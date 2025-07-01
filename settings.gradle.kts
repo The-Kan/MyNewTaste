@@ -21,4 +21,10 @@ dependencyResolutionManagement {
 
 rootProject.name = "MyNewsTaste"
 include(":app")
- 
+include(":feature:main")
+include(":feature:settings")
+include(":feature:detail")
+include(":core:local")
+include(":core:network")
+include(":core:data")
+include(":core:domain")
