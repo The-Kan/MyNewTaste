@@ -12,6 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
+        // Add Padding of Edge to Edge to
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -19,9 +21,7 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, MainParentFragment())
-            .commit()
+
 
     }
 }
