@@ -1,10 +1,13 @@
 package com.devyd.mynewstaste
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.devyd.main.ui.parent.MainParentFragment
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +23,17 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val navHost =
+            supportFragmentManager.findFragmentById(R.id.nav_host_container) as NavHostFragment
+        val navController: NavController = navHost.navController
 
+        supportFragmentManager.setFragmentResultListener(
+            "NAV_TO_FEATURE3",
+            this
+        ) { _requestKey, _bundle ->
+            Log.i("Deok", "수신했나요?")
+           // navController.navigate(R.id.action_host_to_feature3)
+        }
 
 
     }
