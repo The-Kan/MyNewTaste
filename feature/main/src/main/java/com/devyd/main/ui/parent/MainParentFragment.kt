@@ -23,10 +23,10 @@ class MainParentFragment : Fragment(R.layout.fragment_mainparent) {
 
         viewPager.adapter = ChildFragmentStateAdapter(this)
 
-        val tabTitles = listOf("첫 번째", "두 번째", "세 번째")
+
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = tabTitles[position]
+            tab.text = TapList.titles[position]
         }.attach()
     }
 }
