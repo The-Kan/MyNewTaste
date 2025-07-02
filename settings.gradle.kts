@@ -23,7 +23,7 @@ rootProject.name = "MyNewsTaste"
 include(":app")
 include(":feature:articlelist")
 include(":feature:settings")
-include(":feature:detail")
+include(":feature:articledetail")
 include(":core:local")
 include(":core:network")
 include(":core:data")
