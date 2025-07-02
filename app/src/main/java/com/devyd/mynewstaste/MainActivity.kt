@@ -9,7 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
-import com.devyd.main.ui.parent.MainParentFragment
+import com.devyd.main.ui.parent.ArticleListContainerFragment
 import com.devyd.mynewstaste.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -35,13 +35,13 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { controller, destination, _ ->
             if(destination.id == R.id.fragment1){
-                val parentFragment = navHost
+                val articleListContainerFragment = navHost
                     .childFragmentManager
                     .fragments
-                    .filterIsInstance<MainParentFragment>()
+                    .filterIsInstance<ArticleListContainerFragment>()
                     .firstOrNull()
 
-                parentFragment?.apply {
+                articleListContainerFragment?.apply {
                     setArticleClickListener { id ->
                         LogUtil.i(logTag(), "$id 디테일 화면으로 전환")
                     }

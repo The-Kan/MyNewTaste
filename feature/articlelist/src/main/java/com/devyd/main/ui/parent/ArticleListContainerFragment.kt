@@ -9,16 +9,15 @@ import androidx.fragment.app.Fragment
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.main.R
-import com.devyd.main.databinding.FragmentMainparentBinding
+import com.devyd.main.databinding.FragmentArticlelistcontainerBinding
 import com.devyd.main.ui.child.ChildFragmentStateAdapter
 import com.devyd.main.ui.child.TapList
 import com.devyd.main.ui.common.Constants
 import com.google.android.material.tabs.TabLayoutMediator
 
+class ArticleListContainerFragment : Fragment() {
 
-class MainParentFragment : Fragment() {
-
-    private var binding: FragmentMainparentBinding? = null
+    private var binding: FragmentArticlelistcontainerBinding? = null
 
     private var articleClickListener: ArticleClickListener? = null
     private var settingClickListener: SettingClickListener? = null
@@ -28,7 +27,7 @@ class MainParentFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentMainparentBinding.inflate(inflater, container, false)
+        binding = FragmentArticlelistcontainerBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
@@ -56,10 +55,12 @@ class MainParentFragment : Fragment() {
                      */
                     true
                 }
+
                 R.id.action_settings -> {
                     settingClickListener?.onSettingClicked()
                     true
                 }
+
                 else -> false
             }
         }
