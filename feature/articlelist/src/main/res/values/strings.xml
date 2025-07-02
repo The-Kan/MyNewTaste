@@ -5,4 +5,5 @@
     <string name="tab_society">사회</string>
     <string name="tab_economy">경제</string>
     <string name="tab_favorites">찜</string>
+    <string name="topbar_title">Custom Your Taste</string>
 </resources>
