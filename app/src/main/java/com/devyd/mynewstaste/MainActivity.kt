@@ -35,6 +35,10 @@ class MainActivity : AppCompatActivity() {
                        childFragment.setArticleClickListener {
                            LogUtil.i(logTag(), "${it} 디테일 화면으로 전환")
                        }
+                       childFragment.setSettingClickListener {
+                           LogUtil.i(logTag(), "셋팅 화면으로 전환")
+                       }
+
                    }
                }
             }

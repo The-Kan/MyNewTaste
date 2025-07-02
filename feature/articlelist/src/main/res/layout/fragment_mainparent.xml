@@ -13,11 +13,11 @@
 
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
+            android:id="@+id/top_toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/topbar_title"
-            app:menu="@menu/topbar_menu" />
+            app:title="@string/top_toolbar_title"
+            app:menu="@menu/top_toolbar_menu" />
 
 
         <com.google.android.material.tabs.TabLayout
