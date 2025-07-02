@@ -2,45 +2,51 @@ package com.devyd.main.ui.parent
 
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.widget.ViewPager2
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.main.R
+import com.devyd.main.databinding.FragmentMainparentBinding
 import com.devyd.main.ui.child.ChildFragmentStateAdapter
 import com.devyd.main.ui.child.TapList
 import com.devyd.main.ui.common.Constants
-import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 
 
-class MainParentFragment : Fragment(R.layout.fragment_mainparent) {
+class MainParentFragment : Fragment() {
 
-    private lateinit var viewPager: ViewPager2
-    private lateinit var tabLayout: TabLayout
+    private var binding: FragmentMainparentBinding? = null
 
     private var articleClickListener: ArticleClickListener? = null
     private var settingClickListener: SettingClickListener? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentMainparentBinding.inflate(inflater, container, false)
+        return binding!!.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         LogUtil.i(logTag(), "onViewCreated")
 
-        viewPager = view.findViewById(R.id.view_pager)
-        tabLayout = view.findViewById(R.id.tab_layout)
+        val viewPager = binding?.viewPager!!
         viewPager.adapter = ChildFragmentStateAdapter(this)
+
+        val tabLayout = binding?.tabLayout!!
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = getString(TapList.titles[position])
         }.attach()
 
 
-        val topToolbar = view.findViewById<MaterialToolbar>(R.id.top_toolbar)
-
-        // 2) 메뉴 아이템 클릭 리스너 설정
-        topToolbar.setOnMenuItemClickListener { menuItem ->
+        binding?.topToolbar?.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_search -> {
                     /**
@@ -63,12 +69,17 @@ class MainParentFragment : Fragment(R.layout.fragment_mainparent) {
             Constants.ARTICLE_CLICK,
             this.viewLifecycleOwner
         ) { requestKey, bundle ->
-            if(requestKey == Constants.ARTICLE_CLICK){
+            if (requestKey == Constants.ARTICLE_CLICK) {
                 val articleId = bundle.getInt(Constants.ARTICLE_ID)
                 articleClickListener?.onArticleClicked(articleId)
             }
         }
 
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 
     fun setArticleClickListener(l: ArticleClickListener) {

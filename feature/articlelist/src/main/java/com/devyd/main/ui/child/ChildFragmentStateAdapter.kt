@@ -7,6 +7,7 @@ import com.devyd.main.R
 
 class ChildFragmentStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
+
     override fun getItemCount(): Int = TapList.titles.size
 
     override fun createFragment(position: Int): Fragment {

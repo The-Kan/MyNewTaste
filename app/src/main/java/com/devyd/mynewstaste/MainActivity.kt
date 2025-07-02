@@ -10,39 +10,46 @@ import androidx.navigation.fragment.NavHostFragment
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.main.ui.parent.MainParentFragment
+import com.devyd.mynewstaste.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         // Add Padding of Edge to Edge to
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
         val navHost =
-            supportFragmentManager.findFragmentById(R.id.nav_host_container) as NavHostFragment
+            supportFragmentManager.findFragmentById(binding.navHostContainer.id) as NavHostFragment
         val navController: NavController = navHost.navController
 
         navController.addOnDestinationChangedListener { controller, destination, _ ->
             if(destination.id == R.id.fragment1){
-               for(childFragment in navHost.childFragmentManager.fragments){
-                   if(childFragment is MainParentFragment){
-                       childFragment.setArticleClickListener {
-                           LogUtil.i(logTag(), "${it} 디테일 화면으로 전환")
-                       }
-                       childFragment.setSettingClickListener {
-                           LogUtil.i(logTag(), "셋팅 화면으로 전환")
-                       }
+                val parentFragment = navHost
+                    .childFragmentManager
+                    .fragments
+                    .filterIsInstance<MainParentFragment>()
+                    .firstOrNull()
 
-                   }
-               }
+                parentFragment?.apply {
+                    setArticleClickListener { id ->
+                        LogUtil.i(logTag(), "$id 디테일 화면으로 전환")
+                    }
+                    setSettingClickListener {
+                        LogUtil.i(logTag(), "셋팅 화면으로 전환")
+                    }
+                }
             }
         }
-
     }
 }
