@@ -36,7 +36,7 @@ android {
 }
 
 dependencies {
-
+    implementation(project(":core:common"))
     implementation(project(":feature:articlelist"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.devyd.main"
+    namespace = "com.devyd.common"
     compileSdk = 35
 
     defaultConfig {
@@ -14,13 +14,19 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
+    android.buildFeatures.buildConfig = true
+
     buildTypes {
+        debug {
+            buildConfigField("boolean", "DEBUG", "true")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("boolean", "DEBUG", "false")
         }
     }
     compileOptions {
@@ -33,16 +39,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:common"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-
-    implementation(libs.androidx.fragment.ktx)
-    implementation(libs.androidx.viewpager2)
-
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

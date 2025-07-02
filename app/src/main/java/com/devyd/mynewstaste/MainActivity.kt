@@ -1,13 +1,14 @@
 package com.devyd.mynewstaste
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import com.devyd.common.util.LogUtil
+import com.devyd.common.util.logTag
 import com.devyd.main.ui.parent.MainParentFragment
 
 class MainActivity : AppCompatActivity() {
@@ -27,14 +28,17 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_container) as NavHostFragment
         val navController: NavController = navHost.navController
 
-        supportFragmentManager.setFragmentResultListener(
-            "NAV_TO_FEATURE3",
-            this
-        ) { _requestKey, _bundle ->
-            Log.i("Deok", "수신했나요?")
-           // navController.navigate(R.id.action_host_to_feature3)
+        navController.addOnDestinationChangedListener { controller, destination, _ ->
+            if(destination.id == R.id.fragment1){
+               for(childFragment in navHost.childFragmentManager.fragments){
+                   if(childFragment is MainParentFragment){
+                       childFragment.setArticleClickListener {
+                           LogUtil.i(logTag(), "${it} 디테일 화면으로 전환")
+                       }
+                   }
+               }
+            }
         }
-
 
     }
 }
