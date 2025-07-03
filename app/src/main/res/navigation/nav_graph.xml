@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragment1">
+    app:startDestination="@id/articleListContainerFragment">
 
     <fragment
-        android:id="@+id/fragment1"
+        android:id="@+id/articleListContainerFragment"
         android:name="com.devyd.articlelist.ui.parent.ArticleListContainerFragment"
-        android:label="화면 1">
-<!--        <action-->
-<!--            android:id="@+id/action_fragment1_to_fragment2"-->
-<!--            app:destination="@id/fragment2" />-->
+        android:label="articleListContainer">
+        <action
+            android:id="@+id/action_articleListContainerFragment_to_articleDetailFragment"
+            app:destination="@id/articleDetailFragment" />
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/fragment2"-->
-<!--        android:name="com.yourcompany.app.Fragment2"-->
-<!--        android:label="화면 2" />-->
+    <fragment
+        android:id="@+id/articleDetailFragment"
+        android:name="com.devyd.articledetail.ui.ArticleDetailFragment"
+        android:label="articleDetail">
+    </fragment>
 </navigation>

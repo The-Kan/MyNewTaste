@@ -1,4 +1,4 @@
-package com.devyd.detail
+package com.devyd.articledetail
 
 import org.junit.Test
 

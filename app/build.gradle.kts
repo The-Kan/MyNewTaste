@@ -42,6 +42,7 @@ android {
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":feature:articlelist"))
+    implementation(project(":feature:articledetail"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

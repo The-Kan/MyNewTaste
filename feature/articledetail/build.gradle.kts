@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.devyd.detail"
+    namespace = "com.devyd.articledetail"
     compileSdk = 35
 
     defaultConfig {
@@ -30,9 +30,14 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
+    implementation(project(":core:common"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

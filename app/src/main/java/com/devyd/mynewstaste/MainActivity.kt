@@ -3,6 +3,7 @@ package com.devyd.mynewstaste
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.articlelist.ui.parent.ArticleListContainerFragment
+import com.devyd.common.Constants
 import com.devyd.mynewstaste.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
         val navController: NavController = navHost.navController
 
         navController.addOnDestinationChangedListener { controller, destination, _ ->
-            if(destination.id == R.id.fragment1){
+            if(destination.id == R.id.articleListContainerFragment){
                 val articleListContainerFragment = navHost
                     .childFragmentManager
                     .fragments
@@ -43,6 +45,11 @@ class MainActivity : AppCompatActivity() {
 
                 articleListContainerFragment?.apply {
                     setArticleClickListener { id ->
+                        val args = bundleOf(Constants.ARTICLE_ID to id)
+                        navController.navigate(
+                            R.id.articleDetailFragment,
+                            args
+                        )
                         LogUtil.i(logTag(), "$id 디테일 화면으로 전환")
                     }
                     setSettingClickListener {
