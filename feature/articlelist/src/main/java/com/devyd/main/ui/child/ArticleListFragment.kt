@@ -6,8 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import com.devyd.main.R
 import com.devyd.main.databinding.FragmentArticlelistBinding
-import com.devyd.main.ui.common.Constants
+import com.devyd.main.common.Constants
+import com.devyd.main.models.Article
+import com.devyd.main.ui.child.recyclerview.ArticleAdapter
 
 class ArticleListFragment : Fragment() {
 
@@ -25,15 +29,26 @@ class ArticleListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.btnSendToFragment1?.setOnClickListener {
-            val dataBundle = bundleOf(
-                Constants.ARTICLE_ID to 1,
-            )
+        val sampleArticles = listOf(
+            Article(1, "첫 번째 글", R.drawable.landscape_1),
+            Article(2, "두 번째 글", R.drawable.landscape_2),
+            Article(3, "세 번째 글", R.drawable.landscape_3),
+            // … 원하는 만큼 추가
+        )
 
-            parentFragmentManager.setFragmentResult(
-                Constants.ARTICLE_CLICK,
-                dataBundle
-            )
+        binding?.rvArticles?.apply {
+            // 2열 그리드 레이아웃
+            layoutManager = GridLayoutManager(requireContext(), 1)
+            adapter = ArticleAdapter(sampleArticles) { article ->
+                // 아이템 클릭 시 FragmentResult 전송
+                val dataBundle = bundleOf(
+                    Constants.ARTICLE_ID to article.id
+                )
+                parentFragmentManager.setFragmentResult(
+                    Constants.ARTICLE_CLICK,
+                    dataBundle
+                )
+            }
         }
     }
 

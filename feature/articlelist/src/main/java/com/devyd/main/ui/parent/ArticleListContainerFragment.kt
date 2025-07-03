@@ -12,7 +12,7 @@ import com.devyd.main.R
 import com.devyd.main.databinding.FragmentArticlelistcontainerBinding
 import com.devyd.main.ui.child.ChildFragmentStateAdapter
 import com.devyd.main.ui.child.TapList
-import com.devyd.main.ui.common.Constants
+import com.devyd.main.common.Constants
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ArticleListContainerFragment : Fragment() {
