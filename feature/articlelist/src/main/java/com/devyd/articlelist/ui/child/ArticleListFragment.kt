@@ -15,15 +15,16 @@ import com.devyd.common.Constants
 
 class ArticleListFragment : Fragment() {
 
-    private var binding: FragmentArticlelistBinding? = null
+    private var _binding: FragmentArticlelistBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentArticlelistBinding.inflate(inflater, container, false)
-        return binding!!.root
+    ): View {
+        _binding = FragmentArticlelistBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,7 +37,7 @@ class ArticleListFragment : Fragment() {
             // … 원하는 만큼 추가
         )
 
-        binding?.rvArticles?.apply {
+        binding.rvArticles.apply {
             // 2열 그리드 레이아웃
             layoutManager = GridLayoutManager(requireContext(), 1)
             adapter = ArticleAdapter(sampleArticles) { article ->
@@ -54,6 +55,6 @@ class ArticleListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 }

@@ -17,7 +17,8 @@ import com.google.android.material.tabs.TabLayoutMediator
 
 class ArticleListContainerFragment : Fragment() {
 
-    private var binding: FragmentArticlelistcontainerBinding? = null
+    private var _binding: FragmentArticlelistcontainerBinding? = null
+    private val binding get() = _binding!!
 
     private var articleClickListener: ArticleClickListener? = null
     private var settingClickListener: SettingClickListener? = null
@@ -27,25 +28,25 @@ class ArticleListContainerFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentArticlelistcontainerBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentArticlelistcontainerBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         LogUtil.i(logTag(), "onViewCreated")
 
-        val viewPager = binding?.viewPager!!
+        val viewPager = binding.viewPager
         viewPager.adapter = ChildFragmentStateAdapter(this)
 
-        val tabLayout = binding?.tabLayout!!
+        val tabLayout = binding.tabLayout
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = getString(TapList.titles[position])
         }.attach()
 
 
-        binding?.topToolbar?.setOnMenuItemClickListener { menuItem ->
+        binding.topToolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_search -> {
                     /**
@@ -80,7 +81,7 @@ class ArticleListContainerFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        binding = null
+        _binding = null
     }
 
     fun setArticleClickListener(l: ArticleClickListener) {
