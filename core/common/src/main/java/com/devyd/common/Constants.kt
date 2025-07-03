@@ -1,4 +1,4 @@
-package com.devyd.articlelist.common
+package com.devyd.common
 
 object Constants {
     const val ARTICLE_CLICK = "ARTICLE_CLICK"
