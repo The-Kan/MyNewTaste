@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.devyd.articlelist.R
 import com.devyd.articlelist.databinding.FragmentArticlelistBinding
-import com.devyd.articlelist.common.Constants
 import com.devyd.articlelist.models.Article
 import com.devyd.articlelist.ui.child.recyclerview.ArticleAdapter
+import com.devyd.common.Constants
 
 class ArticleListFragment : Fragment() {
 
