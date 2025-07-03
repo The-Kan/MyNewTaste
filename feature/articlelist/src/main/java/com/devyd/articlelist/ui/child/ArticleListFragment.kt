@@ -1,4 +1,4 @@
-package com.devyd.main.ui.child
+package com.devyd.articlelist.ui.child
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.devyd.main.R
-import com.devyd.main.databinding.FragmentArticlelistBinding
-import com.devyd.main.common.Constants
-import com.devyd.main.models.Article
-import com.devyd.main.ui.child.recyclerview.ArticleAdapter
+import com.devyd.articlelist.R
+import com.devyd.articlelist.databinding.FragmentArticlelistBinding
+import com.devyd.articlelist.common.Constants
+import com.devyd.articlelist.models.Article
+import com.devyd.articlelist.ui.child.recyclerview.ArticleAdapter
 
 class ArticleListFragment : Fragment() {
 

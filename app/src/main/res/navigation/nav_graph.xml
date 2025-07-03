@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/fragment1"
-        android:name="com.devyd.main.ui.parent.ArticleListContainerFragment"
+        android:name="com.devyd.articlelist.ui.parent.ArticleListContainerFragment"
         android:label="화면 1">
 <!--        <action-->
 <!--            android:id="@+id/action_fragment1_to_fragment2"-->

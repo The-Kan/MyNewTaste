@@ -9,7 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
-import com.devyd.main.ui.parent.ArticleListContainerFragment
+import com.devyd.articlelist.ui.parent.ArticleListContainerFragment
 import com.devyd.mynewstaste.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.devyd.main.models
+package com.devyd.articlelist.models
 
 import androidx.annotation.DrawableRes
 

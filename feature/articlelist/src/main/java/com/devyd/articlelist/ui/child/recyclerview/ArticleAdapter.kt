@@ -1,10 +1,10 @@
-package com.devyd.main.ui.child.recyclerview
+package com.devyd.articlelist.ui.child.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.devyd.main.databinding.ItemArticleBinding
-import com.devyd.main.models.Article
+import com.devyd.articlelist.databinding.ItemArticleBinding
+import com.devyd.articlelist.models.Article
 
 class ArticleAdapter(
     private val articles: List<Article>,

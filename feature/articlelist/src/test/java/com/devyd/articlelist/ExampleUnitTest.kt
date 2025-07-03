@@ -1,4 +1,4 @@
-package com.devyd.main
+package com.devyd.articlelist
 
 import org.junit.Test
 

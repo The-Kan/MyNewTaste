@@ -1,4 +1,4 @@
-package com.devyd.main.ui.parent
+package com.devyd.articlelist.ui.parent
 
 
 import android.os.Bundle
@@ -8,11 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
-import com.devyd.main.R
-import com.devyd.main.databinding.FragmentArticlelistcontainerBinding
-import com.devyd.main.ui.child.ChildFragmentStateAdapter
-import com.devyd.main.ui.child.TapList
-import com.devyd.main.common.Constants
+import com.devyd.articlelist.R
+import com.devyd.articlelist.databinding.FragmentArticlelistcontainerBinding
+import com.devyd.articlelist.ui.child.ChildFragmentStateAdapter
+import com.devyd.articlelist.ui.child.TapList
+import com.devyd.articlelist.common.Constants
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ArticleListContainerFragment : Fragment() {

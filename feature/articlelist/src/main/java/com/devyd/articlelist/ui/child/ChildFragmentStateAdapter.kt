@@ -1,9 +1,8 @@
-package com.devyd.main.ui.child
+package com.devyd.articlelist.ui.child
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.devyd.main.R
+import com.devyd.articlelist.R
 
 class ChildFragmentStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 

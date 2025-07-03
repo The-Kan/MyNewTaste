@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.devyd.main"
+    namespace = "com.devyd.articlelist"
     compileSdk = 35
 
     defaultConfig {
