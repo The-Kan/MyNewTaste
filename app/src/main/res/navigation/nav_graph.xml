@@ -12,11 +12,20 @@
         <action
             android:id="@+id/action_articleListContainerFragment_to_articleDetailFragment"
             app:destination="@id/articleDetailFragment" />
+        <action
+            android:id="@+id/action_articleListContainerFragment_to_categorySettingsFragment"
+            app:destination="@id/categorySettingsFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/articleDetailFragment"
         android:name="com.devyd.articledetail.ui.ArticleDetailFragment"
         android:label="articleDetail">
+    </fragment>
+
+    <fragment
+        android:id="@+id/categorySettingsFragment"
+        android:name="com.devyd.settings.ui.CategorySettingsFragment"
+        android:label="categorySettings">
     </fragment>
 </navigation>

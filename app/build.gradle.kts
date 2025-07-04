@@ -43,6 +43,8 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":feature:articlelist"))
     implementation(project(":feature:articledetail"))
+    implementation(project(":feature:settings"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

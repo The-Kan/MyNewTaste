@@ -53,6 +53,9 @@ class MainActivity : AppCompatActivity() {
                         LogUtil.i(logTag(), "$id 디테일 화면으로 전환")
                     }
                     setSettingClickListener {
+                        navController.navigate(
+                            R.id.categorySettingsFragment,
+                        )
                         LogUtil.i(logTag(), "셋팅 화면으로 전환")
                     }
                 }
