@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.domain.models.Article
+import com.devyd.domain.models.News
 import com.devyd.domain.usecase.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,13 +16,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ArticleListViewModel @Inject constructor(private val getArticleUseCase: GetArticleUseCase) : ViewModel() {
-    private val _articles = MutableStateFlow<List<Article>>(emptyList())
+    private val _articles = MutableStateFlow(News())
     val article = _articles.asStateFlow()
 
     fun refreshArticle() {
         viewModelScope.launch {
             LogUtil.i(logTag(),"article launch")
-            _articles.update { getArticleUseCase() }
+            val result = getArticleUseCase()
+            LogUtil.i(logTag(),"result = ${result}")
+            _articles.update { result }
         }
     }
 }
