@@ -6,17 +6,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import com.devyd.articlelist.R
 import com.devyd.articlelist.databinding.FragmentArticlelistBinding
 import com.devyd.articlelist.models.Article
 import com.devyd.articlelist.ui.child.recyclerview.ArticleAdapter
+import com.devyd.articlelist.ui.child.vm.ArticleListViewModel
 import com.devyd.common.Constants
+import com.devyd.common.util.LogUtil
+import com.devyd.common.util.logTag
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ArticleListFragment : Fragment() {
 
     private var _binding: FragmentArticlelistBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel : ArticleListViewModel by viewModels<ArticleListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,6 +44,12 @@ class ArticleListFragment : Fragment() {
             Article(3, "세 번째 글", R.drawable.landscape_3),
             // … 원하는 만큼 추가
         )
+
+        binding.refreshArticle.setOnClickListener {
+            LogUtil.i(logTag(),"article refresh")
+            viewModel.refreshArticle()
+
+        }
 
         binding.rvArticles.apply {
             // 2열 그리드 레이아웃

@@ -13,7 +13,9 @@ import com.devyd.common.util.logTag
 import com.devyd.articlelist.ui.parent.ArticleListContainerFragment
 import com.devyd.common.Constants
 import com.devyd.mynewstaste.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
