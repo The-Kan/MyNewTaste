@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.devyd.articlelist.databinding.ItemArticleBinding
 import com.devyd.domain.models.Article
 
@@ -18,7 +19,11 @@ class ArticleAdapter(
         fun bind(article: Article) {
             binding.title.text = article.title
             // 예시: Glide 등을 이용해 실제 URL 로드 가능
-            //binding.thumbnail.setImageResource(article.urlToImage)
+            Glide.with(binding.thumbnail.context)
+                .load(article.urlToImage)
+                .centerCrop()
+                .into(binding.thumbnail)
+
             binding.root.setOnClickListener { onClick(article) }
         }
     }
