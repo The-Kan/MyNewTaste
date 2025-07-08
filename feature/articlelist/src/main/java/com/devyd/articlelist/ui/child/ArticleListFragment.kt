@@ -9,15 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.devyd.articlelist.R
 import com.devyd.articlelist.databinding.FragmentArticlelistBinding
-import com.devyd.articlelist.models.Article
+import com.devyd.articlelist.models.ArticleResult
 import com.devyd.articlelist.ui.child.recyclerview.ArticleAdapter
 import com.devyd.articlelist.ui.child.vm.ArticleListViewModel
 import com.devyd.common.Constants
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
-import com.devyd.domain.models.News
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,7 +25,7 @@ class ArticleListFragment : Fragment() {
     private var _binding: FragmentArticlelistBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel : ArticleListViewModel by viewModels<ArticleListViewModel>()
+    private val viewModel: ArticleListViewModel by viewModels<ArticleListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,39 +39,55 @@ class ArticleListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sampleArticles = listOf(
-            Article(1, "첫 번째 글", R.drawable.landscape_1),
-            Article(2, "두 번째 글", R.drawable.landscape_2),
-            Article(3, "세 번째 글", R.drawable.landscape_3),
-            // … 원하는 만큼 추가
-        )
-
         binding.refreshArticle.setOnClickListener {
-            LogUtil.i(logTag(),"article refresh")
-            viewModel.refreshArticle()
+            LogUtil.i(logTag(), "article refresh")
 
         }
-
-        // 2) 어댑터 초기화 (처음엔 빈 리스트)
-        val articleAdapter = ArticleAdapter(News()) { article ->
-            // 클릭 콜백
+        val articleAdapter = ArticleAdapter(emptyList()) { article ->
             val dataBundle = bundleOf(Constants.ARTICLE_ID to article.title)
             parentFragmentManager.setFragmentResult(Constants.ARTICLE_CLICK, dataBundle)
         }
 
 
         binding.rvArticles.apply {
-            // 2열 그리드 레이아웃
             layoutManager = GridLayoutManager(requireContext(), 1)
             adapter = articleAdapter
         }
 
+        binding.btnRetry.setOnClickListener {
+            viewModel.refreshArticle()
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.article.collect { news ->
-                articleAdapter.updateArticles(news)
+            viewModel.article.collect { articleResult ->
+                when (articleResult) {
+                    ArticleResult.Idle -> {
+                        renderState(isLoading = false, isFail = false, isSuccess = false)
+                    }
+
+                    ArticleResult.Loading -> {
+                        renderState(isLoading = true, isFail = false, isSuccess = false)
+                    }
+
+                    is ArticleResult.Failure -> {
+                        renderState(isLoading = false, isFail = true, isSuccess = false)
+                    }
+
+                    is ArticleResult.Success -> {
+                        renderState(isLoading = false, isFail = false, isSuccess = true)
+                        articleAdapter.updateArticles(articleResult.news.articles)
+                    }
+                }
             }
         }
+        viewModel.refreshArticle()
+
+    }
+
+    private fun renderState(isLoading: Boolean, isFail: Boolean, isSuccess: Boolean) {
+        binding.progressLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.btnRetry.visibility = if (isFail) View.VISIBLE else View.GONE
+        binding.rvArticles.visibility = if (isSuccess) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

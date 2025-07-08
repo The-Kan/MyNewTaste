@@ -6,10 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.devyd.articlelist.databinding.ItemArticleBinding
 import com.devyd.domain.models.Article
-import com.devyd.domain.models.News
 
 class ArticleAdapter(
-    private var news: News,
+    private var articleList: List<Article>,
     private val onClick: (Article) -> Unit
 ) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
@@ -34,14 +33,14 @@ class ArticleAdapter(
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        holder.bind(news.articles[position])
+        holder.bind(articleList[position])
     }
 
-    override fun getItemCount(): Int = news.totalResults
+    override fun getItemCount(): Int = articleList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateArticles(newItems: News) {
-        this.news = newItems
+    fun updateArticles(articleList: List<Article>) {
+        this.articleList = articleList
         notifyDataSetChanged()
     }
 }
