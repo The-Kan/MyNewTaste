@@ -81,8 +81,6 @@ class ArticleListFragment : Fragment() {
                 }
             }
         }
-        viewModel.refreshArticle()
-
     }
 
     private fun renderState(isLoading: Boolean, isFail: Boolean, isSuccess: Boolean) {

@@ -17,6 +17,10 @@ class ArticleListViewModel @Inject constructor(private val getArticleUseCase: Ge
     private val _articles = MutableStateFlow<ArticleResult>(ArticleResult.Idle)
     val article = _articles.asStateFlow()
 
+    init {
+        refreshArticle()
+    }
+
     fun refreshArticle() {
         viewModelScope.launch {
             _articles.update { ArticleResult.Loading }
