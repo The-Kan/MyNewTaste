@@ -71,6 +71,7 @@ class ArticleListFragment : Fragment() {
 
                     is ArticleResult.Failure -> {
                         renderState(isLoading = false, isFail = true, isSuccess = false)
+                        LogUtil.e(logTag(), articleResult.error)
                     }
 
                     is ArticleResult.Success -> {
