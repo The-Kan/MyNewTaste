@@ -4,21 +4,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.ScrollView
-import android.widget.Spinner
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.devyd.settings.R
+import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.ConcatAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.devyd.settings.databinding.FragmentCategorySettingsBinding
-import com.google.android.material.slider.Slider
+import com.devyd.settings.vm.CategorySettingsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-class CategorySettingsFragment : Fragment(){
+@AndroidEntryPoint
+class CategorySettingsFragment : Fragment() {
     private var _binding: FragmentCategorySettingsBinding? = null
     private val binding get() = _binding!!
 
-    private val categories = listOf("과학", "사회", "경제", "주식", "IT", "스포츠", "문화")
+    private val viewModel: CategorySettingsViewModel by viewModels<CategorySettingsViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,47 +28,43 @@ class CategorySettingsFragment : Fragment(){
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnAddCategory.setOnClickListener {
-            addCategoryItem()
-        }
-    }
+        var listAdapter: CategoryAdapter? = null
 
-    private fun addCategoryItem() {
-        val itemView = layoutInflater.inflate(
-            R.layout.item_category_slider,
-            binding.containerCategories,
-            false
+        listAdapter = CategoryAdapter(
+            categories = viewModel.categories,
+            onModify = { sel ->
+                viewModel.modifySelection(sel.id, sel.category, sel.weight)
+            },
+            onDelete = { sel ->
+                viewModel.deleteSelection(sel.id)
+
+                listAdapter?.submitList(viewModel.getCategoryWeightList())
+            }
         )
 
-        val spinner = itemView.findViewById<Spinner>(R.id.spinner_category)
-        spinner.adapter = ArrayAdapter(
-            requireContext(),
-            android.R.layout.simple_spinner_item,
-            categories
-        ).apply {
-            setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        var concatAdapter: ConcatAdapter? = null
+        val footerAdapter = FooterAdapter {
+
+            viewModel.addSelection()  // 구현: id 생성 + addSelection
+            listAdapter.submitList(viewModel.getCategoryWeightList())
+            binding.rvCategories.post {
+                binding.rvCategories.scrollToPosition(concatAdapter?.itemCount?.minus(1) ?: 0)
+            }
         }
 
-        val tvPercent = itemView.findViewById<TextView>(R.id.tv_percentage)
-        val slider = itemView.findViewById<Slider>(R.id.slider_percentage)
-        slider.addOnChangeListener { _, value, _ ->
-            tvPercent.text = "${value.toInt()}"
-        }
 
-        val deleteBtn = itemView.findViewById<ImageButton>(R.id.btn_delete)
-        deleteBtn.setOnClickListener {
-            binding.containerCategories.removeView(itemView)
-        }
+        binding.rvCategories.layoutManager = LinearLayoutManager(requireContext())
 
-        val insertIndex = binding.containerCategories.childCount - 1
-        binding.containerCategories.addView(itemView, insertIndex)
+        concatAdapter = ConcatAdapter(listAdapter, footerAdapter)
+        binding.rvCategories.adapter = concatAdapter
 
-        binding.scrollViewCategories.post {
-            binding.scrollViewCategories.fullScroll(ScrollView.FOCUS_DOWN)
-        }
+
+        listAdapter.submitList(viewModel.getCategoryWeightList())
+
     }
 
     override fun onDestroyView() {
