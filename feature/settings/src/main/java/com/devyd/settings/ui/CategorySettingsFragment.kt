@@ -11,6 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devyd.common.util.LogUtil
+import com.devyd.common.util.logTag
 import com.devyd.settings.databinding.FragmentCategorySettingsBinding
 import com.devyd.settings.vm.CategorySettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,16 +46,13 @@ class CategorySettingsFragment : Fragment() {
             onModify = { id: Int, category: String, weight: Int ->
                 viewModel.updateSelection(id, category, weight)
             },
-            onDelete = { sel ->
-                viewModel.deleteSelection(sel.id)
+            onDelete = { categoryWeight ->
+                viewModel.deleteSelection(categoryWeight)
             }
         )
 
         footerAdapter = FooterAdapter {
             viewModel.addSelection()
-            binding.rvCategories.post {
-                binding.rvCategories.scrollToPosition(concatAdapter.itemCount - 1)
-            }
         }
 
         binding.rvCategories.layoutManager = LinearLayoutManager(requireContext())
@@ -64,6 +63,18 @@ class CategorySettingsFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.categoryWeights.collect { list ->
                     categoryAdapter.submitList(list)
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.scroll.collect { scroll ->
+                    if (scroll) {
+                        binding.rvCategories.post {
+                            binding.rvCategories.scrollToPosition(concatAdapter.itemCount - 1)
+                        }
+                    }
                 }
             }
         }

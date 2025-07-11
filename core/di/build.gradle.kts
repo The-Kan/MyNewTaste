@@ -38,6 +38,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":core:data"))
     implementation(project(":core:network"))
+    implementation(project(":core:local"))
 
 
     implementation(libs.androidx.core.ktx)
@@ -52,4 +53,9 @@ dependencies {
 
     implementation(libs.retrofit2)
     implementation(libs.retrofit2.converter.gson)
+
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    ksp         (libs.room.compiler)
+    testImplementation(libs.room.testing)
 }
