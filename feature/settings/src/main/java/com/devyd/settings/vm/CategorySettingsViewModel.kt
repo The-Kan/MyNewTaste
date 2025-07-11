@@ -11,7 +11,7 @@ class CategorySettingsViewModel @Inject constructor() : ViewModel() {
     val categories = Constants.NEWS_API_TOP_HEADLINES_CATEGORY_LIST
 
     private val categoryWeightList = ArrayList<CategoryWeight>()
-    var categoryWeightItemId = 1
+    private var categoryWeightItemId = 1
 
     fun addSelection() {
         val cw = CategoryWeight(categoryWeightItemId++, categories[0], 0)
