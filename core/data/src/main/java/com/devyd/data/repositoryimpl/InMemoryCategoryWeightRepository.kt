@@ -3,7 +3,7 @@ package com.devyd.data.repositoryimpl
 import com.devyd.domain.models.CategoryWeight
 import com.devyd.domain.repository.CategoryWeightRepository
 
-class CategoryWeightRepositoryImpl : CategoryWeightRepository {
+class InMemoryCategoryWeightRepository : CategoryWeightRepository {
     private val categoryWeightList = mutableListOf<CategoryWeight>()
 
     override suspend fun getAll(): List<CategoryWeight> {

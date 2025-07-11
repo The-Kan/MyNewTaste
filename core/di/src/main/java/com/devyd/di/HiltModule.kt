@@ -2,7 +2,7 @@ package com.devyd.di
 
 import com.devyd.data.datasource.ArticleRemoteDataSource
 import com.devyd.data.repositoryimpl.ArticleRepositoryImpl
-import com.devyd.data.repositoryimpl.CategoryWeightRepositoryImpl
+import com.devyd.data.repositoryimpl.InMemoryCategoryWeightRepository
 import com.devyd.domain.repository.ArticleRepository
 import com.devyd.domain.repository.CategoryWeightRepository
 import com.devyd.network.impl.ArticleRemoteDataSourceImpl
@@ -29,5 +29,5 @@ object HiltModule {
     @Provides
     @Singleton
     fun provideCategoryWeightRepository() : CategoryWeightRepository =
-        CategoryWeightRepositoryImpl()
+        InMemoryCategoryWeightRepository()
 }
