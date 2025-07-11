@@ -2,7 +2,9 @@ package com.devyd.di
 
 import com.devyd.data.datasource.ArticleRemoteDataSource
 import com.devyd.data.repositoryimpl.ArticleRepositoryImpl
+import com.devyd.data.repositoryimpl.CategoryWeightRepositoryImpl
 import com.devyd.domain.repository.ArticleRepository
+import com.devyd.domain.repository.CategoryWeightRepository
 import com.devyd.network.impl.ArticleRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides
@@ -23,4 +25,9 @@ object HiltModule {
     @Singleton
     fun provideArticleRemoteDataSource(): ArticleRemoteDataSource =
         ArticleRemoteDataSourceImpl()
+
+    @Provides
+    @Singleton
+    fun provideCategoryWeightRepository() : CategoryWeightRepository =
+        CategoryWeightRepositoryImpl()
 }

@@ -5,13 +5,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.devyd.domain.models.CategoryWeight
+import com.devyd.settings.common.setWidthByLongestItem
 import com.devyd.settings.databinding.ItemCategorySliderBinding
-import com.devyd.settings.model.CategoryWeight
 import com.google.android.material.slider.Slider
 
 class CategoryAdapter(
     private val categories: List<String>,
-    private val onModify: (CategoryWeight) -> Unit,
+    private val onModify: (id: Int, category: String, weight: Int) -> Unit,
     private val onDelete: (CategoryWeight) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.VH>() {
 
@@ -40,29 +41,27 @@ class CategoryAdapter(
             )
 
             actvCategory.setAdapter(dropdownAdapter)
-
+            actvCategory.setWidthByLongestItem(categories)
             actvCategory.setText(categoryWeight.category, false)
 
-            // ④ 사용자 선택 시에만 호출
+
             actvCategory.setOnItemClickListener { parent, _, position, _ ->
                 val selected = parent.getItemAtPosition(position) as String
-                categoryWeight.category = selected
-                onModify(categoryWeight)
+                onModify(categoryWeight.id, selected, categoryWeight.weight)
             }
 
-            // Slider 초기화
             slider.value = categoryWeight.weight.toFloat()
             tvWeight.text = categoryWeight.weight.toString()
 
+            slider.clearOnSliderTouchListeners()
             slider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
                 override fun onStartTrackingTouch(slider: Slider) { /* no-op */
                 }
 
                 override fun onStopTrackingTouch(slider: Slider) {
                     val w = slider.value.toInt()
-                    categoryWeight.weight = w
                     tvWeight.text = "$w"
-                    onModify(categoryWeight)
+                    onModify(categoryWeight.id, categoryWeight.category, w)
                 }
             })
 

@@ -41,8 +41,8 @@ class CategorySettingsFragment : Fragment() {
 
         categoryAdapter = CategoryAdapter(
             categories = viewModel.categories,
-            onModify = { sel ->
-                viewModel.modifySelection(sel.id, sel.category, sel.weight)
+            onModify = { id: Int, category: String, weight: Int ->
+                viewModel.updateSelection(id, category, weight)
             },
             onDelete = { sel ->
                 viewModel.deleteSelection(sel.id)
