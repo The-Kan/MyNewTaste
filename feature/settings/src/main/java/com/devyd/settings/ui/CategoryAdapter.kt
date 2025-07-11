@@ -4,11 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.devyd.common.util.LogUtil
-import com.devyd.common.util.logTag
 import com.devyd.settings.databinding.ItemCategorySliderBinding
 import com.devyd.settings.model.CategoryWeight
 import com.google.android.material.slider.Slider
@@ -22,9 +18,9 @@ class CategoryAdapter(
     private val items = mutableListOf<CategoryWeight>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(newList: List<CategoryWeight>) {
+    fun submitList(categoryWeightList: List<CategoryWeight>) {
         items.clear()
-        items.addAll(newList)
+        items.addAll(categoryWeightList)
         notifyDataSetChanged()
     }
 
@@ -35,7 +31,7 @@ class CategoryAdapter(
         private val tvWeight = binding.tvWeight
         private val btnDelete = binding.btnDelete
 
-        fun bind(data: CategoryWeight) {
+        fun bind(categoryWeight: CategoryWeight) {
 
             var dropdownAdapter = ArrayAdapter(
                 itemView.context,
@@ -45,18 +41,18 @@ class CategoryAdapter(
 
             actvCategory.setAdapter(dropdownAdapter)
 
-            actvCategory.setText(data.category, false)
+            actvCategory.setText(categoryWeight.category, false)
 
             // ④ 사용자 선택 시에만 호출
             actvCategory.setOnItemClickListener { parent, _, position, _ ->
                 val selected = parent.getItemAtPosition(position) as String
-                data.category = selected
-                onModify(data)
+                categoryWeight.category = selected
+                onModify(categoryWeight)
             }
 
             // Slider 초기화
-            slider.value = data.weight.toFloat()
-            tvWeight.text = data.weight.toString()
+            slider.value = categoryWeight.weight.toFloat()
+            tvWeight.text = categoryWeight.weight.toString()
 
             slider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
                 override fun onStartTrackingTouch(slider: Slider) { /* no-op */
@@ -64,14 +60,14 @@ class CategoryAdapter(
 
                 override fun onStopTrackingTouch(slider: Slider) {
                     val w = slider.value.toInt()
-                    data.weight = w
+                    categoryWeight.weight = w
                     tvWeight.text = "$w"
-                    onModify(data)
+                    onModify(categoryWeight)
                 }
             })
 
             btnDelete.setOnClickListener {
-                onDelete(data)
+                onDelete(categoryWeight)
             }
         }
     }

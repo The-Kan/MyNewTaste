@@ -4,31 +4,32 @@ import androidx.lifecycle.ViewModel
 import com.devyd.common.Constants
 import com.devyd.settings.model.CategoryWeight
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import java.util.concurrent.atomic.AtomicInteger
 import javax.inject.Inject
 
 @HiltViewModel
 class CategorySettingsViewModel @Inject constructor() : ViewModel() {
+    private val _categoryWeights = MutableStateFlow<List<CategoryWeight>>(emptyList())
+    val categoryWeights = _categoryWeights.asStateFlow()
+
+    private val categoryId = AtomicInteger(1)
     val categories = Constants.NEWS_API_TOP_HEADLINES_CATEGORY_LIST
 
-    private val categoryWeightList = ArrayList<CategoryWeight>()
-    private var categoryWeightItemId = 1
-
     fun addSelection() {
-        val cw = CategoryWeight(categoryWeightItemId++, categories[0], 0)
-        categoryWeightList.add(cw)
+        val newItem = CategoryWeight(categoryId.getAndIncrement(), categories.first(), 0)
+        _categoryWeights.update { oldList -> oldList + newItem }
     }
 
     fun modifySelection(id: Int, category: String, weight: Int) {
-        val selection = categoryWeightList.last { it.id == id }
-        selection.category = category
-        selection.weight = weight
+        _categoryWeights.update { oldList ->
+            oldList.map { if (it.id == id) it.copy(category = category, weight = weight) else it }
+        }
     }
 
     fun deleteSelection(id: Int) {
-        categoryWeightList.removeIf { it.id == id }
-    }
-
-    fun getCategoryWeightList(): List<CategoryWeight> {
-        return categoryWeightList.map { it.copy() }
+        _categoryWeights.update { oldList -> oldList.filterNot { it.id == id } }
     }
 }

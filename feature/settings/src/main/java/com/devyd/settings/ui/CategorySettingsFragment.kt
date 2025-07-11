@@ -6,18 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devyd.settings.databinding.FragmentCategorySettingsBinding
 import com.devyd.settings.vm.CategorySettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class CategorySettingsFragment : Fragment() {
     private var _binding: FragmentCategorySettingsBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: CategorySettingsViewModel by viewModels<CategorySettingsViewModel>()
+    private val viewModel: CategorySettingsViewModel by viewModels()
+
+    private lateinit var categoryAdapter: CategoryAdapter
+    private lateinit var footerAdapter: FooterAdapter
+    private lateinit var concatAdapter: ConcatAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,43 +36,37 @@ class CategorySettingsFragment : Fragment() {
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        var listAdapter: CategoryAdapter? = null
-
-        listAdapter = CategoryAdapter(
+        categoryAdapter = CategoryAdapter(
             categories = viewModel.categories,
             onModify = { sel ->
                 viewModel.modifySelection(sel.id, sel.category, sel.weight)
             },
             onDelete = { sel ->
                 viewModel.deleteSelection(sel.id)
-
-                listAdapter?.submitList(viewModel.getCategoryWeightList())
             }
         )
 
-        var concatAdapter: ConcatAdapter? = null
-        val footerAdapter = FooterAdapter {
-
-            viewModel.addSelection()  // 구현: id 생성 + addSelection
-            listAdapter.submitList(viewModel.getCategoryWeightList())
+        footerAdapter = FooterAdapter {
+            viewModel.addSelection()
             binding.rvCategories.post {
-                binding.rvCategories.scrollToPosition(concatAdapter?.itemCount?.minus(1) ?: 0)
+                binding.rvCategories.scrollToPosition(concatAdapter.itemCount - 1)
             }
         }
 
-
         binding.rvCategories.layoutManager = LinearLayoutManager(requireContext())
-
-        concatAdapter = ConcatAdapter(listAdapter, footerAdapter)
+        concatAdapter = ConcatAdapter(categoryAdapter, footerAdapter)
         binding.rvCategories.adapter = concatAdapter
 
-
-        listAdapter.submitList(viewModel.getCategoryWeightList())
-
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.categoryWeights.collect { list ->
+                    categoryAdapter.submitList(list)
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {
