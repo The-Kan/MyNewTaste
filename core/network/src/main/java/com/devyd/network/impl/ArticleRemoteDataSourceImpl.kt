@@ -3,14 +3,14 @@ package com.devyd.network.impl
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.data.datasource.ArticleRemoteDataSource
-import com.devyd.data.models.NewsEntity
+import com.devyd.data.models.NewsDto
 import com.devyd.network.models.toEntity
 import com.devyd.network.retrofit.RetrofitClient
 import java.io.IOException
 import javax.inject.Inject
 
 class ArticleRemoteDataSourceImpl @Inject constructor() : ArticleRemoteDataSource {
-    override suspend fun fetchNewsEntity(): NewsEntity {
+    override suspend fun fetchNewsEntity(): NewsDto {
         val response = RetrofitClient.api.getBusinessHeadlines()
 
         if (!response.isSuccessful) {

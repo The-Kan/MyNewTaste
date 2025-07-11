@@ -1,8 +1,8 @@
 package com.devyd.network.models
 
-import com.devyd.data.models.ArticleEntity
-import com.devyd.data.models.NewsEntity
-import com.devyd.data.models.SourceEntity
+import com.devyd.data.models.ArticleDto
+import com.devyd.data.models.NewsDto
+import com.devyd.data.models.SourceDto
 
 data class NewsResponse(
     val status: String,
@@ -26,14 +26,14 @@ data class SourceResponse(
     val name: String
 )
 
-fun NewsResponse.toEntity(): NewsEntity = NewsEntity(
+fun NewsResponse.toEntity(): NewsDto = NewsDto(
     status         = status,
     totalResults   = totalResults,
     articleEntities = articles.map { it.toEntity() }
 )
 
-fun ArticleResponse.toEntity(): ArticleEntity = ArticleEntity(
-    sourceEntity = source.toEntity(),
+fun ArticleResponse.toEntity(): ArticleDto = ArticleDto(
+    sourceDto = source.toEntity(),
     author       = author,
     title        = title,
     description  = description,
@@ -43,7 +43,7 @@ fun ArticleResponse.toEntity(): ArticleEntity = ArticleEntity(
     content      = content
 )
 
-fun SourceResponse.toEntity(): SourceEntity = SourceEntity(
+fun SourceResponse.toEntity(): SourceDto = SourceDto(
     id   = id,
     name = name
 )

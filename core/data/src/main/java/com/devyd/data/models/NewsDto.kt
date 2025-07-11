@@ -4,14 +4,14 @@ import com.devyd.domain.models.Article
 import com.devyd.domain.models.News
 import com.devyd.domain.models.Source
 
-data class NewsEntity(
+data class NewsDto(
     val status: String,
     val totalResults: Int,
-    val articleEntities: List<ArticleEntity>
+    val articleEntities: List<ArticleDto>
 )
 
-data class ArticleEntity(
-    val sourceEntity: SourceEntity,
+data class ArticleDto(
+    val sourceDto: SourceDto,
     val author: String?,
     val title: String,
     val description: String?,
@@ -21,20 +21,20 @@ data class ArticleEntity(
     val content: String?
 )
 
-data class SourceEntity(
+data class SourceDto(
     val id: String?,
     val name: String
 )
 
 
-fun NewsEntity.toDomain(): News = News(
+fun NewsDto.toDomain(): News = News(
     status       = status,
     totalResults = totalResults,
     articles     = articleEntities.map { it.toDomain() }
 )
 
-fun ArticleEntity.toDomain(): Article = Article(
-    source       = sourceEntity.toDomain(),
+fun ArticleDto.toDomain(): Article = Article(
+    source       = sourceDto.toDomain(),
     author       = author,
     title        = title,
     description  = description,
@@ -44,7 +44,7 @@ fun ArticleEntity.toDomain(): Article = Article(
     content      = content
 )
 
-fun SourceEntity.toDomain(): Source = Source(
+fun SourceDto.toDomain(): Source = Source(
     id   = id,
     name = name
 )
