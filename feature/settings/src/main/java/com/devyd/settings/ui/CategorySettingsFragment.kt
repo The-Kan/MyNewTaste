@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devyd.settings.databinding.FragmentCategorySettingsBinding
+import com.devyd.settings.models.CategoryWeightResult
 import com.devyd.settings.ui.adapter.CategoryAdapter
 import com.devyd.settings.ui.adapter.FooterAdapter
 import com.devyd.settings.ui.vm.CategorySettingsViewModel
@@ -53,10 +54,11 @@ class CategorySettingsFragment : Fragment() {
         )
 
         footerAdapter = FooterAdapter {
-            if(viewModel.categoryWeights.value.size >= viewModel.categories.size){
-                Toast.makeText(context, "No more categories can be created.", Toast.LENGTH_SHORT).show()
-            } else {
+            if (viewModel.addCategoryPossible.value) {
                 viewModel.addSelection()
+            } else {
+                Toast.makeText(context, "No more categories can be created.", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -66,8 +68,25 @@ class CategorySettingsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.categoryWeights.collect { list ->
-                    categoryAdapter.submitList(list)
+                viewModel.categoryWeights.collect { cwResult ->
+                    when (cwResult) {
+                        CategoryWeightResult.Idle -> {
+                            renderState(isLoading = false, isFail = false, isSuccess = false)
+                        }
+
+                        CategoryWeightResult.Loading -> {
+                            renderState(isLoading = true, isFail = false, isSuccess = false)
+                        }
+
+                        is CategoryWeightResult.Failure -> {
+                            renderState(isLoading = false, isFail = true, isSuccess = false)
+                        }
+
+                        is CategoryWeightResult.Success -> {
+                            categoryAdapter.submitList(cwResult.categoryWeightList)
+                            renderState(isLoading = false, isFail = false, isSuccess = true)
+                        }
+                    }
                 }
             }
         }
@@ -83,6 +102,12 @@ class CategorySettingsFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun renderState(isLoading: Boolean, isFail: Boolean, isSuccess: Boolean) {
+        binding.progressLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.btnRetry.visibility = if (isFail) View.VISIBLE else View.GONE
+        binding.rvCategories.visibility = if (isSuccess) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {
