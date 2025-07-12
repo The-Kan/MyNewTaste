@@ -76,7 +76,7 @@ class ArticleListFragment : Fragment() {
 
                     is ArticleResult.Success -> {
                         renderState(isLoading = false, isFail = false, isSuccess = true)
-                        articleAdapter.updateArticles(articleResult.news.articles)
+                        articleAdapter.updateArticles(articleResult.articles.articles)
                     }
                 }
             }

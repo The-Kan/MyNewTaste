@@ -1,10 +1,10 @@
 package com.devyd.network.models
 
 import com.devyd.data.models.ArticleDto
-import com.devyd.data.models.NewsDto
+import com.devyd.data.models.ArticlesDto
 import com.devyd.data.models.SourceDto
 
-data class NewsResponse(
+data class ArticlesResponse(
     val status: String,
     val totalResults: Int,
     val articles: List<ArticleResponse>
@@ -26,7 +26,7 @@ data class SourceResponse(
     val name: String
 )
 
-fun NewsResponse.toEntity(): NewsDto = NewsDto(
+fun ArticlesResponse.toEntity(): ArticlesDto = ArticlesDto(
     status         = status,
     totalResults   = totalResults,
     articleEntities = articles.map { it.toEntity() }

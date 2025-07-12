@@ -1,10 +1,10 @@
 package com.devyd.data.models
 
 import com.devyd.domain.models.Article
-import com.devyd.domain.models.News
+import com.devyd.domain.models.Articles
 import com.devyd.domain.models.Source
 
-data class NewsDto(
+data class ArticlesDto(
     val status: String,
     val totalResults: Int,
     val articleEntities: List<ArticleDto>
@@ -27,7 +27,7 @@ data class SourceDto(
 )
 
 
-fun NewsDto.toDomain(): News = News(
+fun ArticlesDto.toDomain(): Articles = Articles(
     status       = status,
     totalResults = totalResults,
     articles     = articleEntities.map { it.toDomain() }

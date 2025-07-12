@@ -1,6 +1,6 @@
 package com.devyd.domain.models
 
-data class News(
+data class Articles(
     val status: String,
     val totalResults: Int,
     val articles: List<Article>

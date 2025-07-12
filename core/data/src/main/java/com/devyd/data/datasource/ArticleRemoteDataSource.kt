@@ -1,7 +1,7 @@
 package com.devyd.data.datasource
 
-import com.devyd.data.models.NewsDto
+import com.devyd.data.models.ArticlesDto
 
 interface ArticleRemoteDataSource  {
-    suspend fun fetchNewsEntity(): NewsDto
+    suspend fun fetchNewsEntity(): ArticlesDto
 }
