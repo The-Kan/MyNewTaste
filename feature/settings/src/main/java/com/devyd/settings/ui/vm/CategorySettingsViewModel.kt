@@ -1,4 +1,4 @@
-package com.devyd.settings.vm
+package com.devyd.settings.ui.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

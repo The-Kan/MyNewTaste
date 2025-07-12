@@ -15,29 +15,36 @@
             android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="카테고리를 추가하고 저장해보세요! "
+            android:text="Try adding a category. \n It will be saved and applied automatically."
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:contentDescription="save_categories"
-            android:src="@drawable/outline_check_24"
-            app:layout_constraintBaseline_toBaselineOf="@id/text_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:tint="?attr/colorOnSurface" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_categories"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/progressLoading"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_categories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:visibility="gone" />
+
+
+    </FrameLayout>
+
 
 </LinearLayout>

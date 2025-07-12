@@ -1,4 +1,4 @@
-package com.devyd.settings.ui
+package com.devyd.settings.ui.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

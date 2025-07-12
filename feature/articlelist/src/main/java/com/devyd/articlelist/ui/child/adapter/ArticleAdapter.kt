@@ -1,4 +1,4 @@
-package com.devyd.articlelist.ui.child.recyclerview
+package com.devyd.articlelist.ui.child.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
