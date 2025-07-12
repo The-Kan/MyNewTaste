@@ -1,18 +1,20 @@
 package com.devyd.articlelist.ui.parent
 
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.devyd.common.util.LogUtil
-import com.devyd.common.util.logTag
 import com.devyd.articlelist.R
 import com.devyd.articlelist.databinding.FragmentArticlelistcontainerBinding
 import com.devyd.articlelist.ui.child.ChildFragmentStateAdapter
 import com.devyd.articlelist.ui.child.TapList
 import com.devyd.common.Constants
+import com.devyd.common.models.ArticleUiState
+import com.devyd.common.util.LogUtil
+import com.devyd.common.util.logTag
 import com.google.android.material.tabs.TabLayoutMediator
 
 class ArticleListContainerFragment : Fragment() {
@@ -74,8 +76,18 @@ class ArticleListContainerFragment : Fragment() {
             this.viewLifecycleOwner
         ) { requestKey, bundle ->
             if (requestKey == Constants.ARTICLE_CLICK) {
-                val articleId = bundle.getInt(Constants.ARTICLE_ID)
-                articleClickListener?.onArticleClicked(articleId)
+
+                var articleUiState: ArticleUiState? = null
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    articleUiState =
+                        bundle.getParcelable(Constants.ARTICLE, ArticleUiState::class.java)
+                } else {
+                    @Suppress("DEPRECATION")
+                    articleUiState = bundle.getParcelable(Constants.ARTICLE) as? ArticleUiState
+                }
+
+
+                articleClickListener?.onArticleClicked(articleUiState)
             }
         }
 
@@ -96,7 +108,7 @@ class ArticleListContainerFragment : Fragment() {
 }
 
 fun interface ArticleClickListener {
-    fun onArticleClicked(articleId: Int)
+    fun onArticleClicked(articleUiState: ArticleUiState?)
 }
 
 fun interface SettingClickListener {

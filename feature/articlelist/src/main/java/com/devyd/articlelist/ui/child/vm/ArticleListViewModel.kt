@@ -3,6 +3,7 @@ package com.devyd.articlelist.ui.child.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devyd.articlelist.models.ArticleResult
+import com.devyd.common.models.toUiSate
 import com.devyd.domain.usecase.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +28,7 @@ class ArticleListViewModel @Inject constructor(private val getArticleUseCase: Ge
 
             val result = runCatching { getArticleUseCase() }
                 .fold(
-                    onSuccess = { news -> ArticleResult.Success(news) },
+                    onSuccess = { news -> ArticleResult.Success(news.toUiSate()) },
                     onFailure = { err -> ArticleResult.Failure(err.message ?: "unknown error") })
 
             _articles.update { result }

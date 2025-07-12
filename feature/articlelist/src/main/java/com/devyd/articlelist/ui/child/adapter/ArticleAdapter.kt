@@ -6,25 +6,25 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.devyd.articlelist.databinding.ItemArticleBinding
-import com.devyd.domain.models.Article
+import com.devyd.common.models.ArticleUiState
 
 class ArticleAdapter(
-    private var articleList: List<Article>,
-    private val onClick: (Article) -> Unit
+    private var articleUiStateList: List<ArticleUiState>,
+    private val onClick: (ArticleUiState) -> Unit
 ) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
 
     inner class ArticleViewHolder(
         private val binding: ItemArticleBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(article: Article) {
-            binding.title.text = article.title
+        fun bind(articleUiState: ArticleUiState) {
+            binding.title.text = articleUiState.title
             // 예시: Glide 등을 이용해 실제 URL 로드 가능
             Glide.with(binding.thumbnail.context)
-                .load(article.urlToImage)
+                .load(articleUiState.urlToImage)
                 .centerCrop()
                 .into(binding.thumbnail)
 
-            binding.root.setOnClickListener { onClick(article) }
+            binding.root.setOnClickListener { onClick(articleUiState) }
         }
     }
 
@@ -38,14 +38,14 @@ class ArticleAdapter(
     }
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
-        holder.bind(articleList[position])
+        holder.bind(articleUiStateList[position])
     }
 
-    override fun getItemCount(): Int = articleList.size
+    override fun getItemCount(): Int = articleUiStateList.size
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateArticles(articleList: List<Article>) {
-        this.articleList = articleList
+    fun updateArticlesUiState(articleUiStateList: List<ArticleUiState>) {
+        this.articleUiStateList = articleUiStateList
         notifyDataSetChanged()
     }
 }

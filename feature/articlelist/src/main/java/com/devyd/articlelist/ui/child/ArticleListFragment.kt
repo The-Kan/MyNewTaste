@@ -43,8 +43,8 @@ class ArticleListFragment : Fragment() {
             LogUtil.i(logTag(), "article refresh")
 
         }
-        val articleAdapter = ArticleAdapter(emptyList()) { article ->
-            val dataBundle = bundleOf(Constants.ARTICLE_ID to article.title)
+        val articleAdapter = ArticleAdapter(emptyList()) { articleUiState ->
+            val dataBundle = bundleOf(Constants.ARTICLE to articleUiState)
             parentFragmentManager.setFragmentResult(Constants.ARTICLE_CLICK, dataBundle)
         }
 
@@ -76,7 +76,7 @@ class ArticleListFragment : Fragment() {
 
                     is ArticleResult.Success -> {
                         renderState(isLoading = false, isFail = false, isSuccess = true)
-                        articleAdapter.updateArticles(articleResult.articles.articles)
+                        articleAdapter.updateArticlesUiState(articleResult.articlesUiState.articleUiState)
                     }
                 }
             }

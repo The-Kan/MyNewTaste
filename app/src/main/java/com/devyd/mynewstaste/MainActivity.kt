@@ -8,10 +8,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.devyd.common.util.LogUtil
-import com.devyd.common.util.logTag
 import com.devyd.articlelist.ui.parent.ArticleListContainerFragment
 import com.devyd.common.Constants
+import com.devyd.common.util.LogUtil
+import com.devyd.common.util.logTag
 import com.devyd.mynewstaste.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         val navController: NavController = navHost.navController
 
         navController.addOnDestinationChangedListener { controller, destination, _ ->
-            if(destination.id == R.id.articleListContainerFragment){
+            if (destination.id == R.id.articleListContainerFragment) {
                 val articleListContainerFragment = navHost
                     .childFragmentManager
                     .fragments
@@ -46,8 +46,8 @@ class MainActivity : AppCompatActivity() {
                     .firstOrNull()
 
                 articleListContainerFragment?.apply {
-                    setArticleClickListener { id ->
-                        val args = bundleOf(Constants.ARTICLE_ID to id)
+                    setArticleClickListener { articleUiState ->
+                        val args = bundleOf(Constants.ARTICLE to articleUiState)
                         navController.navigate(
                             R.id.articleDetailFragment,
                             args
