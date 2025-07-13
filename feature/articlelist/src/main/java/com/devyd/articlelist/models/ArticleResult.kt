@@ -1,7 +1,5 @@
 package com.devyd.articlelist.models
 
-import com.devyd.common.models.ArticlesUiState
-
 sealed class ArticleResult {
     object Idle : ArticleResult()
     data class Loading(val isSwipeLoading: Boolean) : ArticleResult()

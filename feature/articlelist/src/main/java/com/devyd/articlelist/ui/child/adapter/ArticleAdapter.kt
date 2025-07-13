@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.devyd.articlelist.R
 import com.devyd.articlelist.databinding.ItemArticleBinding
-import com.devyd.common.models.ArticleUiState
+import com.devyd.articlelist.models.ArticleUiState
 
 class ArticleAdapter(
     private var articleUiStateList: List<ArticleUiState>,

@@ -1,4 +1,4 @@
-package com.devyd.common.models
+package com.devyd.articlelist.models
 
 import android.os.Parcelable
 import com.devyd.domain.models.Article
@@ -33,14 +33,14 @@ data class SourceUiState(
 ) : Parcelable
 
 
-fun Articles.toUiSate(): ArticlesUiState = ArticlesUiState(
+fun Articles.toUiState(): ArticlesUiState = ArticlesUiState(
     status = status,
     totalResults = totalResults,
-    articleUiState = articles.map { it.toUiSate() }.filter { !it.urlToImage.isNullOrEmpty() }
+    articleUiState = articles.map { it.toUiState() }.filter { !it.urlToImage.isNullOrEmpty() }
 )
 
-fun Article.toUiSate(): ArticleUiState = ArticleUiState(
-    sourceUiState = source.toUiSate(),
+fun Article.toUiState(): ArticleUiState = ArticleUiState(
+    sourceUiState = source.toUiState(),
     author = author,
     title = title,
     description = description,
@@ -50,7 +50,7 @@ fun Article.toUiSate(): ArticleUiState = ArticleUiState(
     content = content
 )
 
-fun Source.toUiSate(): SourceUiState = SourceUiState(
+fun Source.toUiState(): SourceUiState = SourceUiState(
     id = id,
     name = name
 )

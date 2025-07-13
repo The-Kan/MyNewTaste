@@ -27,6 +27,11 @@ class ArticleListFragment(private val category: String) : Fragment() {
 
     private val viewModel: ArticleListViewModel by viewModels<ArticleListViewModel>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.initParams(category)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,7 +43,6 @@ class ArticleListFragment(private val category: String) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.initParams(category)
 
         binding.swipeRefreshLayout.setOnRefreshListener  {
             viewModel.refreshArticle(true, category)

@@ -13,6 +13,7 @@ import com.devyd.common.Constants
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.mynewstaste.databinding.ActivityMainBinding
+import com.devyd.mynewstaste.mapper.toUiState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -47,7 +48,10 @@ class MainActivity : AppCompatActivity() {
 
                 articleListContainerFragment?.apply {
                     setArticleClickListener { articleUiState ->
-                        val args = bundleOf(Constants.ARTICLE to articleUiState)
+
+                        val detailArticleUiState = articleUiState?.toUiState()
+
+                        val args = bundleOf(Constants.ARTICLE to detailArticleUiState)
                         navController.navigate(
                             R.id.articleDetailFragment,
                             args
