@@ -20,12 +20,26 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ArticleListFragment(private val category: String) : Fragment() {
+class ArticleListFragment : Fragment() {
 
     private var _binding: FragmentArticlelistBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: ArticleListViewModel by viewModels<ArticleListViewModel>()
+
+    private val category: String by lazy {
+        arguments?.getString(CATEGORY) ?: "default"
+    }
+
+    companion object {
+        fun newInstance(category: String): ArticleListFragment {
+            return ArticleListFragment().apply {
+                arguments = bundleOf(CATEGORY to category)
+            }
+        }
+
+        private const val CATEGORY = "category"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,7 +107,7 @@ class ArticleListFragment(private val category: String) : Fragment() {
     private fun renderState(isLoading: Boolean, isFail: Boolean, isSuccess: Boolean) {
         binding.progressLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
         binding.btnRetry.visibility = if (isFail) View.VISIBLE else View.GONE
-        binding.rvArticles.visibility = if (isSuccess) View.VISIBLE else View.GONE
+        binding.swipeRefreshLayout.visibility = if (isSuccess) View.VISIBLE else View.GONE
     }
 
     override fun onDestroyView() {

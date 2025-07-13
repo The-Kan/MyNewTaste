@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.devyd.articlelist.ui.child.TapList.titles
 import com.devyd.common.CategoryStrings
-import com.devyd.common.util.LogUtil
-import com.devyd.common.util.logTag
 import java.util.Locale
 
 class ChildFragmentStateAdapter(private val fragment: Fragment) : FragmentStateAdapter(fragment) {
@@ -18,9 +16,9 @@ class ChildFragmentStateAdapter(private val fragment: Fragment) : FragmentStateA
 
     override fun createFragment(position: Int): Fragment {
         val string = fragment.requireContext().getEnglishString(titles[position])
-        if(CategoryStrings.contains(string)) return ArticleListFragment(string)
+        if (CategoryStrings.contains(string)) return ArticleListFragment.newInstance(string)
 
-        return ArticleListFragment(CategoryStrings.BUSINESS)
+        return ArticleListFragment.newInstance(CategoryStrings.BUSINESS)
     }
 
     private fun Context.getEnglishString(@StringRes resId: Int): String {
