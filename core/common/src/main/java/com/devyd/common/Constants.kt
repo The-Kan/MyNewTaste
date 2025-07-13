@@ -5,12 +5,12 @@ object Constants {
     const val ARTICLE = "ARTICLE"
 
     val NEWS_API_TOP_HEADLINES_CATEGORY_LIST = listOf(
-        "business",
-        "entertainment",
-        "general",
-        "health",
-        "science",
-        "sports",
-        "technology"
+        R.string.category_1,
+        R.string.category_2,
+        R.string.category_3,
+        R.string.category_4,
+        R.string.category_5,
+        R.string.category_6,
+        R.string.category_7
     )
 }

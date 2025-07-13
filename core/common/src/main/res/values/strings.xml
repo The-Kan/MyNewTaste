@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category_1">비즈니스</string>
+    <string name="category_2">엔터테인먼트</string>
+    <string name="category_3">일반</string>
+    <string name="category_4">건강</string>
+    <string name="category_5">과학</string>
+    <string name="category_6">스포츠</string>
+    <string name="category_7">기술</string>
+</resources>

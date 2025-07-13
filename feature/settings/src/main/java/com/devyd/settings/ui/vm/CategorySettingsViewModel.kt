@@ -69,12 +69,12 @@ class CategorySettingsViewModel @Inject constructor(
         _addCategoryPossible.value = list.size < categories.size
     }
 
-    fun addSelection() {
+    fun addSelection(category: String) {
         viewModelScope.launch {
             val result = kotlin.runCatching {
                 withContext(Dispatchers.IO) {
                     val newItem =
-                        CategoryWeight(categoryId.getAndIncrement(), categories.first(), 0)
+                        CategoryWeight(categoryId.getAndIncrement(), category, 0)
                     addCategoryWeightUseCase(newItem)
                     getCategoryWeightsUseCase()
                 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category_1">business</string>
+    <string name="category_2">entertainment</string>
+    <string name="category_3">general</string>
+    <string name="category_4">health</string>
+    <string name="category_5">science</string>
+    <string name="category_6">sports</string>
+    <string name="category_7">technology</string>
+</resources>

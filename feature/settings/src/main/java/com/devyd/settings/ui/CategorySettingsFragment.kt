@@ -44,7 +44,7 @@ class CategorySettingsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         categoryAdapter = CategoryAdapter(
-            categories = viewModel.categories,
+            categories = viewModel.categories.map { getString(it) },
             onModify = { id: Int, category: String, weight: Int ->
                 viewModel.updateSelection(id, category, weight)
             },
@@ -55,7 +55,7 @@ class CategorySettingsFragment : Fragment() {
 
         footerAdapter = FooterAdapter {
             if (viewModel.addCategoryPossible.value) {
-                viewModel.addSelection()
+                viewModel.addSelection(getString(viewModel.categories.first()))
             } else {
                 Toast.makeText(context, "No more categories can be created.", Toast.LENGTH_SHORT)
                     .show()
