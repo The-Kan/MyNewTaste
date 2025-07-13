@@ -58,10 +58,37 @@
                 android:textColor="@android:color/black" />
 
             <TextView
-                android:id="@+id/articleContent"
+                android:id="@+id/articlePublishedAt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/articleAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/articleSourceName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textSize="12sp"
+                android:lineSpacingExtra="4dp"
+                android:textColor="@android:color/darker_gray" />
+
+            <TextView
+                android:id="@+id/articleContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:textSize="16sp"
                 android:lineSpacingExtra="4dp"
                 android:textColor="@android:color/black" />
@@ -75,44 +102,10 @@
                 android:textColorLink="@android:color/holo_purple"
                 android:text="read more" />
 
-            <TextView
-                android:id="@+id/articleAuthor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                android:lineSpacingExtra="4dp"
-                android:textColor="@android:color/black" />
+
 
             <TextView
                 android:id="@+id/articleDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                android:lineSpacingExtra="4dp"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/articlePublishedAt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                android:lineSpacingExtra="4dp"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/articleSourceId"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textSize="16sp"
-                android:lineSpacingExtra="4dp"
-                android:textColor="@android:color/black" />
-
-            <TextView
-                android:id="@+id/articleSourceName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

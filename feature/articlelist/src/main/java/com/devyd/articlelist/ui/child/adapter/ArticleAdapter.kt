@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.devyd.articlelist.R
 import com.devyd.articlelist.databinding.ItemArticleBinding
 import com.devyd.common.models.ArticleUiState
 
@@ -22,6 +23,7 @@ class ArticleAdapter(
             Glide.with(binding.thumbnail.context)
                 .load(articleUiState.urlToImage)
                 .centerCrop()
+                .error(R.drawable.landscape_1)
                 .into(binding.thumbnail)
 
             binding.root.setOnClickListener { onClick(articleUiState) }

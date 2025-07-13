@@ -36,7 +36,7 @@ data class SourceUiState(
 fun Articles.toUiSate(): ArticlesUiState = ArticlesUiState(
     status = status,
     totalResults = totalResults,
-    articleUiState = articles.map { it.toUiSate() }
+    articleUiState = articles.map { it.toUiSate() }.filter { !it.urlToImage.isNullOrEmpty() }
 )
 
 fun Article.toUiSate(): ArticleUiState = ArticleUiState(

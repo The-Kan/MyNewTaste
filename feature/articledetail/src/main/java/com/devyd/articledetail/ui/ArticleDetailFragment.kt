@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.devyd.articledetail.R
 import com.devyd.articledetail.databinding.FragmentArticledetailBinding
 import com.devyd.common.Constants
 import com.devyd.common.models.ArticleUiState
@@ -46,28 +47,29 @@ class ArticleDetailFragment : Fragment() {
 
 
         binding.apply {
-            Glide.with(headerImage.context)
-                .load(articleUiState?.urlToImage)
-                .centerCrop()
-                .into(headerImage)
+            articleUiState?.also {
+                Glide.with(headerImage.context)
+                    .load(it.urlToImage)
+                    .centerCrop()
+                    .into(headerImage)
 
-            articleTitle.text = articleUiState?.title
-            articleContent.text = articleUiState?.content
+                articlePublishedAt.text = getString(R.string.published_at, it.publishedAt)
+                articleAuthor.text = getString(R.string.author, it.author)
+                articleSourceName.text = getString(R.string.from, it.sourceUiState.name)
 
-            articleAuthor.text = articleUiState?.author
-            articleDescription.text = articleUiState?.description
-            articlePublishedAt.text = articleUiState?.publishedAt
+                articleTitle.text = it.title
+                articleContent.text = it.content
 
-            articleSourceId.text = articleUiState?.sourceUiState?.id
-            articleSourceName.text = articleUiState?.sourceUiState?.name
+                articleDescription.text = it.description
 
-            val html = "<a href=\"${articleUiState?.url}\">read more</a>"
-            val spanned = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
+                val html = "<a href=\"${articleUiState?.url}\">read more</a>"
+                val spanned = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
-            binding.articleUrl.apply {
-                text = spanned
-                linksClickable = true
-                movementMethod = LinkMovementMethod.getInstance()
+                this.articleUrl.apply {
+                    text = spanned
+                    linksClickable = true
+                    movementMethod = LinkMovementMethod.getInstance()
+                }
             }
         }
     }
