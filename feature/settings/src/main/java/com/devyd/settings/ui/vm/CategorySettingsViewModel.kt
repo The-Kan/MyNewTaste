@@ -41,6 +41,7 @@ class CategorySettingsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
+            _categoryWeights.value = CategoryWeightResult.Loading
 
             val result = kotlin.runCatching {
                 withContext(Dispatchers.IO) {

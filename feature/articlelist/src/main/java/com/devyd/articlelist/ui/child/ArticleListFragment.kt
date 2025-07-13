@@ -39,15 +39,14 @@ class ArticleListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.refreshArticle.setOnClickListener {
-            LogUtil.i(logTag(), "article refresh")
-
+        binding.swipeRefreshLayout.setOnRefreshListener  {
+            viewModel.refreshArticle(true)
         }
+
         val articleAdapter = ArticleAdapter(emptyList()) { articleUiState ->
             val dataBundle = bundleOf(Constants.ARTICLE to articleUiState)
             parentFragmentManager.setFragmentResult(Constants.ARTICLE_CLICK, dataBundle)
         }
-
 
         binding.rvArticles.apply {
             layoutManager = GridLayoutManager(requireContext(), 1)
@@ -55,27 +54,30 @@ class ArticleListFragment : Fragment() {
         }
 
         binding.btnRetry.setOnClickListener {
-            viewModel.refreshArticle()
+            viewModel.refreshArticle(false)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.article.collect { articleResult ->
                 when (articleResult) {
                     ArticleResult.Idle -> {
+                        binding.swipeRefreshLayout.isRefreshing = false
                         renderState(isLoading = false, isFail = false, isSuccess = false)
                     }
 
-                    ArticleResult.Loading -> {
-                        renderState(isLoading = true, isFail = false, isSuccess = false)
+                    is ArticleResult.Loading -> {
+                        renderState(isLoading = !articleResult.isSwipeLoading, isFail = false, isSuccess = false)
                     }
 
                     is ArticleResult.Failure -> {
-                        renderState(isLoading = false, isFail = true, isSuccess = false)
                         LogUtil.e(logTag(), articleResult.error)
+                        binding.swipeRefreshLayout.isRefreshing = false
+                        renderState(isLoading = false, isFail = true, isSuccess = false)
                     }
 
                     is ArticleResult.Success -> {
                         articleAdapter.updateArticlesUiState(articleResult.articlesUiState.articleUiState)
+                        binding.swipeRefreshLayout.isRefreshing = false
                         renderState(isLoading = false, isFail = false, isSuccess = true)
                     }
                 }

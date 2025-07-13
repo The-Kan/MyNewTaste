@@ -19,12 +19,12 @@ class ArticleListViewModel @Inject constructor(private val getArticleUseCase: Ge
     val article = _articles.asStateFlow()
 
     init {
-        refreshArticle()
+        refreshArticle(false)
     }
 
-    fun refreshArticle() {
+    fun refreshArticle(isSwipeRefresh: Boolean) {
         viewModelScope.launch {
-            _articles.update { ArticleResult.Loading }
+            _articles.update { ArticleResult.Loading(isSwipeRefresh) }
 
             val result = runCatching { getArticleUseCase() }
                 .fold(

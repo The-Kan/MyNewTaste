@@ -60,4 +60,6 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     implementation(libs.glide)
+
+    implementation(libs.androidx.swiperefreshlayouth)
 }
