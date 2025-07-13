@@ -6,4 +6,6 @@
     <string name="tab_economy">Economy</string>
     <string name="tab_favorites">Favorites</string>
     <string name="top_toolbar_title">Custom Your Taste</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
 </resources>

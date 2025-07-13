@@ -5,10 +5,10 @@
     tools:ignore="ExtraText">
     <item
         android:id="@+id/action_search"
-        android:title="검색"
+        android:title="@string/search"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_settings"
-        android:title="설정"
+        android:title="@string/settings"
         app:showAsAction="never" />
 </menu>
