@@ -2,8 +2,6 @@
 <resources>
     <string name="tab_home">MyNewsTaste</string>
     <string name="tab_all">All News</string>
-    <string name="tab_society">Society</string>
-    <string name="tab_economy">Economy</string>
     <string name="tab_favorites">Favorites</string>
     <string name="top_toolbar_title">Custom Your Taste</string>
     <string name="search">Search</string>

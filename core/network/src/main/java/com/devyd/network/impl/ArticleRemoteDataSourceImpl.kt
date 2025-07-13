@@ -9,8 +9,8 @@ import com.devyd.network.retrofit.RetrofitClient
 import java.io.IOException
 
 class ArticleRemoteDataSourceImpl : ArticleRemoteDataSource {
-    override suspend fun fetchNewsEntity(): ArticlesDto {
-        val response = RetrofitClient.api.getBusinessHeadlines()
+    override suspend fun fetchNewsEntity(category: String): ArticlesDto {
+        val response = RetrofitClient.api.getBusinessHeadlines(category = category)
 
         if (!response.isSuccessful) {
             LogUtil.e(logTag(), "${response.code()}")

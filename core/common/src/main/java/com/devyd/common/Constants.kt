@@ -14,3 +14,22 @@ object Constants {
         R.string.category_7
     )
 }
+
+object CategoryStrings {
+    const val BUSINESS = "business"
+    const val ENTERTAINMENT = "entertainment"
+    const val GENERAL = "general"
+    const val HEALTH = "health"
+    const val SCIENCE = "science"
+    const val SPORTS = "sports"
+    const val TECHNOLOGY = "technology"
+    const val UNKNOWN = "unknown"
+
+    private val validValues = setOf(
+        BUSINESS, ENTERTAINMENT, GENERAL, HEALTH, SCIENCE, SPORTS, TECHNOLOGY
+    )
+
+    fun contains(value: String): Boolean {
+        return value in validValues
+    }
+}

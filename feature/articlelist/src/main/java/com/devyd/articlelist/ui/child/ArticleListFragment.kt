@@ -20,7 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ArticleListFragment : Fragment() {
+class ArticleListFragment(private val category: String) : Fragment() {
 
     private var _binding: FragmentArticlelistBinding? = null
     private val binding get() = _binding!!
@@ -38,9 +38,10 @@ class ArticleListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.initParams(category)
 
         binding.swipeRefreshLayout.setOnRefreshListener  {
-            viewModel.refreshArticle(true)
+            viewModel.refreshArticle(true, category)
         }
 
         val articleAdapter = ArticleAdapter(emptyList()) { articleUiState ->
@@ -54,7 +55,7 @@ class ArticleListFragment : Fragment() {
         }
 
         binding.btnRetry.setOnClickListener {
-            viewModel.refreshArticle(false)
+            viewModel.refreshArticle(false, category)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {

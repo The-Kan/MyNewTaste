@@ -1,15 +1,34 @@
 package com.devyd.articlelist.ui.child
 
+import android.content.Context
+import android.content.res.Configuration
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.devyd.articlelist.ui.child.TapList.titles
+import com.devyd.common.CategoryStrings
+import com.devyd.common.util.LogUtil
+import com.devyd.common.util.logTag
+import java.util.Locale
 
-class ChildFragmentStateAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class ChildFragmentStateAdapter(private val fragment: Fragment) : FragmentStateAdapter(fragment) {
 
 
-    override fun getItemCount(): Int = TapList.titles.size
+    override fun getItemCount(): Int = titles.size
 
     override fun createFragment(position: Int): Fragment {
-        return ArticleListFragment()
+        val string = fragment.requireContext().getEnglishString(titles[position])
+        if(CategoryStrings.contains(string)) return ArticleListFragment(string)
+
+        return ArticleListFragment(CategoryStrings.BUSINESS)
+    }
+
+    private fun Context.getEnglishString(@StringRes resId: Int): String {
+        val config = Configuration(resources.configuration).apply {
+            setLocale(Locale.ENGLISH)
+        }
+        val englishContext = createConfigurationContext(config)
+        return englishContext.resources.getString(resId)
     }
 }
 

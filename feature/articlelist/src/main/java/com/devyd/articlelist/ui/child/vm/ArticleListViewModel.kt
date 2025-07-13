@@ -18,15 +18,15 @@ class ArticleListViewModel @Inject constructor(private val getArticleUseCase: Ge
     private val _articles = MutableStateFlow<ArticleResult>(ArticleResult.Idle)
     val article = _articles.asStateFlow()
 
-    init {
-        refreshArticle(false)
+    fun initParams(category: String) {
+        refreshArticle(false, category)
     }
 
-    fun refreshArticle(isSwipeRefresh: Boolean) {
+    fun refreshArticle(isSwipeRefresh: Boolean, category: String) {
         viewModelScope.launch {
             _articles.update { ArticleResult.Loading(isSwipeRefresh) }
 
-            val result = runCatching { getArticleUseCase() }
+            val result = runCatching { getArticleUseCase(category) }
                 .fold(
                     onSuccess = { news -> ArticleResult.Success(news.toUiSate()) },
                     onFailure = { err -> ArticleResult.Failure(err.message ?: "unknown error") })
