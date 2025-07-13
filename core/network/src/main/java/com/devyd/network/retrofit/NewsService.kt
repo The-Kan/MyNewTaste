@@ -11,7 +11,8 @@ interface NewsService {
     suspend fun getBusinessHeadlines(
         @Query("country") country: String = "us",
         @Query("category") category: String = "business",
-        @Query("apiKey") apiKey: String = "5a560d99ec304137978ecc18f3ececad"
+       // @Query("apiKey") apiKey: String = "5a560d99ec304137978ecc18f3ececad"
+        @Query("apiKey") apiKey: String = "1e1efe3e63de48b197d0fada9d5fd0a4"
     ): Response<ArticlesResponse>
 }
 
