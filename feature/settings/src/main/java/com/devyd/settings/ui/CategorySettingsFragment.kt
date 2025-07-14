@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.devyd.common.CategoryStrings
 import com.devyd.settings.databinding.FragmentCategorySettingsBinding
 import com.devyd.settings.models.CategoryWeightResult
 import com.devyd.settings.ui.adapter.CategoryAdapter
@@ -55,7 +56,7 @@ class CategorySettingsFragment : Fragment() {
 
         footerAdapter = FooterAdapter {
             if (viewModel.addCategoryPossible.value) {
-                viewModel.addSelection(getString(viewModel.categories.first()))
+                viewModel.addSelection(CategoryStrings.validValues.first())
             } else {
                 Toast.makeText(context, "No more categories can be created.", Toast.LENGTH_SHORT)
                     .show()

@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.devyd.common.CategoryStrings
+import com.devyd.common.Constants.NEWS_API_TOP_HEADLINES_CATEGORY_LIST
 import com.devyd.domain.models.CategoryWeight
 import com.devyd.settings.common.setWidthByLongestItem
 import com.devyd.settings.databinding.ItemCategorySliderBinding
@@ -42,12 +44,15 @@ class CategoryAdapter(
 
             actvCategory.setAdapter(dropdownAdapter)
             actvCategory.setWidthByLongestItem(categories)
-            actvCategory.setText(categoryWeight.category, false)
+            actvCategory.setText(getCategorySystemName(categoryWeight.category), false)
 
 
             actvCategory.setOnItemClickListener { parent, _, position, _ ->
-                val selected = parent.getItemAtPosition(position) as String
-                onModify(categoryWeight.id, selected, categoryWeight.weight)
+                onModify(
+                    categoryWeight.id,
+                    CategoryStrings.validValues[position],
+                    categoryWeight.weight
+                )
             }
 
             slider.value = categoryWeight.weight.toFloat()
@@ -68,6 +73,11 @@ class CategoryAdapter(
             btnDelete.setOnClickListener {
                 onDelete(categoryWeight)
             }
+        }
+
+        private fun getCategorySystemName(categoryFromLocal: String): String {
+            val categoryPosition = CategoryStrings.validValues.indexOf(categoryFromLocal)
+            return NEWS_API_TOP_HEADLINES_CATEGORY_LIST.map { itemView.context.getString(it) }[categoryPosition]
         }
     }
 
