@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import com.devyd.articlelist.databinding.FragmentArticlelistBinding
+import com.devyd.articlelist.databinding.FragmentCategoryArticlelistBinding
 import com.devyd.articlelist.models.ArticleResult
 import com.devyd.articlelist.ui.child.category.adapter.CategoryArticleAdapter
 import com.devyd.articlelist.ui.child.category.vm.CategoryArticleListViewModel
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class CategoryArticleListFragment : Fragment() {
 
-    private var _binding: FragmentArticlelistBinding? = null
+    private var _binding: FragmentCategoryArticlelistBinding? = null
     private val binding get() = _binding!!
 
     private val viewModel: CategoryArticleListViewModel by viewModels<CategoryArticleListViewModel>()
@@ -51,7 +51,7 @@ class CategoryArticleListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentArticlelistBinding.inflate(inflater, container, false)
+        _binding = FragmentCategoryArticlelistBinding.inflate(inflater, container, false)
         return binding.root
     }
 
