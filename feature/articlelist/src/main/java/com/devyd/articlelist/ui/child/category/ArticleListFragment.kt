@@ -1,4 +1,4 @@
-package com.devyd.articlelist.ui.child
+package com.devyd.articlelist.ui.child.category
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.devyd.articlelist.databinding.FragmentArticlelistBinding
 import com.devyd.articlelist.models.ArticleResult
-import com.devyd.articlelist.ui.child.adapter.ArticleAdapter
-import com.devyd.articlelist.ui.child.vm.ArticleListViewModel
+import com.devyd.articlelist.ui.child.category.adapter.ArticleAdapter
+import com.devyd.articlelist.ui.child.category.vm.ArticleListViewModel
 import com.devyd.common.Constants
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag

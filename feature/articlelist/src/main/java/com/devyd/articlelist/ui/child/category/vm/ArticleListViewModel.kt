@@ -1,4 +1,4 @@
-package com.devyd.articlelist.ui.child.vm
+package com.devyd.articlelist.ui.child.category.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

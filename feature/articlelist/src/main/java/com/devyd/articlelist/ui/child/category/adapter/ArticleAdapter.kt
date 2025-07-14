@@ -1,4 +1,4 @@
-package com.devyd.articlelist.ui.child.adapter
+package com.devyd.articlelist.ui.child.category.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

@@ -6,6 +6,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.devyd.articlelist.ui.child.TapList.titles
+import com.devyd.articlelist.ui.child.category.ArticleListFragment
 import com.devyd.common.CategoryStrings
 import java.util.Locale
 
