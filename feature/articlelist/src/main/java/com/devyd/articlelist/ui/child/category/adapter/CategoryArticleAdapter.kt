@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.devyd.articlelist.R
-import com.devyd.articlelist.databinding.ItemArticleBinding
+import com.devyd.articlelist.databinding.CategoryArticleBinding
 import com.devyd.articlelist.models.ArticleUiState
 
 class CategoryArticleAdapter(
@@ -15,7 +15,7 @@ class CategoryArticleAdapter(
 ) : RecyclerView.Adapter<CategoryArticleAdapter.ArticleViewHolder>() {
 
     inner class ArticleViewHolder(
-        private val binding: ItemArticleBinding
+        private val binding: CategoryArticleBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(articleUiState: ArticleUiState) {
             binding.title.text = articleUiState.title
@@ -31,7 +31,7 @@ class CategoryArticleAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        val binding = ItemArticleBinding.inflate(
+        val binding = CategoryArticleBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
