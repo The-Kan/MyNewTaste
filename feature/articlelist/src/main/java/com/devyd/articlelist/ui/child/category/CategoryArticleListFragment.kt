@@ -11,8 +11,8 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.devyd.articlelist.databinding.FragmentArticlelistBinding
 import com.devyd.articlelist.models.ArticleResult
-import com.devyd.articlelist.ui.child.category.adapter.ArticleAdapter
-import com.devyd.articlelist.ui.child.category.vm.ArticleListViewModel
+import com.devyd.articlelist.ui.child.category.adapter.CategoryArticleAdapter
+import com.devyd.articlelist.ui.child.category.vm.CategoryArticleListViewModel
 import com.devyd.common.Constants
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
@@ -20,20 +20,20 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class ArticleListFragment : Fragment() {
+class CategoryArticleListFragment : Fragment() {
 
     private var _binding: FragmentArticlelistBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ArticleListViewModel by viewModels<ArticleListViewModel>()
+    private val viewModel: CategoryArticleListViewModel by viewModels<CategoryArticleListViewModel>()
 
     private val category: String by lazy {
         arguments?.getString(CATEGORY) ?: "default"
     }
 
     companion object {
-        fun newInstance(category: String): ArticleListFragment {
-            return ArticleListFragment().apply {
+        fun newInstance(category: String): CategoryArticleListFragment {
+            return CategoryArticleListFragment().apply {
                 arguments = bundleOf(CATEGORY to category)
             }
         }
@@ -62,14 +62,14 @@ class ArticleListFragment : Fragment() {
             viewModel.refreshArticle(true, category)
         }
 
-        val articleAdapter = ArticleAdapter(emptyList()) { articleUiState ->
+        val categoryArticleAdapter = CategoryArticleAdapter(emptyList()) { articleUiState ->
             val dataBundle = bundleOf(Constants.ARTICLE to articleUiState)
             parentFragmentManager.setFragmentResult(Constants.ARTICLE_CLICK, dataBundle)
         }
 
         binding.rvArticles.apply {
             layoutManager = GridLayoutManager(requireContext(), 1)
-            adapter = articleAdapter
+            adapter = categoryArticleAdapter
         }
 
         binding.btnRetry.setOnClickListener {
@@ -95,7 +95,7 @@ class ArticleListFragment : Fragment() {
                     }
 
                     is ArticleResult.Success -> {
-                        articleAdapter.updateArticlesUiState(articleResult.articlesUiState.articleUiState)
+                        categoryArticleAdapter.updateArticlesUiState(articleResult.articlesUiState.articleUiState)
                         binding.swipeRefreshLayout.isRefreshing = false
                         renderState(isLoading = false, isFail = false, isSuccess = true)
                     }

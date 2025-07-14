@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ArticleListViewModel @Inject constructor(private val getArticleUseCase: GetArticleUseCase) :
+class CategoryArticleListViewModel @Inject constructor(private val getArticleUseCase: GetArticleUseCase) :
     ViewModel() {
     private val _articles = MutableStateFlow<ArticleResult>(ArticleResult.Idle)
     val article = _articles.asStateFlow()

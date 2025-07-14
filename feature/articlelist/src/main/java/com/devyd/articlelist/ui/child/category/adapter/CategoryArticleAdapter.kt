@@ -9,10 +9,10 @@ import com.devyd.articlelist.R
 import com.devyd.articlelist.databinding.ItemArticleBinding
 import com.devyd.articlelist.models.ArticleUiState
 
-class ArticleAdapter(
+class CategoryArticleAdapter(
     private var articleUiStateList: List<ArticleUiState>,
     private val onClick: (ArticleUiState) -> Unit
-) : RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder>() {
+) : RecyclerView.Adapter<CategoryArticleAdapter.ArticleViewHolder>() {
 
     inner class ArticleViewHolder(
         private val binding: ItemArticleBinding
