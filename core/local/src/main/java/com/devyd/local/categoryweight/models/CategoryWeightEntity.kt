@@ -1,4 +1,4 @@
-package com.devyd.local.models
+package com.devyd.local.categoryweight.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

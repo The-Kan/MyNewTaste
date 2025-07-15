@@ -1,10 +1,10 @@
-package com.devyd.local.impl
+package com.devyd.local.categoryweight.impl
 
 import com.devyd.data.datasource.CategoryWeightLocalDataSource
 import com.devyd.data.models.CategoryWeightDto
-import com.devyd.local.dao.CategoryWeightDao
-import com.devyd.local.models.toDto
-import com.devyd.local.models.toEntity
+import com.devyd.local.categoryweight.dao.CategoryWeightDao
+import com.devyd.local.categoryweight.models.toDto
+import com.devyd.local.categoryweight.models.toEntity
 import javax.inject.Inject
 
 class RoomCategoryWeightLocalDataSource @Inject constructor(

@@ -1,11 +1,11 @@
-package com.devyd.local.dao
+package com.devyd.local.categoryweight.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.devyd.local.models.CategoryWeightEntity
+import com.devyd.local.categoryweight.models.CategoryWeightEntity
 
 @Dao
 interface CategoryWeightDao {

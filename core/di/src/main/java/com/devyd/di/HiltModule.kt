@@ -8,9 +8,9 @@ import com.devyd.data.repositoryimpl.ArticleRepositoryImpl
 import com.devyd.data.repositoryimpl.categoryweight.DBCategoryWeightRepository
 import com.devyd.domain.repository.ArticleRepository
 import com.devyd.domain.repository.CategoryWeightRepository
-import com.devyd.local.dao.CategoryWeightDao
-import com.devyd.local.database.CategoryWeightDatabase
-import com.devyd.local.impl.RoomCategoryWeightLocalDataSource
+import com.devyd.local.categoryweight.dao.CategoryWeightDao
+import com.devyd.local.categoryweight.database.CategoryWeightDatabase
+import com.devyd.local.categoryweight.impl.RoomCategoryWeightLocalDataSource
 import com.devyd.network.impl.ArticleRemoteDataSourceImpl
 import dagger.Module
 import dagger.Provides

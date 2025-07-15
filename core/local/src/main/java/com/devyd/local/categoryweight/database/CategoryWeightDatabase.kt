@@ -1,9 +1,9 @@
-package com.devyd.local.database
+package com.devyd.local.categoryweight.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.devyd.local.dao.CategoryWeightDao
-import com.devyd.local.models.CategoryWeightEntity
+import com.devyd.local.categoryweight.dao.CategoryWeightDao
+import com.devyd.local.categoryweight.models.CategoryWeightEntity
 
 @Database(
     entities = [CategoryWeightEntity::class],
