@@ -25,7 +25,7 @@ object CategoryStrings {
     const val TECHNOLOGY = "technology"
     const val UNKNOWN = "unknown"
 
-    private val validValues = setOf(
+    val validValues = listOf(
         BUSINESS, ENTERTAINMENT, GENERAL, HEALTH, SCIENCE, SPORTS, TECHNOLOGY
     )
 

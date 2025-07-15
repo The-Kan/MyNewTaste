@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devyd.common.CategoryStrings
 import com.devyd.settings.databinding.FragmentCategorySettingsBinding
-import com.devyd.settings.models.CategoryWeightResult
+import com.devyd.common.models.CategoryWeightResult
 import com.devyd.settings.ui.adapter.CategoryAdapter
 import com.devyd.settings.ui.adapter.FooterAdapter
 import com.devyd.settings.ui.vm.CategorySettingsViewModel

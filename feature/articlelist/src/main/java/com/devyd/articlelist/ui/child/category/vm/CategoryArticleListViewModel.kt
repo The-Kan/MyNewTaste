@@ -28,7 +28,10 @@ class CategoryArticleListViewModel @Inject constructor(private val getArticleUse
 
             val result = runCatching { getArticleUseCase(category) }
                 .fold(
-                    onSuccess = { news -> ArticleResult.Success(news.toUiState()) },
+                    onSuccess = { news ->
+                        val articlesUiState = news.toUiState()
+                        val newArticlesUiState = articlesUiState.copy(articleUiState = articlesUiState.articleUiState.map { it.copy(category = category) })
+                        ArticleResult.Success(newArticlesUiState) },
                     onFailure = { err -> ArticleResult.Failure(err.message ?: "unknown error") })
 
             _articles.update { result }

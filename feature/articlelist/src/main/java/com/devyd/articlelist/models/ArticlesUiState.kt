@@ -23,7 +23,8 @@ data class ArticleUiState(
     val url: String,
     val urlToImage: String?,
     val publishedAt: String,
-    val content: String?
+    val content: String?,
+    val category: String? = null
 ) : Parcelable
 
 @Parcelize

@@ -8,7 +8,7 @@ import com.devyd.domain.usecase.categoryweight.AddCategoryWeightUseCase
 import com.devyd.domain.usecase.categoryweight.DeleteCategoryWeightUseCase
 import com.devyd.domain.usecase.categoryweight.GetCategoryWeightsUseCase
 import com.devyd.domain.usecase.categoryweight.UpdateCategoryWeightUseCase
-import com.devyd.settings.models.CategoryWeightResult
+import com.devyd.common.models.CategoryWeightResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow

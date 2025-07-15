@@ -1,4 +1,4 @@
-package com.devyd.settings.models
+package com.devyd.common.models
 
 import com.devyd.domain.models.CategoryWeight
 
