@@ -50,7 +50,7 @@ object HiltModule {
 
     @Provides
     @Singleton
-    fun provideDatabase(
+    fun provideCategoryWeightDatabase(
         @ApplicationContext context: Context
     ): CategoryWeightDatabase =
         Room.databaseBuilder(
