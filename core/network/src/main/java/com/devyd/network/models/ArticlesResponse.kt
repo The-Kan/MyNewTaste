@@ -26,14 +26,14 @@ data class SourceResponse(
     val name: String
 )
 
-fun ArticlesResponse.toEntity(): ArticlesDto = ArticlesDto(
+fun ArticlesResponse.toDto(): ArticlesDto = ArticlesDto(
     status         = status,
     totalResults   = totalResults,
-    articleEntities = articles.map { it.toEntity() }
+    articleEntities = articles.map { it.toDto() }
 )
 
-fun ArticleResponse.toEntity(): ArticleDto = ArticleDto(
-    sourceDto = source.toEntity(),
+fun ArticleResponse.toDto(): ArticleDto = ArticleDto(
+    sourceDto = source.toDto(),
     author       = author,
     title        = title,
     description  = description,
@@ -43,7 +43,7 @@ fun ArticleResponse.toEntity(): ArticleDto = ArticleDto(
     content      = content
 )
 
-fun SourceResponse.toEntity(): SourceDto = SourceDto(
+fun SourceResponse.toDto(): SourceDto = SourceDto(
     id   = id,
     name = name
 )

@@ -10,7 +10,7 @@ import javax.inject.Inject
 class ArticleRepositoryImpl @Inject constructor(
     private val articleRemoteDataSource: ArticleRemoteDataSource
 ) : ArticleRepository {
-    override suspend fun getNews(category: String): Articles {
-        return articleRemoteDataSource.fetchNewsEntity(category).toDomain()
+    override suspend fun getArticles(category: String): Articles {
+        return articleRemoteDataSource.fetchArticlesDto(category).toDomain()
     }
 }

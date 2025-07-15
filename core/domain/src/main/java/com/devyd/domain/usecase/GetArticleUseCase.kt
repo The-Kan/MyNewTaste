@@ -7,5 +7,5 @@ import javax.inject.Inject
 class GetArticleUseCase @Inject constructor(
     private val repository: ArticleRepository
 ) {
-    suspend operator fun invoke(category: String): Articles = repository.getNews(category)
+    suspend operator fun invoke(category: String): Articles = repository.getArticles(category)
 }
