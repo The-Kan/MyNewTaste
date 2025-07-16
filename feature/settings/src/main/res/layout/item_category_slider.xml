@@ -55,7 +55,7 @@
             android:id="@+id/tv_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="0" />
+            android:text="1" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/slider_weight"
@@ -64,9 +64,9 @@
             android:layout_marginStart="8dp"
             android:layout_weight="1"
             android:stepSize="1"
-            android:value="0"
-            android:valueFrom="0"
+            android:valueFrom="1"
             android:valueTo="10"
+            android:value="1.0f"
             app:trackHeight="12dp" />
     </LinearLayout>
 </LinearLayout>

@@ -8,7 +8,7 @@ import com.devyd.domain.usecase.categoryweight.AddCategoryWeightUseCase
 import com.devyd.domain.usecase.categoryweight.DeleteCategoryWeightUseCase
 import com.devyd.domain.usecase.categoryweight.GetCategoryWeightsUseCase
 import com.devyd.domain.usecase.categoryweight.UpdateCategoryWeightUseCase
-import com.devyd.common.models.CategoryWeightResult
+import com.devyd.ui.models.CategoryWeightResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -27,7 +27,7 @@ class CategorySettingsViewModel @Inject constructor(
     private val updateCategoryWeightUseCase: UpdateCategoryWeightUseCase,
     private val deleteCategoryWeightUseCase: DeleteCategoryWeightUseCase,
 ) : ViewModel() {
-    private val _categoryWeights = MutableStateFlow<CategoryWeightResult>(CategoryWeightResult.Idle)
+    private val _categoryWeights = MutableStateFlow<com.devyd.ui.models.CategoryWeightResult>(com.devyd.ui.models.CategoryWeightResult.Idle)
     val categoryWeights = _categoryWeights.asStateFlow()
 
     private val _scroll = MutableSharedFlow<Boolean>()
@@ -41,7 +41,7 @@ class CategorySettingsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _categoryWeights.value = CategoryWeightResult.Loading
+            _categoryWeights.value = com.devyd.ui.models.CategoryWeightResult.Loading
 
             val result = kotlin.runCatching {
                 withContext(Dispatchers.IO) {
@@ -53,10 +53,10 @@ class CategorySettingsViewModel @Inject constructor(
                     categoryId = AtomicInteger(maxId + 1)
                     updateAddCategoryPossible(list)
 
-                    CategoryWeightResult.Success(list)
+                    com.devyd.ui.models.CategoryWeightResult.Success(list)
                 },
                 onFailure = { error ->
-                    CategoryWeightResult.Failure(
+                    com.devyd.ui.models.CategoryWeightResult.Failure(
                         error.message ?: "unknown error"
                     )
                 })
@@ -74,17 +74,17 @@ class CategorySettingsViewModel @Inject constructor(
             val result = kotlin.runCatching {
                 withContext(Dispatchers.IO) {
                     val newItem =
-                        CategoryWeight(categoryId.getAndIncrement(), category, 0)
+                        CategoryWeight(categoryId.getAndIncrement(), category, 1)
                     addCategoryWeightUseCase(newItem)
                     getCategoryWeightsUseCase()
                 }
             }.fold(
                 onSuccess = { list ->
                     updateAddCategoryPossible(list)
-                    CategoryWeightResult.Success(list)
+                    com.devyd.ui.models.CategoryWeightResult.Success(list)
                 },
                 onFailure = { error ->
-                    CategoryWeightResult.Failure(
+                    com.devyd.ui.models.CategoryWeightResult.Failure(
                         error.message ?: "unknown error"
                     )
                 })
@@ -103,10 +103,10 @@ class CategorySettingsViewModel @Inject constructor(
                 }
             }.fold(
                 onSuccess = { list ->
-                    CategoryWeightResult.Success(list)
+                    com.devyd.ui.models.CategoryWeightResult.Success(list)
                 },
                 onFailure = { error ->
-                    CategoryWeightResult.Failure(
+                    com.devyd.ui.models.CategoryWeightResult.Failure(
                         error.message ?: "unknown error"
                     )
                 })
@@ -125,10 +125,10 @@ class CategorySettingsViewModel @Inject constructor(
             }.fold(
                 onSuccess = { list ->
                     updateAddCategoryPossible(list)
-                    CategoryWeightResult.Success(list)
+                    com.devyd.ui.models.CategoryWeightResult.Success(list)
                 },
                 onFailure = { error ->
-                    CategoryWeightResult.Failure(
+                    com.devyd.ui.models.CategoryWeightResult.Failure(
                         error.message ?: "unknown error"
                     )
                 })

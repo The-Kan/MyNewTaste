@@ -11,8 +11,8 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.devyd.articledetail.R
 import com.devyd.articledetail.databinding.FragmentArticledetailBinding
-import com.devyd.articledetail.models.ArticleUiState
 import com.devyd.common.Constants
+import com.devyd.ui.models.ArticleUiState
 
 class ArticleDetailFragment : Fragment() {
 

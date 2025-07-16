@@ -3,7 +3,7 @@ package com.devyd.articlelist.ui.child.category.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devyd.articlelist.models.ArticleResult
-import com.devyd.articlelist.models.toUiState
+import com.devyd.ui.models.toUiState
 import com.devyd.domain.usecase.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

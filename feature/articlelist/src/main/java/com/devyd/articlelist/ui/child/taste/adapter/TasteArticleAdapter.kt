@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.devyd.articlelist.R
 import com.devyd.articlelist.databinding.CategoryArticleBinding
-import com.devyd.articlelist.models.ArticleUiState
+import com.devyd.ui.models.ArticleUiState
 
 class TasteArticleAdapter(
     private var articleUiStateList: List<ArticleUiState>,

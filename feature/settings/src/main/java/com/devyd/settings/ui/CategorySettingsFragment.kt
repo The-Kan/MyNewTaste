@@ -15,8 +15,7 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devyd.common.CategoryStrings
 import com.devyd.settings.databinding.FragmentCategorySettingsBinding
-import com.devyd.common.models.CategoryWeightResult
-import com.devyd.common.util.LogUtil
+import com.devyd.ui.models.CategoryWeightResult
 import com.devyd.settings.ui.adapter.CategoryAdapter
 import com.devyd.settings.ui.adapter.FooterAdapter
 import com.devyd.settings.ui.vm.CategorySettingsViewModel
@@ -71,23 +70,24 @@ class CategorySettingsFragment : Fragment() {
         concatAdapter = ConcatAdapter(categoryAdapter, footerAdapter)
         binding.rvCategories.adapter = concatAdapter
 
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.categoryWeights.collect { cwResult ->
                     when (cwResult) {
-                        CategoryWeightResult.Idle -> {
+                        com.devyd.ui.models.CategoryWeightResult.Idle -> {
                             renderState(isLoading = false, isFail = false, isSuccess = false)
                         }
 
-                        CategoryWeightResult.Loading -> {
+                        com.devyd.ui.models.CategoryWeightResult.Loading -> {
                             renderState(isLoading = true, isFail = false, isSuccess = false)
                         }
 
-                        is CategoryWeightResult.Failure -> {
+                        is com.devyd.ui.models.CategoryWeightResult.Failure -> {
                             renderState(isLoading = false, isFail = true, isSuccess = false)
                         }
 
-                        is CategoryWeightResult.Success -> {
+                        is com.devyd.ui.models.CategoryWeightResult.Success -> {
                             categoryAdapter.submitList(cwResult.categoryWeightList)
                             renderState(isLoading = false, isFail = false, isSuccess = true)
                         }

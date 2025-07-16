@@ -6,6 +6,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.devyd.common.CategoryStrings
+import com.devyd.common.Constants.CATEGORY_SLIDER_MAX
+import com.devyd.common.Constants.CATEGORY_SLIDER_MIN
 import com.devyd.common.Constants.NEWS_API_TOP_HEADLINES_CATEGORY_LIST
 import com.devyd.domain.models.CategoryWeight
 import com.devyd.settings.common.setWidthByLongestItem
@@ -35,6 +37,10 @@ class CategoryAdapter(
         private val btnDelete = binding.btnDelete
 
         fun bind(categoryWeight: CategoryWeight) {
+            slider.apply {
+                valueFrom = CATEGORY_SLIDER_MIN
+                valueTo = CATEGORY_SLIDER_MAX
+            }
 
             var dropdownAdapter = ArrayAdapter(
                 itemView.context,

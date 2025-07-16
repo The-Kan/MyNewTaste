@@ -2,12 +2,12 @@ package com.devyd.articlelist.ui.child.taste.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devyd.articlelist.models.ArticleUiState
-import com.devyd.articlelist.models.ArticlesUiState
+import com.devyd.ui.models.ArticleUiState
+import com.devyd.ui.models.ArticlesUiState
 import com.devyd.articlelist.models.TasteArticleResult
-import com.devyd.articlelist.models.toUiState
+import com.devyd.ui.models.toUiState
 import com.devyd.common.CategoryStrings
-import com.devyd.common.models.CategoryWeightResult
+import com.devyd.common.Constants
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.domain.usecase.GetArticleUseCase
@@ -46,17 +46,17 @@ class TasteArticleListViewModel @Inject constructor(
                 }
             }.fold(
                 onSuccess = { list ->
-                    CategoryWeightResult.Success(list)
+                    com.devyd.ui.models.CategoryWeightResult.Success(list)
                 },
                 onFailure = { error ->
-                    CategoryWeightResult.Failure(
+                    com.devyd.ui.models.CategoryWeightResult.Failure(
                         error.message ?: "unknown error"
                     )
                 })
 
-            if (getCategoryWeightsUseCaseResult is CategoryWeightResult.Failure) {
+            if (getCategoryWeightsUseCaseResult is com.devyd.ui.models.CategoryWeightResult.Failure) {
                 _articles.update { TasteArticleResult.Failure(getCategoryWeightsUseCaseResult.error) }
-            } else if (getCategoryWeightsUseCaseResult is CategoryWeightResult.Success) {
+            } else if (getCategoryWeightsUseCaseResult is com.devyd.ui.models.CategoryWeightResult.Success) {
                 val map = mutableMapOf<String, LinkedList<ArticleUiState>>()
 
                 for (category in CategoryStrings.validValues) {
@@ -93,7 +93,7 @@ class TasteArticleListViewModel @Inject constructor(
                 } else {
                     LogUtil.i(logTag(), "categoryWeightList = ${categoryWeightList}")
                     val articleUiStateList = mutableListOf<ArticleUiState>()
-                    val min = categoryWeightList.minOf { it.weight }
+                    val min = categoryWeightList.minOf { it.weight }.coerceAtLeast(Constants.CATEGORY_SLIDER_MIN.toInt())
                     val max = map.values.maxOf { it.size }
                     val maxRepeatCount = max / min + 1
                     outer@ for (i in 0..maxRepeatCount) {

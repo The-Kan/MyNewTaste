@@ -14,7 +14,7 @@ import com.devyd.articlelist.databinding.FragmentArticlelistcontainerBinding
 import com.devyd.articlelist.ui.child.ChildFragmentStateAdapter
 import com.devyd.articlelist.ui.child.TapList
 import com.devyd.common.Constants
-import com.devyd.articlelist.models.ArticleUiState
+import com.devyd.ui.models.ArticleUiState
 import com.devyd.articlelist.ui.child.taste.TasteArticleListFragment
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag

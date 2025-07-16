@@ -1,4 +1,4 @@
-package com.devyd.articlelist.models
+package com.devyd.ui.models
 
 import android.os.Parcelable
 import com.devyd.domain.models.Article

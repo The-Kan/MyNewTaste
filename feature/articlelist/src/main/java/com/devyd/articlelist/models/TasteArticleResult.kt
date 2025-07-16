@@ -1,5 +1,7 @@
 package com.devyd.articlelist.models
 
+import com.devyd.ui.models.ArticlesUiState
+
 sealed class TasteArticleResult {
     object Idle : TasteArticleResult()
     object NeedToCategorySetting : TasteArticleResult()
