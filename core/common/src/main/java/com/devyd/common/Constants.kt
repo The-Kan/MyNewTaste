@@ -3,6 +3,7 @@ package com.devyd.common
 object Constants {
     const val ARTICLE_CLICK = "ARTICLE_CLICK"
     const val ARTICLE = "ARTICLE"
+    const val CATEGORY_SETTING_GUIDE_CLICK = "CATEGORY_SETTING_GUIDE_CLICK"
 
     val NEWS_API_TOP_HEADLINES_CATEGORY_LIST = listOf(
         R.string.category_1,

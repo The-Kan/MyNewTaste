@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import com.devyd.articlelist.databinding.FragmentTasteArticlelistBinding
-import com.devyd.articlelist.models.ArticleResult
+import com.devyd.articlelist.models.TasteArticleResult
 import com.devyd.articlelist.ui.child.taste.adapter.TasteArticleAdapter
 import com.devyd.articlelist.ui.child.taste.vm.TasteArticleListViewModel
 import com.devyd.common.Constants
@@ -57,33 +57,43 @@ class TasteArticleListFragment : Fragment() {
             viewModel.refreshArticle(false)
         }
 
+        binding.btnSetCategory.setOnClickListener {
+            parentFragmentManager.setFragmentResult(Constants.CATEGORY_SETTING_GUIDE_CLICK, Bundle())
+        }
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.article.collect { articleResult ->
                 when (articleResult) {
-                    ArticleResult.Idle -> {
+                    TasteArticleResult.Idle -> {
                         LogUtil.i(logTag(), "Start time")
                         binding.swipeRefreshLayout.isRefreshing = false
-                        renderState(isLoading = false, isFail = false, isSuccess = false)
+                        renderState(isLoading = false, isNeedToGuide= false,isFail = false, isSuccess = false)
                     }
 
-                    is ArticleResult.Loading -> {
+                    is TasteArticleResult.Loading -> {
                         renderState(
                             isLoading = !articleResult.isSwipeLoading,
+                            isNeedToGuide = false,
                             isFail = false,
                             isSuccess = false
                         )
                     }
 
-                    is ArticleResult.Failure -> {
-                        LogUtil.e(logTag(), articleResult.error)
+                    TasteArticleResult.NeedToCategorySetting -> {
                         binding.swipeRefreshLayout.isRefreshing = false
-                        renderState(isLoading = false, isFail = true, isSuccess = false)
+                        renderState(isLoading = false, isNeedToGuide = true, isFail = false, isSuccess = false)
                     }
 
-                    is ArticleResult.Success -> {
+                    is TasteArticleResult.Failure -> {
+                        LogUtil.e(logTag(), articleResult.error)
+                        binding.swipeRefreshLayout.isRefreshing = false
+                        renderState(isLoading = false, isNeedToGuide = false, isFail = true, isSuccess = false)
+                    }
+
+                    is TasteArticleResult.Success -> {
                         tasteArticleAdapter.updateArticlesUiState(articleResult.articlesUiState.articleUiState)
                         binding.swipeRefreshLayout.isRefreshing = false
-                        renderState(isLoading = false, isFail = false, isSuccess = true)
+                        renderState(isLoading = false, isNeedToGuide = false, isFail = false, isSuccess = true)
                         LogUtil.i(logTag(), "end time")
                     }
                 }
@@ -91,8 +101,13 @@ class TasteArticleListFragment : Fragment() {
         }
     }
 
-    private fun renderState(isLoading: Boolean, isFail: Boolean, isSuccess: Boolean) {
+    fun refreshArticle() {
+        viewModel.refreshArticle(false)
+    }
+
+    private fun renderState(isLoading: Boolean, isNeedToGuide: Boolean, isFail: Boolean, isSuccess: Boolean) {
         binding.progressLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.categorySettingGuide.visibility = if(isNeedToGuide) View.VISIBLE else View.GONE
         binding.btnRetry.visibility = if (isFail) View.VISIBLE else View.GONE
         binding.swipeRefreshLayout.visibility = if (isSuccess) View.VISIBLE else View.GONE
     }

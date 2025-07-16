@@ -2,9 +2,9 @@ package com.devyd.articlelist.ui.child.taste.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devyd.articlelist.models.ArticleResult
 import com.devyd.articlelist.models.ArticleUiState
 import com.devyd.articlelist.models.ArticlesUiState
+import com.devyd.articlelist.models.TasteArticleResult
 import com.devyd.articlelist.models.toUiState
 import com.devyd.common.CategoryStrings
 import com.devyd.common.models.CategoryWeightResult
@@ -28,7 +28,7 @@ class TasteArticleListViewModel @Inject constructor(
     private val getArticleUseCase: GetArticleUseCase
 ) :
     ViewModel() {
-    private val _articles = MutableStateFlow<ArticleResult>(ArticleResult.Idle)
+    private val _articles = MutableStateFlow<TasteArticleResult>(TasteArticleResult.Idle)
     val article = _articles.asStateFlow()
 
     init {
@@ -37,7 +37,7 @@ class TasteArticleListViewModel @Inject constructor(
 
     fun refreshArticle(isSwipeRefresh: Boolean) {
         viewModelScope.launch {
-            _articles.update { ArticleResult.Loading(isSwipeRefresh) }
+            _articles.update { TasteArticleResult.Loading(isSwipeRefresh) }
 
             // DB에서 비율 가져오기.
             val getCategoryWeightsUseCaseResult = kotlin.runCatching {
@@ -55,7 +55,7 @@ class TasteArticleListViewModel @Inject constructor(
                 })
 
             if (getCategoryWeightsUseCaseResult is CategoryWeightResult.Failure) {
-                _articles.update { ArticleResult.Failure(getCategoryWeightsUseCaseResult.error) }
+                _articles.update { TasteArticleResult.Failure(getCategoryWeightsUseCaseResult.error) }
             } else if (getCategoryWeightsUseCaseResult is CategoryWeightResult.Success) {
                 val map = mutableMapOf<String, LinkedList<ArticleUiState>>()
 
@@ -68,17 +68,17 @@ class TasteArticleListViewModel @Inject constructor(
                                     articlesUiState.copy(articleUiState = articlesUiState.articleUiState.map {
                                         it.copy(category = category)
                                     })
-                                ArticleResult.Success(newArticlesUiState)
+                                TasteArticleResult.Success(newArticlesUiState)
                             },
                             onFailure = { err ->
-                                ArticleResult.Failure(
+                                TasteArticleResult.Failure(
                                     err.message ?: "unknown error"
                                 )
                             })
 
                     val queue = LinkedList<ArticleUiState>()
 
-                    if (getArticleUseCaseResult is ArticleResult.Success) {
+                    if (getArticleUseCaseResult is TasteArticleResult.Success) {
                         queue.addAll(getArticleUseCaseResult.articlesUiState.articleUiState)
                         map[category] = queue
                     }
@@ -89,7 +89,7 @@ class TasteArticleListViewModel @Inject constructor(
 
                 if (categoryWeightList.isEmpty()) {
                     // 이 지점에서 CategoryWeight를 설정할 수 있도록 해야함.
-                    _articles.update { ArticleResult.Loading(isSwipeRefresh) }
+                    _articles.update { TasteArticleResult.NeedToCategorySetting }
                 } else {
                     LogUtil.i(logTag(), "categoryWeightList = ${categoryWeightList}")
                     val articleUiStateList = mutableListOf<ArticleUiState>()
@@ -112,7 +112,7 @@ class TasteArticleListViewModel @Inject constructor(
                         }
                     }
 
-                    val result = ArticleResult.Success(
+                    val result = TasteArticleResult.Success(
                         ArticlesUiState(
                             status = "status",
                             totalResults = 1,

@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.devyd.articlelist.R
 import com.devyd.articlelist.databinding.FragmentArticlelistcontainerBinding
 import com.devyd.articlelist.ui.child.ChildFragmentStateAdapter
 import com.devyd.articlelist.ui.child.TapList
 import com.devyd.common.Constants
 import com.devyd.articlelist.models.ArticleUiState
+import com.devyd.articlelist.ui.child.taste.TasteArticleListFragment
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.google.android.material.tabs.TabLayoutMediator
@@ -24,6 +27,7 @@ class ArticleListContainerFragment : Fragment() {
 
     private var articleClickListener: ArticleClickListener? = null
     private var settingClickListener: SettingClickListener? = null
+    private var categorySettingGuideClickListener: CategorySettingGuideClickListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -77,7 +81,7 @@ class ArticleListContainerFragment : Fragment() {
         ) { requestKey, bundle ->
             if (requestKey == Constants.ARTICLE_CLICK) {
 
-                var articleUiState: ArticleUiState? = null
+                var articleUiState: ArticleUiState?
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     articleUiState =
                         bundle.getParcelable(Constants.ARTICLE, ArticleUiState::class.java)
@@ -86,11 +90,42 @@ class ArticleListContainerFragment : Fragment() {
                     articleUiState = bundle.getParcelable(Constants.ARTICLE) as? ArticleUiState
                 }
 
-
                 articleClickListener?.onArticleClicked(articleUiState)
             }
         }
 
+        childFragmentManager.setFragmentResultListener(
+            Constants.CATEGORY_SETTING_GUIDE_CLICK,
+            this.viewLifecycleOwner
+        ) { requestKey, bundle ->
+            if (requestKey == Constants.CATEGORY_SETTING_GUIDE_CLICK) {
+                categorySettingGuideClickListener?.onSettingClicked()
+            }
+        }
+
+    }
+
+    fun registerViewLifecycleOwnerLiveData() {
+        viewLifecycleOwnerLiveData.observe(this) { lifecycleOwner ->
+            lifecycleOwner.lifecycle.addObserver(
+                object : DefaultLifecycleObserver {
+                    override fun onStart(owner: LifecycleOwner) {
+
+                        val tabLayout = binding.tabLayout
+                        for (i in 0 until tabLayout.tabCount) {
+                            val tab = tabLayout.getTabAt(i)
+                            if (tab?.text == getString(R.string.tab_home)) {
+                                val tag = "f$i"
+                                val fragment = childFragmentManager.findFragmentByTag(tag) as? TasteArticleListFragment
+                                fragment?.refreshArticle()
+                            }
+                        }
+
+                        viewLifecycleOwner.lifecycle.removeObserver(this)
+                    }
+                }
+            )
+        }
     }
 
     override fun onDestroyView() {
@@ -105,6 +140,10 @@ class ArticleListContainerFragment : Fragment() {
     fun setSettingClickListener(l: SettingClickListener) {
         settingClickListener = l
     }
+
+    fun setCategorySettingGuideClickListener(l: CategorySettingGuideClickListener) {
+        categorySettingGuideClickListener = l
+    }
 }
 
 fun interface ArticleClickListener {
@@ -112,5 +151,9 @@ fun interface ArticleClickListener {
 }
 
 fun interface SettingClickListener {
+    fun onSettingClicked()
+}
+
+fun interface CategorySettingGuideClickListener {
     fun onSettingClicked()
 }

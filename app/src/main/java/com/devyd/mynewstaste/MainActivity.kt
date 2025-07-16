@@ -1,11 +1,14 @@
 package com.devyd.mynewstaste
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.devyd.articlelist.ui.parent.ArticleListContainerFragment
@@ -14,6 +17,7 @@ import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.mynewstaste.databinding.ActivityMainBinding
 import com.devyd.mynewstaste.mapper.toUiState
+import com.devyd.settings.ui.CategorySettingsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -38,34 +42,57 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(binding.navHostContainer.id) as NavHostFragment
         val navController: NavController = navHost.navController
 
-        navController.addOnDestinationChangedListener { controller, destination, _ ->
-            if (destination.id == R.id.articleListContainerFragment) {
-                val articleListContainerFragment = navHost
-                    .childFragmentManager
-                    .fragments
-                    .filterIsInstance<ArticleListContainerFragment>()
-                    .firstOrNull()
 
-                articleListContainerFragment?.apply {
-                    setArticleClickListener { articleUiState ->
+        val articleListContainerFragment = navHost
+            .childFragmentManager
+            .fragments
+            .filterIsInstance<ArticleListContainerFragment>()
+            .firstOrNull()
 
-                        val detailArticleUiState = articleUiState?.toUiState()
 
-                        val args = bundleOf(Constants.ARTICLE to detailArticleUiState)
-                        navController.navigate(
-                            R.id.articleDetailFragment,
-                            args
-                        )
-                        LogUtil.i(logTag(), "$id 디테일 화면으로 전환")
+        navHost.childFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentViewCreated(
+                    fragmentManager: FragmentManager,
+                    fragment: Fragment,
+                    view: View,
+                    savedInstanceState: Bundle?
+                ) {
+                    if(fragment is ArticleListContainerFragment){
+                        fragment.apply {
+                            setArticleClickListener { articleUiState ->
+
+                                val detailArticleUiState = articleUiState?.toUiState()
+
+                                val args = bundleOf(Constants.ARTICLE to detailArticleUiState)
+                                navController.navigate(
+                                    R.id.articleDetailFragment,
+                                    args
+                                )
+                                LogUtil.i(logTag(), "$id 디테일 화면으로 전환")
+                            }
+                            setSettingClickListener {
+                                navController.navigate(
+                                    R.id.categorySettingsFragment,
+                                )
+                                LogUtil.i(logTag(), "셋팅 화면으로 전환")
+                            }
+                            setCategorySettingGuideClickListener {
+                                navController.navigate(
+                                    R.id.categorySettingsFragment,
+                                )
+                                LogUtil.i(logTag(), "셋팅 화면으로 전환")
+                            }
+                        }
                     }
-                    setSettingClickListener {
-                        navController.navigate(
-                            R.id.categorySettingsFragment,
-                        )
-                        LogUtil.i(logTag(), "셋팅 화면으로 전환")
+                    else if (fragment is CategorySettingsFragment) {
+                        fragment.setBackPressListener {
+                            articleListContainerFragment?.registerViewLifecycleOwnerLiveData()
+                        }
                     }
                 }
-            }
-        }
+            },
+            true
+        )
     }
 }

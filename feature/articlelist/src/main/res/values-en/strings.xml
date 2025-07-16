@@ -6,4 +6,6 @@
     <string name="top_toolbar_title">Custom Your Taste</string>
     <string name="search">Search</string>
     <string name="settings">Settings</string>
+    <string name="category_setting_guide">Set your category preferences to update articles!</string>
+    <string name="category_setting">Category Setting</string>
 </resources>

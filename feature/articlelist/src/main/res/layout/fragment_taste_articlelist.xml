@@ -27,6 +27,34 @@
             android:text="Fail!! retry"
             android:visibility="gone" />
 
+        <LinearLayout
+            android:id="@+id/categorySettingGuide"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvCategoryHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="@string/category_setting_guide"
+                android:textColor="#333333"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/btnSetCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:text="@string/category_setting" />
+        </LinearLayout>
+
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
@@ -36,8 +64,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvArticles"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                 />
+                android:layout_height="match_parent" />
 
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

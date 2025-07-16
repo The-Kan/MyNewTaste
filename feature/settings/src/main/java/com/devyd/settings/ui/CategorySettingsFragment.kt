@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.devyd.common.CategoryStrings
 import com.devyd.settings.databinding.FragmentCategorySettingsBinding
 import com.devyd.common.models.CategoryWeightResult
+import com.devyd.common.util.LogUtil
 import com.devyd.settings.ui.adapter.CategoryAdapter
 import com.devyd.settings.ui.adapter.FooterAdapter
 import com.devyd.settings.ui.vm.CategorySettingsViewModel
@@ -31,6 +33,8 @@ class CategorySettingsFragment : Fragment() {
     private lateinit var categoryAdapter: CategoryAdapter
     private lateinit var footerAdapter: FooterAdapter
     private lateinit var concatAdapter: ConcatAdapter
+
+    private var backPressListener: BackPressListener? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -103,6 +107,16 @@ class CategorySettingsFragment : Fragment() {
                 }
             }
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                backPressListener?.onBackPress()
+                isEnabled = false
+                requireActivity().onBackPressedDispatcher.onBackPressed()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
     }
 
     private fun renderState(isLoading: Boolean, isFail: Boolean, isSuccess: Boolean) {
@@ -115,4 +129,12 @@ class CategorySettingsFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+    fun setBackPressListener(l: BackPressListener) {
+        backPressListener = l
+    }
+}
+
+fun interface BackPressListener {
+    fun onBackPress()
 }

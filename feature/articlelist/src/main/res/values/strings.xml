@@ -6,4 +6,6 @@
     <string name="top_toolbar_title">Custom Your Taste</string>
     <string name="search">검색</string>
     <string name="settings">설정</string>
+    <string name="category_setting_guide">카테고리 선호도를 설정하여 기사를 업데이트 해보세요!</string>
+    <string name="category_setting">카테고리 설정</string>
 </resources>
