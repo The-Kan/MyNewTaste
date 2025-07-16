@@ -8,6 +8,8 @@ import com.devyd.articlelist.models.ArticlesUiState
 import com.devyd.articlelist.models.toUiState
 import com.devyd.common.CategoryStrings
 import com.devyd.common.models.CategoryWeightResult
+import com.devyd.common.util.LogUtil
+import com.devyd.common.util.logTag
 import com.devyd.domain.usecase.GetArticleUseCase
 import com.devyd.domain.usecase.categoryweight.GetCategoryWeightsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -84,34 +86,42 @@ class TasteArticleListViewModel @Inject constructor(
                 }
 
                 val categoryWeightList = getCategoryWeightsUseCaseResult.categoryWeightList
-                val articleUiStateList = mutableListOf<ArticleUiState>()
-                val min = categoryWeightList.minOf { it.weight }
-                val max = map.values.maxOf { it.size }
-                val maxRepeatCount = max / min + 1
-                outer@ for (i in 0..maxRepeatCount) {
-                    for (j in 0..categoryWeightList.lastIndex) {
-                        val category = categoryWeightList[j].category
-                        val weight = categoryWeightList[j].weight
-                        val articleResultQueue = map[category]!!
-                        if (articleResultQueue.isEmpty()) break@outer
 
-                        repeat(weight) {
-                            if (articleResultQueue.isNotEmpty()) {
+                if (categoryWeightList.isEmpty()) {
+                    // 이 지점에서 CategoryWeight를 설정할 수 있도록 해야함.
+                    _articles.update { ArticleResult.Loading(isSwipeRefresh) }
+                } else {
+                    LogUtil.i(logTag(), "categoryWeightList = ${categoryWeightList}")
+                    val articleUiStateList = mutableListOf<ArticleUiState>()
+                    val min = categoryWeightList.minOf { it.weight }
+                    val max = map.values.maxOf { it.size }
+                    val maxRepeatCount = max / min + 1
+                    outer@ for (i in 0..maxRepeatCount) {
+                        for (j in 0..categoryWeightList.lastIndex) {
+                            val category = categoryWeightList[j].category
+                            val weight = categoryWeightList[j].weight
+                            val articleResultQueue = map[category]!!
+                            if (articleResultQueue.isEmpty()) break@outer
 
-                                articleUiStateList.add(articleResultQueue.pop())
+                            repeat(weight) {
+                                if (articleResultQueue.isNotEmpty()) {
+
+                                    articleUiStateList.add(articleResultQueue.pop())
+                                }
                             }
                         }
                     }
+
+                    val result = ArticleResult.Success(
+                        ArticlesUiState(
+                            status = "status",
+                            totalResults = 1,
+                            articleUiState = articleUiStateList
+                        )
+                    )
+                    _articles.update { result }
                 }
 
-                val result = ArticleResult.Success(
-                    ArticlesUiState(
-                        status = "status",
-                        totalResults = 1,
-                        articleUiState = articleUiStateList
-                    )
-                )
-                _articles.update { result }
 
             }
         }
