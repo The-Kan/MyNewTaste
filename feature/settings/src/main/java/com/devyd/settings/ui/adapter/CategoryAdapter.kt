@@ -9,21 +9,21 @@ import com.devyd.common.CategoryStrings
 import com.devyd.common.Constants.CATEGORY_SLIDER_MAX
 import com.devyd.common.Constants.CATEGORY_SLIDER_MIN
 import com.devyd.common.Constants.NEWS_API_TOP_HEADLINES_CATEGORY_LIST
-import com.devyd.domain.models.CategoryWeight
 import com.devyd.settings.common.setWidthByLongestItem
 import com.devyd.settings.databinding.ItemCategorySliderBinding
+import com.devyd.ui.models.CategoryWeightUiState
 import com.google.android.material.slider.Slider
 
 class CategoryAdapter(
     private val categories: List<String>,
     private val onModify: (id: Int, category: String, weight: Int) -> Unit,
-    private val onDelete: (CategoryWeight) -> Unit
+    private val onDelete: (CategoryWeightUiState) -> Unit
 ) : RecyclerView.Adapter<CategoryAdapter.VH>() {
 
-    private val items = mutableListOf<CategoryWeight>()
+    private val items = mutableListOf<CategoryWeightUiState>()
 
     @SuppressLint("NotifyDataSetChanged")
-    fun submitList(categoryWeightList: List<CategoryWeight>) {
+    fun submitList(categoryWeightList: List<CategoryWeightUiState>) {
         items.clear()
         items.addAll(categoryWeightList)
         notifyDataSetChanged()
@@ -36,7 +36,7 @@ class CategoryAdapter(
         private val tvWeight = binding.tvWeight
         private val btnDelete = binding.btnDelete
 
-        fun bind(categoryWeight: CategoryWeight) {
+        fun bind(categoryWeightUiState: CategoryWeightUiState) {
             slider.apply {
                 valueFrom = CATEGORY_SLIDER_MIN
                 valueTo = CATEGORY_SLIDER_MAX
@@ -50,19 +50,19 @@ class CategoryAdapter(
 
             actvCategory.setAdapter(dropdownAdapter)
             actvCategory.setWidthByLongestItem(categories)
-            actvCategory.setText(getCategorySystemName(categoryWeight.category), false)
+            actvCategory.setText(getCategorySystemName(categoryWeightUiState.category), false)
 
 
             actvCategory.setOnItemClickListener { parent, _, position, _ ->
                 onModify(
-                    categoryWeight.id,
+                    categoryWeightUiState.id,
                     CategoryStrings.validValues[position],
-                    categoryWeight.weight
+                    categoryWeightUiState.weight
                 )
             }
 
-            slider.value = categoryWeight.weight.toFloat()
-            tvWeight.text = categoryWeight.weight.toString()
+            slider.value = categoryWeightUiState.weight.toFloat()
+            tvWeight.text = categoryWeightUiState.weight.toString()
 
             slider.clearOnSliderTouchListeners()
             slider.addOnSliderTouchListener(object : Slider.OnSliderTouchListener {
@@ -72,12 +72,12 @@ class CategoryAdapter(
                 override fun onStopTrackingTouch(slider: Slider) {
                     val w = slider.value.toInt()
                     tvWeight.text = "$w"
-                    onModify(categoryWeight.id, categoryWeight.category, w)
+                    onModify(categoryWeightUiState.id, categoryWeightUiState.category, w)
                 }
             })
 
             btnDelete.setOnClickListener {
-                onDelete(categoryWeight)
+                onDelete(categoryWeightUiState)
             }
         }
 

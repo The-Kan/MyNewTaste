@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devyd.common.CategoryStrings
 import com.devyd.settings.databinding.FragmentCategorySettingsBinding
-import com.devyd.ui.models.CategoryWeightResult
 import com.devyd.settings.ui.adapter.CategoryAdapter
 import com.devyd.settings.ui.adapter.FooterAdapter
 import com.devyd.settings.ui.vm.CategorySettingsViewModel
@@ -75,20 +74,20 @@ class CategorySettingsFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.categoryWeights.collect { cwResult ->
                     when (cwResult) {
-                        com.devyd.ui.models.CategoryWeightResult.Idle -> {
+                        com.devyd.ui.models.CategoryWeightUiStateResult.Idle -> {
                             renderState(isLoading = false, isFail = false, isSuccess = false)
                         }
 
-                        com.devyd.ui.models.CategoryWeightResult.Loading -> {
+                        com.devyd.ui.models.CategoryWeightUiStateResult.Loading -> {
                             renderState(isLoading = true, isFail = false, isSuccess = false)
                         }
 
-                        is com.devyd.ui.models.CategoryWeightResult.Failure -> {
+                        is com.devyd.ui.models.CategoryWeightUiStateResult.Failure -> {
                             renderState(isLoading = false, isFail = true, isSuccess = false)
                         }
 
-                        is com.devyd.ui.models.CategoryWeightResult.Success -> {
-                            categoryAdapter.submitList(cwResult.categoryWeightList)
+                        is com.devyd.ui.models.CategoryWeightUiStateResult.Success -> {
+                            categoryAdapter.submitList(cwResult.categoryWeightUiStateList)
                             renderState(isLoading = false, isFail = false, isSuccess = true)
                         }
                     }

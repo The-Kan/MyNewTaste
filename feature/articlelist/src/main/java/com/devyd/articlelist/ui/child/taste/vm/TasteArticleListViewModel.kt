@@ -12,6 +12,7 @@ import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.domain.usecase.GetArticleUseCase
 import com.devyd.domain.usecase.categoryweight.GetCategoryWeightsUseCase
+import com.devyd.ui.models.CategoryWeightUiStateResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -46,17 +47,18 @@ class TasteArticleListViewModel @Inject constructor(
                 }
             }.fold(
                 onSuccess = { list ->
-                    com.devyd.ui.models.CategoryWeightResult.Success(list)
+
+                    CategoryWeightUiStateResult.Success(list.map { it.toUiState() })
                 },
                 onFailure = { error ->
-                    com.devyd.ui.models.CategoryWeightResult.Failure(
+                    CategoryWeightUiStateResult.Failure(
                         error.message ?: "unknown error"
                     )
                 })
 
-            if (getCategoryWeightsUseCaseResult is com.devyd.ui.models.CategoryWeightResult.Failure) {
+            if (getCategoryWeightsUseCaseResult is CategoryWeightUiStateResult.Failure) {
                 _articles.update { TasteArticleResult.Failure(getCategoryWeightsUseCaseResult.error) }
-            } else if (getCategoryWeightsUseCaseResult is com.devyd.ui.models.CategoryWeightResult.Success) {
+            } else if (getCategoryWeightsUseCaseResult is CategoryWeightUiStateResult.Success) {
                 val map = mutableMapOf<String, LinkedList<ArticleUiState>>()
 
                 for (category in CategoryStrings.validValues) {
@@ -85,7 +87,7 @@ class TasteArticleListViewModel @Inject constructor(
 
                 }
 
-                val categoryWeightList = getCategoryWeightsUseCaseResult.categoryWeightList
+                val categoryWeightList = getCategoryWeightsUseCaseResult.categoryWeightUiStateList
 
                 if (categoryWeightList.isEmpty()) {
                     // 이 지점에서 CategoryWeight를 설정할 수 있도록 해야함.
