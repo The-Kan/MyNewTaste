@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.devyd.articlelist.R
 import com.devyd.articlelist.databinding.FragmentArticlelistcontainerBinding
 import com.devyd.common.Constants
@@ -104,26 +105,31 @@ class ArticleListContainerFragment : Fragment() {
     }
 
     fun registerViewLifecycleOwnerLiveData() {
-        viewLifecycleOwnerLiveData.observe(this) { lifecycleOwner ->
-            lifecycleOwner.lifecycle.addObserver(
-                object : DefaultLifecycleObserver {
-                    override fun onStart(owner: LifecycleOwner) {
+        val viewLifecycleObserver = object : Observer<LifecycleOwner> {
+            override fun onChanged(lifecycleOwner: LifecycleOwner) {
 
-                        val tabLayout = binding.tabLayout
-                        for (i in 0 until tabLayout.tabCount) {
-                            val tab = tabLayout.getTabAt(i)
-                            if (tab?.text == getString(R.string.tab_home)) {
-                                val tag = "f$i"
-                                val fragment = childFragmentManager.findFragmentByTag(tag) as? TasteArticleListFragment
-                                fragment?.refreshArticle()
+                lifecycleOwner.lifecycle.addObserver(
+                    object : DefaultLifecycleObserver {
+                        override fun onStart(owner: LifecycleOwner) {
+
+                            val tabLayout = binding.tabLayout
+                            for (i in 0 until tabLayout.tabCount) {
+                                val tab = tabLayout.getTabAt(i)
+                                if (tab?.text == getString(R.string.tab_home)) {
+                                    val tag = "f$i"
+                                    val fragment = childFragmentManager.findFragmentByTag(tag) as? TasteArticleListFragment
+                                    fragment?.refreshArticle()
+                                }
                             }
+                            lifecycleOwner.lifecycle.removeObserver(this)
                         }
-
-                        viewLifecycleOwner.lifecycle.removeObserver(this)
                     }
-                }
-            )
+                )
+
+                viewLifecycleOwnerLiveData.removeObserver(this)
+            }
         }
+        viewLifecycleOwnerLiveData.observe(this, viewLifecycleObserver)
     }
 
     override fun onDestroyView() {
