@@ -61,8 +61,6 @@ class MainActivity : AppCompatActivity() {
                         fragment.apply {
                             setArticleClickListener { articleUiState ->
 
-//                                val detailArticleUiState = articleUiState?.toUiState()
-
                                 val args = bundleOf(Constants.ARTICLE to articleUiState)
                                 navController.navigate(
                                     R.id.articleDetailFragment,
