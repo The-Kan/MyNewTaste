@@ -1,11 +1,11 @@
-package com.devyd.articlelist.ui.child
+package com.devyd.articlelist.ui.parent
 
 import android.content.Context
 import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.devyd.articlelist.ui.child.TapList.titles
+import com.devyd.articlelist.ui.parent.TapList.titles
 import com.devyd.articlelist.ui.child.category.CategoryArticleListFragment
 import com.devyd.articlelist.ui.child.taste.TasteArticleListFragment
 import com.devyd.common.CategoryStrings
