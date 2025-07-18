@@ -55,14 +55,14 @@ class ArticleListContainerFragment : Fragment() {
 
         binding.topToolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.action_search -> {
-                    /**
-                     *  Todo
-                     *  Search is useful to show Article you want.
-                     *  It will be implement
-                     */
-                    true
-                }
+//                R.id.action_search -> {
+//                    /**
+//                     *  Todo
+//                     *  Search is useful to show Article you want.
+//                     *  It will be implement
+//                     */
+//                    true
+//                }
 
                 R.id.action_settings -> {
                     settingClickListener?.onSettingClicked()
@@ -134,6 +134,7 @@ class ArticleListContainerFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        LogUtil.i(logTag(),"Deok 파괴")
         _binding = null
     }
 
