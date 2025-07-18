@@ -3,6 +3,8 @@ package com.devyd.articlelist.ui.child.category.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devyd.articlelist.models.ArticleResult
+import com.devyd.common.util.LogUtil
+import com.devyd.common.util.logTag
 import com.devyd.ui.models.toUiState
 import com.devyd.domain.usecase.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,9 +32,16 @@ class CategoryArticleListViewModel @Inject constructor(private val getArticleUse
                 .fold(
                     onSuccess = { news ->
                         val articlesUiState = news.toUiState()
-                        val newArticlesUiState = articlesUiState.copy(articleUiState = articlesUiState.articleUiState.map { it.copy(category = category) })
-                        ArticleResult.Success(newArticlesUiState) },
-                    onFailure = { err -> ArticleResult.Failure(err.message ?: "unknown error") })
+                        val newArticlesUiState =
+                            articlesUiState.copy(articleUiState = articlesUiState.articleUiState.map {
+                                it.copy(category = category)
+                            })
+                        ArticleResult.Success(newArticlesUiState)
+                    },
+                    onFailure = { err ->
+                        LogUtil.e(logTag(), "getArticleUseCase err : ${err.message}")
+                        ArticleResult.Failure(err.message ?: "unknown error")
+                    })
 
             _articles.update { result }
         }

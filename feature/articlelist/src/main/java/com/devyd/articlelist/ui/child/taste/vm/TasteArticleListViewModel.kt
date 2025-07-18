@@ -73,6 +73,7 @@ class TasteArticleListViewModel @Inject constructor(
                                 TasteArticleResult.Success(newArticlesUiState)
                             },
                             onFailure = { err ->
+                                LogUtil.e(logTag(),"getArticleUseCase err : ${err.message}")
                                 TasteArticleResult.Failure(
                                     err.message ?: "unknown error"
                                 )
@@ -93,7 +94,6 @@ class TasteArticleListViewModel @Inject constructor(
                     // 이 지점에서 CategoryWeight를 설정할 수 있도록 해야함.
                     _articles.update { TasteArticleResult.NeedToCategorySetting }
                 } else {
-                    LogUtil.i(logTag(), "categoryWeightList = ${categoryWeightList}")
                     val articleUiStateList = mutableListOf<ArticleUiState>()
                     val min = categoryWeightList.minOf { it.weight }.coerceAtLeast(Constants.CATEGORY_SLIDER_MIN.toInt())
                     val max = map.values.maxOf { it.size }

@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.devyd.articlelist.ui.child.allcategory.AllArticleListFragment
 import com.devyd.articlelist.ui.parent.TapList.titles
 import com.devyd.articlelist.ui.child.category.CategoryArticleListFragment
 import com.devyd.articlelist.ui.child.taste.TasteArticleListFragment
@@ -20,6 +21,7 @@ class ChildFragmentStateAdapter(private val fragment: Fragment) : FragmentStateA
         val string = fragment.requireContext().getEnglishString(titles[position])
         if (CategoryStrings.contains(string)) return CategoryArticleListFragment.newInstance(string)
         else if(position == 0) return TasteArticleListFragment()
+        else if(position == 1) return AllArticleListFragment()
 
         return CategoryArticleListFragment.newInstance(CategoryStrings.BUSINESS)
     }
