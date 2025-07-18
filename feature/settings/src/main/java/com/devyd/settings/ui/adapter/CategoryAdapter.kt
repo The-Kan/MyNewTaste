@@ -8,9 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.devyd.common.CategoryStrings
 import com.devyd.common.Constants.CATEGORY_SLIDER_MAX
 import com.devyd.common.Constants.CATEGORY_SLIDER_MIN
-import com.devyd.common.Constants.NEWS_API_TOP_HEADLINES_CATEGORY_LIST
 import com.devyd.settings.common.setWidthByLongestItem
 import com.devyd.settings.databinding.ItemCategorySliderBinding
+import com.devyd.ui.extension.getCategorySystemName
 import com.devyd.ui.models.CategoryWeightUiState
 import com.google.android.material.slider.Slider
 
@@ -50,7 +50,10 @@ class CategoryAdapter(
 
             actvCategory.setAdapter(dropdownAdapter)
             actvCategory.setWidthByLongestItem(categories)
-            actvCategory.setText(getCategorySystemName(categoryWeightUiState.category), false)
+            actvCategory.setText(
+                itemView.context.getCategorySystemName(categoryWeightUiState.category),
+                false
+            )
 
 
             actvCategory.setOnItemClickListener { parent, _, position, _ ->
@@ -79,11 +82,6 @@ class CategoryAdapter(
             btnDelete.setOnClickListener {
                 onDelete(categoryWeightUiState)
             }
-        }
-
-        private fun getCategorySystemName(categoryFromLocal: String): String {
-            val categoryPosition = CategoryStrings.validValues.indexOf(categoryFromLocal)
-            return NEWS_API_TOP_HEADLINES_CATEGORY_LIST.map { itemView.context.getString(it) }[categoryPosition]
         }
     }
 

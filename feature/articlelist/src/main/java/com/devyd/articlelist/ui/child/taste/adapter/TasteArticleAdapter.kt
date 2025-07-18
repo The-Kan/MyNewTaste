@@ -6,19 +6,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.devyd.articlelist.R
-import com.devyd.articlelist.databinding.ArticleBinding
+import com.devyd.articlelist.databinding.CategoryArticleBinding
+import com.devyd.ui.extension.getCategorySystemName
 import com.devyd.ui.models.ArticleUiState
 
 class TasteArticleAdapter(
     private var articleUiStateList: List<ArticleUiState>,
     private val onClick: (ArticleUiState) -> Unit
-) : RecyclerView.Adapter<TasteArticleAdapter.ArticleViewHolder>() {
+) : RecyclerView.Adapter<TasteArticleAdapter.CategoryArticleViewHolder>() {
 
-    inner class ArticleViewHolder(
-        private val binding: ArticleBinding
+    inner class CategoryArticleViewHolder(
+        private val binding: CategoryArticleBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(articleUiState: ArticleUiState) {
             binding.title.text = articleUiState.title
+            binding.category.text = itemView.context.getCategorySystemName(articleUiState.category!!)
             // 예시: Glide 등을 이용해 실제 URL 로드 가능
             Glide.with(binding.thumbnail.context)
                 .load(articleUiState.urlToImage)
@@ -30,16 +32,16 @@ class TasteArticleAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
-        val binding = ArticleBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryArticleViewHolder {
+        val binding = CategoryArticleBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return ArticleViewHolder(binding)
+        return CategoryArticleViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryArticleViewHolder, position: Int) {
         holder.bind(articleUiStateList[position])
     }
 

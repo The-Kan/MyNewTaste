@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+        <color name="my_light_primary">#6200EE</color>
+        <color name="my_light_on_primary">#FFFFFF</color>
+
+        <color name="my_light_secondary">#03DAC6</color>
+        <color name="my_light_on_secondary">#000000</color>
+
+        <color name="my_light_background">#FFFFFF</color>
+        <color name="my_light_on_background">#000000</color>
+
+        <color name="my_light_surface">#F5F5F5</color>
+        <color name="my_light_on_surface">#000000</color>
+
+        <color name="errorColor">#B00020</color>
+        <color name="warningColor">#FFA000</color>
+
+        <color name="categoryColor">#9575CD</color>
+        <color name="shadowCategoryColor">#8B000000</color>
+
+</resources>
