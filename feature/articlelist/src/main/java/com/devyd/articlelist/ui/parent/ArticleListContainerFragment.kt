@@ -44,7 +44,7 @@ class ArticleListContainerFragment : Fragment() {
         val viewPager = binding.viewPager
         val adapter = ChildFragmentStateAdapter(this)
         viewPager.adapter = adapter
-        viewPager.offscreenPageLimit = adapter.itemCount
+        viewPager.offscreenPageLimit = 1
 
         val tabLayout = binding.tabLayout
 
