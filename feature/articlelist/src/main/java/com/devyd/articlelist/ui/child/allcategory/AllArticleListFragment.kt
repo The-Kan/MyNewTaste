@@ -90,7 +90,13 @@ class AllArticleListFragment : Fragment() {
     }
 
     private fun renderState(isLoading: Boolean, isFail: Boolean, isSuccess: Boolean) {
-        binding.progressLoading.visibility = if (isLoading) View.VISIBLE else View.GONE
+        binding.airplaneProgress.visibility = if (isLoading) {
+            binding.airplaneProgress.playAnimation()
+            View.VISIBLE
+        } else {
+            binding.airplaneProgress.cancelAnimation()
+            View.GONE
+        }
         binding.btnRetry.visibility = if (isFail) View.VISIBLE else View.GONE
         binding.swipeRefreshLayout.visibility = if (isSuccess) View.VISIBLE else View.GONE
     }

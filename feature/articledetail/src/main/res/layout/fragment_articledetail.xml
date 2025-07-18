@@ -113,7 +113,24 @@
                 android:lineSpacingExtra="4dp"
                 android:textColor="@android:color/black" />
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:gravity="end">
 
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/saveLotti"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:lottie_fileName="bookmark_icon_lotti.json"
+                    app:lottie_autoPlay="false"
+                    app:lottie_loop="false" />
+            </LinearLayout>
         </LinearLayout>
+
+
+
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -70,6 +70,21 @@ class ArticleDetailFragment : Fragment() {
                     linksClickable = true
                     movementMethod = LinkMovementMethod.getInstance()
                 }
+
+                var isBookmarked = false
+
+                saveLotti.setOnClickListener {
+                    if (!isBookmarked) {
+                        saveLotti.setMinAndMaxProgress(0f, 1f)
+                        saveLotti.speed = 1.2f
+                        saveLotti.playAnimation()
+                        isBookmarked = true
+                    } else {
+                        saveLotti.cancelAnimation()
+                        saveLotti.progress = 0f
+                        isBookmarked = false
+                    }
+                }
             }
         }
     }

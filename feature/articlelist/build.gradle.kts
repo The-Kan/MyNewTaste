@@ -63,4 +63,5 @@ dependencies {
     implementation(libs.glide)
 
     implementation(libs.androidx.swiperefreshlayouth)
+    implementation(libs.lottie)
 }
