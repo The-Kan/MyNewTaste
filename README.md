@@ -22,8 +22,8 @@
 
 ---
 
-## 🖼️ 스크린샷 (추가 예정)
-
+## 🖼️ 스크린샷
+![Image](https://github.com/user-attachments/assets/8cd5008c-6f34-47b1-ba55-62bbff1f11c8)
 
 ---
 
