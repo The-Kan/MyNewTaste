@@ -37,19 +37,6 @@ class CategoryAdapter(
         private val btnDelete = binding.btnDelete
 
         fun bind(categoryWeightUiState: CategoryWeightUiState) {
-            slider.apply {
-                valueFrom = CATEGORY_SLIDER_MIN
-                valueTo = CATEGORY_SLIDER_MAX
-            }
-
-            var dropdownAdapter = ArrayAdapter(
-                itemView.context,
-                android.R.layout.simple_list_item_1,
-                categories
-            )
-
-            actvCategory.setAdapter(dropdownAdapter)
-            actvCategory.setWidthByLongestItem(categories)
             actvCategory.setText(
                 itemView.context.getCategorySystemName(categoryWeightUiState.category),
                 false
@@ -88,6 +75,22 @@ class CategoryAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val binding =
             ItemCategorySliderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val dropdownAdapter = ArrayAdapter(
+            parent.context,
+            android.R.layout.simple_list_item_1,
+            categories
+        )
+        val slider = binding.sliderWeight
+        val actvCategory = binding.actvCategory
+
+        slider.apply {
+            valueFrom = CATEGORY_SLIDER_MIN
+            valueTo = CATEGORY_SLIDER_MAX
+        }
+
+        actvCategory.setAdapter(dropdownAdapter)
+        actvCategory.setWidthByLongestItem(categories)
+
         return VH(binding)
     }
 
