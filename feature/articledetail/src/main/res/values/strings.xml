@@ -8,4 +8,7 @@
     <string name="published_at">발행일 : %1$s</string>
     <string name="author">%1$s 기자</string>
     <string name="from">발간처 : %1$s</string>
+    <string name="load_fail">기사를 표시할 수 없습니다.</string>
+    <string name="bookmark_fail">저장이 실패하였습니다.</string>
+    <string name="unbookmark_fail">삭제가 실패하였습니다.</string>
 </resources>

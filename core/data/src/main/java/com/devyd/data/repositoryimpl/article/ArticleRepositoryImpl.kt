@@ -1,4 +1,4 @@
-package com.devyd.data.repositoryimpl
+package com.devyd.data.repositoryimpl.article
 
 
 import com.devyd.data.datasource.ArticleLocalDataSource

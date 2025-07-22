@@ -9,4 +9,7 @@ Furthermore, the direct and indirect impacts of climate change have far-reaching
     <string name="published_at">Published At : %1$s</string>
     <string name="author">%1$s author</string>
     <string name="from">from : %1$s</string>
+    <string name="load_fail">The article cannot be displayed.</string>
+    <string name="bookmark_fail">Bookmarking failed.</string>
+    <string name="unbookmark_fail">Failed to remove bookmark.</string>
 </resources>

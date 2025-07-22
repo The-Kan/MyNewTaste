@@ -4,14 +4,20 @@ import android.content.Context
 import androidx.room.Room
 import com.devyd.data.datasource.ArticleLocalDataSource
 import com.devyd.data.datasource.ArticleRemoteDataSource
+import com.devyd.data.datasource.BookmarkedArticleLocalDataSource
 import com.devyd.data.datasource.CategoryWeightLocalDataSource
-import com.devyd.data.repositoryimpl.ArticleRepositoryImpl
+import com.devyd.data.repositoryimpl.article.ArticleRepositoryImpl
+import com.devyd.data.repositoryimpl.article.BookmarkedArticleRepositoryImpl
 import com.devyd.data.repositoryimpl.categoryweight.DBCategoryWeightRepository
 import com.devyd.domain.repository.ArticleRepository
+import com.devyd.domain.repository.BookmarkedArticleRepository
 import com.devyd.domain.repository.CategoryWeightRepository
 import com.devyd.local.article.dao.ArticlesDao
+import com.devyd.local.article.dao.BookMarkedArticleDao
 import com.devyd.local.article.database.ArticleDatabase
 import com.devyd.local.article.impl.RoomArticleLocalDataSource
+import com.devyd.local.article.impl.RoomBookmarkedArticleLocalDataSource
+import com.devyd.local.bookmarkedarticle.database.BookMarkedArticleDatabase
 import com.devyd.local.categoryweight.dao.CategoryWeightDao
 import com.devyd.local.categoryweight.database.CategoryWeightDatabase
 import com.devyd.local.categoryweight.impl.RoomCategoryWeightLocalDataSource
@@ -27,6 +33,38 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object HiltModule {
+    @Provides
+    @Singleton
+    fun provideBookmarkedArticleRepository(
+        bookmarkedArticleLocalDataSource: BookmarkedArticleLocalDataSource
+    ): BookmarkedArticleRepository =
+        BookmarkedArticleRepositoryImpl(bookmarkedArticleLocalDataSource)
+
+    @Provides
+    @Singleton
+    fun provideBookmarkedArticleLocalDataSource(
+        bookMarkedArticleDao: BookMarkedArticleDao
+    ): BookmarkedArticleLocalDataSource =
+        RoomBookmarkedArticleLocalDataSource(bookMarkedArticleDao)
+
+    @Provides
+    @Singleton
+    fun provideBookMarkedArticleDatabase(
+        @ApplicationContext context: Context
+    ): BookMarkedArticleDatabase {
+        return Room.databaseBuilder(
+            context,
+            BookMarkedArticleDatabase::class.java,
+            "bookMarked_article_db"
+        ).build()
+    }
+
+    @Provides
+    fun provideBookMarkedArticleDao(database: BookMarkedArticleDatabase): BookMarkedArticleDao {
+        return database.bookMarkedArticleDao()
+    }
+
+
     @Provides
     @Singleton
     fun provideArticleRepository(

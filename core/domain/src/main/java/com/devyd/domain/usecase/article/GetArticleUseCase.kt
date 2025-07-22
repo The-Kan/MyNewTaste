@@ -1,4 +1,4 @@
-package com.devyd.domain.usecase
+package com.devyd.domain.usecase.article
 
 import com.devyd.domain.models.Articles
 import com.devyd.domain.repository.ArticleRepository

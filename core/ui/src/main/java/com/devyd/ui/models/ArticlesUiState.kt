@@ -55,3 +55,19 @@ fun Source.toUiState(): SourceUiState = SourceUiState(
     id = id,
     name = name
 )
+
+fun ArticleUiState.toDomain(): Article = Article(
+    source = sourceUiState.toDomain(),
+    author = author,
+    title = title,
+    description = description,
+    url = url,
+    urlToImage = urlToImage,
+    publishedAt = publishedAt,
+    content = content
+)
+
+fun SourceUiState.toDomain(): Source = Source(
+    id = id,
+    name = name
+)

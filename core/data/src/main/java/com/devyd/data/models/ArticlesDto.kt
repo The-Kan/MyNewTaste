@@ -48,3 +48,20 @@ fun SourceDto.toDomain(): Source = Source(
     id   = id,
     name = name
 )
+
+
+fun Article.toDto(): ArticleDto = ArticleDto(
+    sourceDto       = source.toDto(),
+    author       = author,
+    title        = title,
+    description  = description,
+    url          = url,
+    urlToImage   = urlToImage,
+    publishedAt  = publishedAt,
+    content      = content
+)
+
+fun Source.toDto(): SourceDto = SourceDto(
+    id   = id,
+    name = name
+)

@@ -10,7 +10,7 @@ import com.devyd.common.CategoryStrings
 import com.devyd.common.Constants
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
-import com.devyd.domain.usecase.GetArticleUseCase
+import com.devyd.domain.usecase.article.GetArticleUseCase
 import com.devyd.domain.usecase.categoryweight.GetCategoryWeightsUseCase
 import com.devyd.ui.models.CategoryWeightUiStateResult
 import dagger.hilt.android.lifecycle.HiltViewModel

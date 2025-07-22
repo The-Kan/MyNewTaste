@@ -6,7 +6,7 @@ import com.devyd.articlelist.models.ArticleResult
 import com.devyd.common.CategoryStrings
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
-import com.devyd.domain.usecase.GetArticleUseCase
+import com.devyd.domain.usecase.article.GetArticleUseCase
 import com.devyd.ui.models.ArticleUiState
 import com.devyd.ui.models.ArticlesUiState
 import com.devyd.ui.models.toUiState

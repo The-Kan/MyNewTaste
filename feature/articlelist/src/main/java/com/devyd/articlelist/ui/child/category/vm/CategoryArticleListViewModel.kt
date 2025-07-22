@@ -6,7 +6,7 @@ import com.devyd.articlelist.models.ArticleResult
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.ui.models.toUiState
-import com.devyd.domain.usecase.GetArticleUseCase
+import com.devyd.domain.usecase.article.GetArticleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
