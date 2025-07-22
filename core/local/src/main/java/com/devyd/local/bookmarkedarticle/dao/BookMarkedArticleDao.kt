@@ -18,4 +18,14 @@ interface BookMarkedArticleDao {
     """
     )
     suspend fun deleteByTitleAndPublishedAt(title: String, publishedAt: String): Int
+
+    @Query(
+        """
+        SELECT EXISTS(
+            SELECT 1 FROM bookmarked_article
+            WHERE title = :title AND publishedAt = :publishedAt
+        )
+    """
+    )
+    suspend fun isBookmarked(title: String, publishedAt: String): Boolean
 }

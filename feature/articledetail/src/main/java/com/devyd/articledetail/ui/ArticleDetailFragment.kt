@@ -18,6 +18,7 @@ import com.devyd.articledetail.R
 import com.devyd.articledetail.databinding.FragmentArticledetailBinding
 import com.devyd.articledetail.models.ArticleUiStateResult
 import com.devyd.articledetail.models.BookmarkResult
+import com.devyd.articledetail.models.IsBookMarkedResult
 import com.devyd.articledetail.models.UnBookMarkResult
 import com.devyd.articledetail.vm.ArticleDetailViewModel
 import com.devyd.common.Constants
@@ -36,9 +37,7 @@ class ArticleDetailFragment : Fragment() {
     private val viewModel by viewModels<ArticleDetailViewModel>()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentArticledetailBinding.inflate(inflater, container, false)
 
@@ -47,8 +46,8 @@ class ArticleDetailFragment : Fragment() {
             articleUiState =
                 requireArguments().getParcelable(Constants.ARTICLE, ArticleUiState::class.java)
         } else {
-            @Suppress("DEPRECATION")
-            articleUiState = requireArguments().getParcelable(Constants.ARTICLE) as? ArticleUiState
+            @Suppress("DEPRECATION") articleUiState =
+                requireArguments().getParcelable(Constants.ARTICLE) as? ArticleUiState
         }
 
         viewModel.setArticleUiState(articleUiState)
@@ -83,12 +82,26 @@ class ArticleDetailFragment : Fragment() {
 
             is ArticleUiStateResult.Success -> {
                 val articleUiState = articleUiStateResult.articleUiState
+                viewModel.isBookMarked(articleUiState)
+
+                var isBookmarked = false
+
+                viewLifecycleOwner.lifecycleScope.launch {
+                    repeatOnLifecycle(Lifecycle.State.STARTED) {
+                        when (val result = viewModel.isBookMarkedResult.first()) {
+                            is IsBookMarkedResult.Failure -> {}
+                            is IsBookMarkedResult.Success -> {
+                                isBookmarked = result.isBookmarked
+                                binding.saveLotti.progress = if (isBookmarked) 1f else 0f
+                            }
+                        }
+                    }
+                }
+
 
                 binding.apply {
                     articleUiState.also {
-                        Glide.with(headerImage.context)
-                            .load(it.urlToImage)
-                            .centerCrop()
+                        Glide.with(headerImage.context).load(it.urlToImage).centerCrop()
                             .into(headerImage)
 
                         articlePublishedAt.text = getString(R.string.published_at, it.publishedAt)
@@ -110,34 +123,15 @@ class ArticleDetailFragment : Fragment() {
                         }
 
                         var isBlocked = false
-                        var isBookmarked = false
 
-                        // 저장을 시작하면, 저장 기능을 잠시 막아야함. 그리고, isBookmarked 검사 기능이 있어야함.
                         saveLotti.setOnClickListener {
                             if (!isBlocked) {
                                 isBlocked = true
 
-                                if(!isBookmarked){
+                                if (!isBookmarked) {
                                     saveLotti.setMinAndMaxProgress(0f, 1f)
                                     saveLotti.speed = 1.2f
                                     saveLotti.playAnimation()
-
-                                    viewLifecycleOwner.lifecycleScope.launch {
-                                        repeatOnLifecycle(Lifecycle.State.STARTED){
-                                            val result = viewModel.bookMarkArticleResult.first()
-                                            when(result){
-                                                is BookmarkResult.Failure -> {
-                                                    Toast.makeText(context, R.string.bookmark_fail, Toast.LENGTH_SHORT).show()
-                                                }
-                                                is BookmarkResult.Success -> {
-                                                    LogUtil.i(logTag(),"Deok 저장 ${result.idx}")
-                                                    isBookmarked = true
-                                                    isBlocked = false
-                                                }
-
-                                            }
-                                        }
-                                    }
 
                                     viewModel.bookMarkArticle(articleUiState)
 
@@ -145,24 +139,53 @@ class ArticleDetailFragment : Fragment() {
                                     saveLotti.cancelAnimation()
                                     saveLotti.progress = 0f
 
-                                    viewLifecycleOwner.lifecycleScope.launch {
-                                        repeatOnLifecycle(Lifecycle.State.STARTED) {
-                                            val result = viewModel.unBookMarkArticleResult.first()
-                                            when(result) {
-                                                is UnBookMarkResult.Failure -> {
-                                                    Toast.makeText(context, R.string.unbookmark_fail, Toast.LENGTH_SHORT).show()
-                                                }
-                                                is UnBookMarkResult.Success -> {
-                                                    LogUtil.i(logTag(),"Deok 삭제 ${result.num}")
-                                                    isBookmarked = false
-                                                    isBlocked = false
-                                                }
+                                    viewModel.unBookMarkArticle(articleUiState)
+                                }
+                            }
+                        }
+
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.bookMarkArticleResult
+                                    .collect { result ->
+                                        when (result) {
+                                            is BookmarkResult.Failure -> {
+                                                Toast.makeText(
+                                                    context,
+                                                    R.string.bookmark_fail,
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+
+                                            is BookmarkResult.Success -> {
+                                                isBookmarked = true
+                                                isBlocked = false
                                             }
                                         }
                                     }
+                            }
+                        }
 
-                                    viewModel.unBookMarkArticle(articleUiState)
-                                }
+
+                        viewLifecycleOwner.lifecycleScope.launch {
+                            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                                viewModel.unBookMarkArticleResult
+                                    .collect { result ->
+                                        when (result) {
+                                            is UnBookMarkResult.Failure -> {
+                                                Toast.makeText(
+                                                    context,
+                                                    R.string.unbookmark_fail,
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+
+                                            is UnBookMarkResult.Success -> {
+                                                isBookmarked = false
+                                                isBlocked = false
+                                            }
+                                        }
+                                    }
                             }
                         }
                     }

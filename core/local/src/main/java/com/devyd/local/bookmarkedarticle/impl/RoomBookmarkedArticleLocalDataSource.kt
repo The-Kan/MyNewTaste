@@ -19,4 +19,11 @@ class RoomBookmarkedArticleLocalDataSource @Inject constructor(
             articleDto.publishedAt
         )
     }
+
+    override suspend fun isBookmarked(articleDto: ArticleDto): Boolean {
+        return bookMarkedArticleDao.isBookmarked(
+            articleDto.title,
+            articleDto.publishedAt
+        )
+    }
 }

@@ -18,6 +18,10 @@ class BookmarkedArticleRepositoryImpl @Inject constructor(
         return bookmarkedArticleLocalDataSource.unBookmark(article.toDto())
     }
 
+    override suspend fun isBookMarked(article: Article): Boolean {
+        return bookmarkedArticleLocalDataSource.isBookmarked(article.toDto())
+    }
+
     override suspend fun getArticles(): Articles {
         TODO("Not yet implemented")
     }
