@@ -46,7 +46,8 @@ class ArticleDetailFragment : Fragment() {
             articleUiState =
                 requireArguments().getParcelable(Constants.ARTICLE, ArticleUiState::class.java)
         } else {
-            @Suppress("DEPRECATION") articleUiState =
+            @Suppress("DEPRECATION")
+            articleUiState =
                 requireArguments().getParcelable(Constants.ARTICLE) as? ArticleUiState
         }
 
