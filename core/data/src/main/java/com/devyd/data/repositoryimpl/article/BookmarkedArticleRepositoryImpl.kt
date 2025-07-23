@@ -1,6 +1,7 @@
 package com.devyd.data.repositoryimpl.article
 
 import com.devyd.data.datasource.BookmarkedArticleLocalDataSource
+import com.devyd.data.models.toDomain
 import com.devyd.data.models.toDto
 import com.devyd.domain.models.Article
 import com.devyd.domain.models.Articles
@@ -23,6 +24,6 @@ class BookmarkedArticleRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getArticles(): Articles {
-        TODO("Not yet implemented")
+        return bookmarkedArticleLocalDataSource.getArticlesDto().toDomain()
     }
 }

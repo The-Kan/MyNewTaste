@@ -2,7 +2,9 @@ package com.devyd.local.article.impl
 
 import com.devyd.data.datasource.BookmarkedArticleLocalDataSource
 import com.devyd.data.models.ArticleDto
+import com.devyd.data.models.ArticlesDto
 import com.devyd.local.article.dao.BookMarkedArticleDao
+import com.devyd.local.bookmarkedarticle.models.toDto
 import com.devyd.local.bookmarkedarticle.models.toEntity
 import javax.inject.Inject
 
@@ -25,5 +27,11 @@ class RoomBookmarkedArticleLocalDataSource @Inject constructor(
             articleDto.title,
             articleDto.publishedAt
         )
+    }
+
+    override suspend fun getArticlesDto(): ArticlesDto {
+        val list = bookMarkedArticleDao.getAll().map { it.toDto() }
+
+        return ArticlesDto(status = "", totalResults = 0, articleEntities = list)
     }
 }

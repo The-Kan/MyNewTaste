@@ -6,9 +6,10 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.devyd.articlelist.ui.child.allcategory.AllArticleListFragment
-import com.devyd.articlelist.ui.parent.TapList.titles
+import com.devyd.articlelist.ui.child.bookmark.BookmarkArticleListFragment
 import com.devyd.articlelist.ui.child.category.CategoryArticleListFragment
 import com.devyd.articlelist.ui.child.taste.TasteArticleListFragment
+import com.devyd.articlelist.ui.parent.TapList.titles
 import com.devyd.common.CategoryStrings
 import java.util.Locale
 
@@ -20,8 +21,9 @@ class ChildFragmentStateAdapter(private val fragment: Fragment) : FragmentStateA
     override fun createFragment(position: Int): Fragment {
         val string = fragment.requireContext().getEnglishString(titles[position])
         if (CategoryStrings.contains(string)) return CategoryArticleListFragment.newInstance(string)
-        else if(position == 0) return TasteArticleListFragment()
-        else if(position == 1) return AllArticleListFragment()
+        else if (position == 0) return TasteArticleListFragment()
+        else if (position == 1) return AllArticleListFragment()
+        else if (position == titles.lastIndex) return BookmarkArticleListFragment()
 
         return CategoryArticleListFragment.newInstance(CategoryStrings.BUSINESS)
     }

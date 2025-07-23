@@ -28,4 +28,7 @@ interface BookMarkedArticleDao {
     """
     )
     suspend fun isBookmarked(title: String, publishedAt: String): Boolean
+
+    @Query("SELECT * FROM bookmarked_article")
+    suspend fun getAll(): List<BookMarkedArticleEntity>
 }
