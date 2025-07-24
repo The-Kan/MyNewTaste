@@ -1,11 +1,13 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.hilt.android.plugin)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.parcelize)
 }
 
 android {
-    namespace = "com.devyd.ui"
+    namespace = "com.devyd.allcategoryarticles"
     compileSdk = 35
 
     defaultConfig {
@@ -38,13 +40,28 @@ android {
 }
 
 dependencies {
-    implementation(project(":core:domain"))
     implementation(project(":core:common"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:ui"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.viewpager2)
+
+    implementation(libs.androidx.recyclerview)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.compiler)
+
+    implementation(libs.glide)
+
+    implementation(libs.androidx.swiperefreshlayouth)
+    implementation(libs.lottie)
 }

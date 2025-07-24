@@ -21,7 +21,6 @@ dependencyResolutionManagement {
 
 rootProject.name = "MyNewsTaste"
 include(":app")
-include(":feature:articlelist")
 include(":feature:settings")
 include(":feature:articledetail")
 include(":core:local")
@@ -31,3 +30,7 @@ include(":core:domain")
 include(":core:common")
 include(":core:di")
 include(":core:ui")
+include(":feature:allcategoryarticles")
+include(":feature:bookmarkarticles")
+include(":feature:categoryarticles")
+include(":feature:tastearticles")

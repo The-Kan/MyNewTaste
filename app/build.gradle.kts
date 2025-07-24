@@ -45,9 +45,12 @@ dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:di"))
     implementation(project(":core:ui"))
-    implementation(project(":feature:articlelist"))
     implementation(project(":feature:articledetail"))
     implementation(project(":feature:settings"))
+    implementation(project(":feature:allcategoryarticles"))
+    implementation(project(":feature:bookmarkarticles"))
+    implementation(project(":feature:categoryarticles"))
+    implementation(project(":feature:tastearticles"))
 
 
 

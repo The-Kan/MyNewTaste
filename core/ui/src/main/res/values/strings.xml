@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_home">MyNewsTaste</string>
+    <string name="tab_all">종합 뉴스</string>
+    <string name="tab_favorites">찜</string>
+    <string name="top_toolbar_title">Custom Your Taste</string>
+    <string name="search">검색</string>
+    <string name="settings">설정</string>
+</resources>

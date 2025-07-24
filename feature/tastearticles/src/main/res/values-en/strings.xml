@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="category_setting_guide">Set your category preferences to update articles!</string>
+    <string name="category_setting">Category Setting</string>
+</resources>

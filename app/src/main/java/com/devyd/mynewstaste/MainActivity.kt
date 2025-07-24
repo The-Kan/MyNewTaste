@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.devyd.articlelist.ui.parent.ArticleListContainerFragment
+import com.devyd.mynewstaste.tablayout.ArticleListContainerFragment
 import com.devyd.common.Constants
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
@@ -47,7 +47,6 @@ class MainActivity : AppCompatActivity() {
             .fragments
             .filterIsInstance<ArticleListContainerFragment>()
             .firstOrNull()
-
 
         navHost.childFragmentManager.registerFragmentLifecycleCallbacks(
             object : FragmentManager.FragmentLifecycleCallbacks() {

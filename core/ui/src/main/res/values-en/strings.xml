@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tab_home">MyNewsTaste</string>
+    <string name="tab_all">All News</string>
+    <string name="tab_favorites">Favorites</string>
+    <string name="top_toolbar_title">Custom Your Taste</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
+</resources>
