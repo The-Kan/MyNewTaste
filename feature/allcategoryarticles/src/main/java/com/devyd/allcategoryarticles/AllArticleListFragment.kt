@@ -27,7 +27,7 @@ class AllArticleListFragment : Fragment() {
 
     private val viewModel: AllArticleListViewModel by viewModels<AllArticleListViewModel>()
 
-
+    // view
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
