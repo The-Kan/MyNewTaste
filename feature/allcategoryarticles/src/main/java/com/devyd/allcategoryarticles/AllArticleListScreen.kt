@@ -233,19 +233,21 @@ fun CustomAsyncImage(
         when (state) {
             is AsyncImagePainter.State.Error -> {
                 Image(
-                    modifier = modifier,
+                    modifier = modifier
+                        .fillMaxSize(),
                     painter = errorPainter,
                     contentDescription = "error image",
-                    contentScale = ContentScale.Inside,
+                    contentScale = ContentScale.Crop,
                 )
             }
 
             is AsyncImagePainter.State.Success -> {
                 Image(
-                    modifier = modifier,
+                    modifier = modifier
+                        .fillMaxSize(),
                     painter = painter,
                     contentDescription = "thumbnail",
-                    contentScale = ContentScale.Inside,
+                    contentScale = ContentScale.Crop,
                 )
             }
 
