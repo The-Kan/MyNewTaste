@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import com.devyd.mynewstaste.tablayout.ArticleListContainerFragment
 import com.devyd.common.Constants
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.mynewstaste.databinding.ActivityMainBinding
+import com.devyd.mynewstaste.tablayout.ComposeArticleListContainerFragment
 import com.devyd.settings.ui.CategorySettingsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         val articleListContainerFragment = navHost
             .childFragmentManager
             .fragments
-            .filterIsInstance<ArticleListContainerFragment>()
+            .filterIsInstance<ComposeArticleListContainerFragment>()
             .firstOrNull()
 
         navHost.childFragmentManager.registerFragmentLifecycleCallbacks(
@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
                     view: View,
                     savedInstanceState: Bundle?
                 ) {
-                    if(fragment is ArticleListContainerFragment){
+                    if(fragment is ComposeArticleListContainerFragment){
                         fragment.apply {
                             setArticleClickListener { articleUiState ->
 
