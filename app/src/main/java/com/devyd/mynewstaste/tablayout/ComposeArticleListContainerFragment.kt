@@ -43,11 +43,7 @@ class ComposeArticleListContainerFragment : Fragment() {
         val viewPager = binding.viewPager
 
 
-        val onArticleClick : (ArticleUiState) -> Unit = {
-            articleClickListener?.onArticleClicked(it)
-        }
-
-        val adapter = ComposeChildFragmentStateAdapter(this, onArticleClick)
+        val adapter = ComposeChildFragmentStateAdapter(this)
         viewPager.adapter = adapter
         viewPager.offscreenPageLimit = 1
 

@@ -5,19 +5,17 @@ import android.content.res.Configuration
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.devyd.allcategoryarticles.AllArticleListFragment
 import com.devyd.allcategoryarticles.ComposeAllArticleListFragment
 import com.devyd.bookmarkarticles.BookmarkArticleListFragment
 import com.devyd.categoryarticles.CategoryArticleListFragment
+import com.devyd.categoryarticles.ComposeCategoryArticleListFragment
 import com.devyd.common.CategoryStrings
 import com.devyd.mynewstaste.tablayout.TapList.titles
 import com.devyd.tastearticles.TasteArticleListFragment
-import com.devyd.ui.models.ArticleUiState
 import java.util.Locale
 
 class ComposeChildFragmentStateAdapter(
     private val fragment: Fragment,
-    private val onArticleClick: (ArticleUiState) -> Unit
 ) : FragmentStateAdapter(fragment) {
 
 
@@ -25,9 +23,11 @@ class ComposeChildFragmentStateAdapter(
 
     override fun createFragment(position: Int): Fragment {
         val string = fragment.requireContext().getEnglishString(titles[position])
-        if (CategoryStrings.contains(string)) return CategoryArticleListFragment.newInstance(string)
+        if (CategoryStrings.contains(string)) return ComposeCategoryArticleListFragment.newInstance(
+            string
+        )
         else if (position == 0) return TasteArticleListFragment()
-        else if (position == 1) return ComposeAllArticleListFragment(onArticleClick)
+        else if (position == 1) return ComposeAllArticleListFragment()
         else if (position == titles.lastIndex) return BookmarkArticleListFragment()
 
         return CategoryArticleListFragment.newInstance(CategoryStrings.BUSINESS)

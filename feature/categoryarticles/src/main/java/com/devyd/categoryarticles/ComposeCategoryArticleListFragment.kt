@@ -1,4 +1,4 @@
-package com.devyd.allcategoryarticles
+package com.devyd.categoryarticles
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,21 @@ import com.devyd.ui.models.ArticleUiState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ComposeAllArticleListFragment : Fragment() {
+class ComposeCategoryArticleListFragment : Fragment() {
+
+    private val category: String by lazy {
+        arguments?.getString(CATEGORY) ?: "default"
+    }
+
+    companion object {
+        fun newInstance(category: String): ComposeCategoryArticleListFragment {
+            return ComposeCategoryArticleListFragment().apply {
+                arguments = bundleOf(CATEGORY to category)
+            }
+        }
+
+        private const val CATEGORY = "category"
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,9 +38,10 @@ class ComposeAllArticleListFragment : Fragment() {
             parentFragmentManager.setFragmentResult(Constants.ARTICLE_CLICK, dataBundle)
         }
 
+
         return ComposeView(requireContext()).apply {
             setContent {
-                AllArticleListScreen(onArticleClick)
+                CategoryArticleListScreen(category, onArticleClick)
             }
         }
     }

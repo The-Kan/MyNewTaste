@@ -52,6 +52,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation(libs.lottie)
+    implementation(libs.lottie.compose)
+
     // platform
     // Gradle이 그 BOM POM 안의 <dependencyManagement> 제약을 가져와서
     //Compose 관련 모듈(예: ui, material3, ui-tooling 등)에 버전을 명시하지 않아도

@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.hilt.android.plugin)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.parcelize)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -64,4 +65,28 @@ dependencies {
 
     implementation(libs.androidx.swiperefreshlayouth)
     implementation(libs.lottie)
+    implementation(libs.lottie.compose)
+
+    // platform
+    // Gradle이 그 BOM POM 안의 <dependencyManagement> 제약을 가져와서
+    //Compose 관련 모듈(예: ui, material3, ui-tooling 등)에 버전을 명시하지 않아도
+    //BOM에 정의된 버전을 자동으로 적용
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.livedata)
+    implementation(libs.androidx.compose.viewmodel)
+    implementation(libs.hilt.android.compose)
+
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
+
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    androidTestImplementation(libs.compose.ui.test.junit4)
+
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network)
 }
