@@ -46,6 +46,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.devyd.allcategoryarticles.vm.ComposeAllArticleListViewModel
+import com.devyd.ui.animation.ShimmerRect
 import com.devyd.ui.models.ArticleResult
 import com.devyd.ui.models.ArticleUiState
 

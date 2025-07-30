@@ -1,4 +1,4 @@
-package com.devyd.allcategoryarticles
+package com.devyd.ui.animation
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.FastOutSlowInEasing
