@@ -26,8 +26,8 @@ class ComposeChildFragmentStateAdapter(
     override fun createFragment(position: Int): Fragment {
         val string = fragment.requireContext().getEnglishString(titles[position])
         if (CategoryStrings.contains(string)) return CategoryArticleListFragment.newInstance(string)
-        else if (position == 1) return TasteArticleListFragment()
-        else if (position == 0) return ComposeAllArticleListFragment(onArticleClick)
+        else if (position == 0) return TasteArticleListFragment()
+        else if (position == 1) return ComposeAllArticleListFragment(onArticleClick)
         else if (position == titles.lastIndex) return BookmarkArticleListFragment()
 
         return CategoryArticleListFragment.newInstance(CategoryStrings.BUSINESS)

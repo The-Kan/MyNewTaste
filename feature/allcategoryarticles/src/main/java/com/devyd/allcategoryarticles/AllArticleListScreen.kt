@@ -25,9 +25,6 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -57,9 +54,7 @@ import com.devyd.ui.models.ArticleUiState
 fun AllArticleListScreen(
     onArticleClick: (ArticleUiState) -> Unit
 ) {
-
     val viewModel = hiltViewModel<ComposeAllArticleListViewModel>()
-    var isRefreshing by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -74,7 +69,6 @@ fun AllArticleListScreen(
         when (val articleResult = articleState) {
 
             is ArticleResult.Failure -> {
-                isRefreshing = false
                 Button(
                     onClick = {
                         viewModel.refreshArticle(false)
@@ -85,7 +79,6 @@ fun AllArticleListScreen(
             }
 
             ArticleResult.Idle -> {
-                isRefreshing = false
             }
 
             is ArticleResult.Loading -> {
@@ -97,11 +90,11 @@ fun AllArticleListScreen(
 
             is ArticleResult.Success -> {
                 RefreshArticleList(
-                    articleResult.articlesUiState.articleUiState,
+                    articleUiStateList = articleResult.articlesUiState.articleUiState,
                     onRefresh = {
                         viewModel.refreshArticle(true)
                     },
-                    onArticleClick
+                    onArticleClick = onArticleClick
                 )
             }
         }
@@ -144,23 +137,20 @@ fun AirplaneProgressLottie(
 @Composable
 fun RefreshArticleList(
     articleUiStateList: List<ArticleUiState>,
-//    isRefreshing: Boolean,
+    isRefreshing: Boolean = false,
     onRefresh: () -> Unit,
-//    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
     onArticleClick: (ArticleUiState) -> Unit
 ) {
     val refreshState = rememberPullToRefreshState()
-    var isRefreshing by remember { mutableStateOf(false) }
-
 
     PullToRefreshBox(
+        modifier = modifier.fillMaxSize(),
         state = refreshState,
         isRefreshing = isRefreshing,
         onRefresh = onRefresh,
     ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize()
-        ) {
+        LazyColumn {
 
             items(
                 items = articleUiStateList,
