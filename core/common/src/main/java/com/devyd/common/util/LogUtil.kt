@@ -28,9 +28,7 @@ object LogUtil {
      * Info log
      */
     fun i(tag: String = defaultTag(), message: String) {
-        if (BuildConfig.DEBUG) {
-            Log.i(tag, message)
-        }
+        Log.i(tag, message)
     }
 
     /**

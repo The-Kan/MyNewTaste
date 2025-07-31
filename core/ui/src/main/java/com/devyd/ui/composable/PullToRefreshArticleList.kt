@@ -1,7 +1,6 @@
 package com.devyd.ui.composable
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,35 +9,34 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.devyd.ui.models.ArticleUiState
+import com.devyd.ui.models.ComposeArticleResult
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PullToRefreshArticleList(
     modifier: Modifier = Modifier,
-    articleUiStateList: List<ArticleUiState>,
-    isRefreshing: Boolean = false,
+    composeArticleResult: ComposeArticleResult,
+    isRefreshing: Boolean,
     onRefresh: () -> Unit,
-    onArticleClick: (ArticleUiState) -> Unit
+    articleContent: @Composable (ArticleUiState) -> Unit
 ) {
-    val refreshState = rememberPullToRefreshState()
+    val pullToRefreshState = rememberPullToRefreshState()
 
     PullToRefreshBox(
         modifier = modifier.fillMaxSize(),
-        state = refreshState,
+        state = pullToRefreshState,
         isRefreshing = isRefreshing,
-        onRefresh = onRefresh,
+        onRefresh = {
+            onRefresh()
+        },
     ) {
-        LazyColumn {
-
-            items(
-                items = articleUiStateList,
-            ) { articleUiState ->
-                Article(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    articleUiState = articleUiState,
-                    onArticleClick = onArticleClick
-                )
+        if (composeArticleResult is ComposeArticleResult.Success) {
+            LazyColumn {
+                items(
+                    items = composeArticleResult.articlesUiState.articleUiState,
+                ) { articleUiState ->
+                    articleContent(articleUiState)
+                }
             }
         }
     }

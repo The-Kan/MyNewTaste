@@ -4,6 +4,7 @@ package com.devyd.allcategoryarticles
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -16,9 +17,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.devyd.allcategoryarticles.vm.ComposeAllArticleListViewModel
 import com.devyd.ui.composable.AirplaneProgressLottie
+import com.devyd.ui.composable.Article
 import com.devyd.ui.composable.PullToRefreshArticleList
-import com.devyd.ui.models.ArticleResult
 import com.devyd.ui.models.ArticleUiState
+import com.devyd.ui.models.ComposeArticleResult
 
 
 @Composable
@@ -39,7 +41,7 @@ fun AllArticleListScreen(
 
         when (val articleResult = articleState) {
 
-            is ArticleResult.Failure -> {
+            is ComposeArticleResult.Failure -> {
                 Button(
                     onClick = {
                         viewModel.refreshArticle(false)
@@ -49,23 +51,28 @@ fun AllArticleListScreen(
                 }
             }
 
-            ArticleResult.Idle -> {
+            ComposeArticleResult.Idle -> {
             }
 
-            is ArticleResult.Loading -> {
-                val isSwipeLoading = articleResult.isSwipeLoading
-                AirplaneProgressLottie(
-                    visible = !isSwipeLoading
-                )
+            is ComposeArticleResult.Loading -> {
+                AirplaneProgressLottie()
             }
 
-            is ArticleResult.Success -> {
+            is ComposeArticleResult.Success, ComposeArticleResult.Refreshing -> {
                 PullToRefreshArticleList(
-                    articleUiStateList = articleResult.articlesUiState.articleUiState,
+                    composeArticleResult = articleResult,
+                    isRefreshing = articleResult == ComposeArticleResult.Refreshing,
                     onRefresh = {
                         viewModel.refreshArticle(true)
                     },
-                    onArticleClick = onArticleClick
+                    articleContent = {
+                        Article(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            articleUiState = it,
+                            onArticleClick = onArticleClick
+                        )
+                    }
                 )
             }
         }

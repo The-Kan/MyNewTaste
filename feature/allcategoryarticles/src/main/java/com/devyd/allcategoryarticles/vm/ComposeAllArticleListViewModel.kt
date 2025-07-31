@@ -3,12 +3,13 @@ package com.devyd.allcategoryarticles.vm
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devyd.common.CategoryStrings
+import com.devyd.common.extension.updateAndDelay
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.domain.usecase.article.GetArticleUseCase
-import com.devyd.ui.models.ArticleResult
 import com.devyd.ui.models.ArticleUiState
 import com.devyd.ui.models.ArticlesUiState
+import com.devyd.ui.models.ComposeArticleResult
 import com.devyd.ui.models.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,7 +23,7 @@ class ComposeAllArticleListViewModel @Inject constructor(
     private val getArticleUseCase: GetArticleUseCase
 ) :
     ViewModel() {
-    private val _articles = MutableStateFlow<ArticleResult>(ArticleResult.Idle)
+    private val _articles = MutableStateFlow<ComposeArticleResult>(ComposeArticleResult.Idle)
     val article = _articles.asStateFlow()
 
     init {
@@ -31,7 +32,14 @@ class ComposeAllArticleListViewModel @Inject constructor(
 
     fun refreshArticle(isSwipeRefresh: Boolean) {
         viewModelScope.launch {
-            _articles.update { ArticleResult.Loading(isSwipeRefresh) }
+
+            if (isSwipeRefresh) {
+                _articles.updateAndDelay {
+                    ComposeArticleResult.Refreshing
+                }
+            } else {
+                _articles.update { ComposeArticleResult.Loading }
+            }
 
 
             val articleUiStateList = mutableListOf<ArticleUiState>()
@@ -45,22 +53,22 @@ class ComposeAllArticleListViewModel @Inject constructor(
                                 articlesUiState.copy(articleUiState = articlesUiState.articleUiState.map {
                                     it.copy(category = category)
                                 })
-                            ArticleResult.Success(newArticlesUiState)
+                            ComposeArticleResult.Success(newArticlesUiState)
                         },
                         onFailure = { err ->
                             LogUtil.e(logTag(), "getArticleUseCase err : ${err.message}")
-                            ArticleResult.Failure(
+                            ComposeArticleResult.Failure(
                                 err.message ?: "unknown error"
                             )
                         })
 
-                if (getArticleUseCaseResult is ArticleResult.Success) {
+                if (getArticleUseCaseResult is ComposeArticleResult.Success) {
                     articleUiStateList.addAll(getArticleUseCaseResult.articlesUiState.articleUiState)
                 }
             }
 
 
-            val result = ArticleResult.Success(
+            val result = ComposeArticleResult.Success(
                 ArticlesUiState(
                     status = "status",
                     totalResults = 1,

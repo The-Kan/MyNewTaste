@@ -15,6 +15,7 @@ import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
 import com.devyd.mynewstaste.R
 import com.devyd.mynewstaste.databinding.FragmentArticlelistcontainerBinding
+import com.devyd.tastearticles.ComposeTasteArticleListFragment
 import com.devyd.ui.models.ArticleUiState
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -119,7 +120,7 @@ class ComposeArticleListContainerFragment : Fragment() {
                                 if (tab?.text == getString(com.devyd.ui.R.string.tab_home)) {
                                     val tag = "f$i"
                                     val fragment =
-                                        childFragmentManager.findFragmentByTag(tag) as? com.devyd.tastearticles.TasteArticleListFragment
+                                        childFragmentManager.findFragmentByTag(tag) as? ComposeTasteArticleListFragment
                                     fragment?.refreshArticle()
                                 }
                             }

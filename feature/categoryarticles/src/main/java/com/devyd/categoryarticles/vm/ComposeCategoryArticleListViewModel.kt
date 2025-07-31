@@ -2,11 +2,12 @@ package com.devyd.categoryarticles.vm
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.devyd.ui.models.ArticleResult
+import com.devyd.common.extension.updateAndDelay
 import com.devyd.common.util.LogUtil
 import com.devyd.common.util.logTag
-import com.devyd.ui.models.toUiState
 import com.devyd.domain.usecase.article.GetArticleUseCase
+import com.devyd.ui.models.ComposeArticleResult
+import com.devyd.ui.models.toUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -18,20 +19,29 @@ import javax.inject.Inject
 @HiltViewModel
 class ComposeCategoryArticleListViewModel @Inject constructor(private val getArticleUseCase: GetArticleUseCase) :
     ViewModel() {
-    private val _articles = MutableStateFlow<ArticleResult>(ArticleResult.Idle)
+    private val _articles = MutableStateFlow<ComposeArticleResult>(ComposeArticleResult.Idle)
     val article = _articles.asStateFlow()
 
     private var isInit = AtomicBoolean(false)
 
     fun initParams(category: String) {
-        if(isInit.compareAndSet(false, true)){
+        if (isInit.compareAndSet(false, true)) {
             refreshArticle(false, category)
         }
     }
 
     fun refreshArticle(isSwipeRefresh: Boolean, category: String) {
         viewModelScope.launch {
-            _articles.update { ArticleResult.Loading(isSwipeRefresh) }
+
+
+            if (isSwipeRefresh) {
+                _articles.updateAndDelay {
+                    ComposeArticleResult.Refreshing
+                }
+            } else {
+                _articles.update { ComposeArticleResult.Loading }
+            }
+
 
             val result = runCatching { getArticleUseCase(category) }
                 .fold(
@@ -41,14 +51,16 @@ class ComposeCategoryArticleListViewModel @Inject constructor(private val getArt
                             articlesUiState.copy(articleUiState = articlesUiState.articleUiState.map {
                                 it.copy(category = category)
                             })
-                        ArticleResult.Success(newArticlesUiState)
+                        ComposeArticleResult.Success(newArticlesUiState)
                     },
                     onFailure = { err ->
                         LogUtil.e(logTag(), "getArticleUseCase err : ${err.message}")
-                        ArticleResult.Failure(err.message ?: "unknown error")
+                        ComposeArticleResult.Failure(err.message ?: "unknown error")
                     })
 
-            _articles.update { result }
+            _articles.update {
+                result
+            }
         }
     }
 }

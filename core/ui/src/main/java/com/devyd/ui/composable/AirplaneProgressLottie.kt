@@ -14,12 +14,9 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 @Composable
 fun AirplaneProgressLottie(
     modifier: Modifier = Modifier,
-    visible: Boolean,
     autoPlay: Boolean = true,
     loop: Boolean = true
 ) {
-    if (!visible) return
-
     val composition =
         rememberLottieComposition(LottieCompositionSpec.Asset("airplane_progress_lottie.json")).value
 

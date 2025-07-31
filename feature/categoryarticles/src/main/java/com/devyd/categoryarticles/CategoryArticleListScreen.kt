@@ -3,22 +3,24 @@ package com.devyd.categoryarticles
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.devyd.categoryarticles.vm.ComposeCategoryArticleListViewModel
 import com.devyd.ui.composable.AirplaneProgressLottie
+import com.devyd.ui.composable.Article
 import com.devyd.ui.composable.PullToRefreshArticleList
-import com.devyd.ui.models.ArticleResult
 import com.devyd.ui.models.ArticleUiState
+import com.devyd.ui.models.ComposeArticleResult
 
 
 @Composable
@@ -40,10 +42,11 @@ fun CategoryArticleListScreen(
         verticalArrangement = Arrangement.Center
     ) {
 
-        val articleState by viewModel.article.collectAsStateWithLifecycle()
+        val articleState by viewModel.article.collectAsState()
+
 
         when (val articleResult = articleState) {
-            is ArticleResult.Failure -> {
+            is ComposeArticleResult.Failure -> {
                 Button(
                     onClick = {
                         viewModel.refreshArticle(false, category)
@@ -53,29 +56,32 @@ fun CategoryArticleListScreen(
                 }
             }
 
-            ArticleResult.Idle -> {
+            ComposeArticleResult.Idle -> {
 
             }
 
-            is ArticleResult.Loading -> {
-                val isSwipeLoading = articleResult.isSwipeLoading
-                AirplaneProgressLottie(
-                    visible = !isSwipeLoading
-                )
+            is ComposeArticleResult.Loading -> {
+                AirplaneProgressLottie()
             }
 
-            is ArticleResult.Success -> {
+            is ComposeArticleResult.Success, ComposeArticleResult.Refreshing -> {
                 PullToRefreshArticleList(
-                    articleUiStateList = articleResult.articlesUiState.articleUiState,
+                    composeArticleResult = articleResult,
+                    isRefreshing = articleResult == ComposeArticleResult.Refreshing,
                     onRefresh = {
                         viewModel.refreshArticle(true, category)
                     },
-                    onArticleClick = onArticleClick
+                    articleContent = {
+                        Article(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                            articleUiState = it,
+                            onArticleClick = onArticleClick
+                        )
+                    }
                 )
             }
         }
-
-
     }
 
 

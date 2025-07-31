@@ -11,7 +11,7 @@ import com.devyd.categoryarticles.CategoryArticleListFragment
 import com.devyd.categoryarticles.ComposeCategoryArticleListFragment
 import com.devyd.common.CategoryStrings
 import com.devyd.mynewstaste.tablayout.TapList.titles
-import com.devyd.tastearticles.TasteArticleListFragment
+import com.devyd.tastearticles.ComposeTasteArticleListFragment
 import java.util.Locale
 
 class ComposeChildFragmentStateAdapter(
@@ -26,7 +26,7 @@ class ComposeChildFragmentStateAdapter(
         if (CategoryStrings.contains(string)) return ComposeCategoryArticleListFragment.newInstance(
             string
         )
-        else if (position == 0) return TasteArticleListFragment()
+        else if (position == 0) return ComposeTasteArticleListFragment()
         else if (position == 1) return ComposeAllArticleListFragment()
         else if (position == titles.lastIndex) return BookmarkArticleListFragment()
 
