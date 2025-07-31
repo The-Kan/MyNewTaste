@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,11 +33,13 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ShimmerRect(modifier: Modifier = Modifier) {
-    val shimmerColors = listOf(
-        Color.LightGray.copy(alpha = 0.8f),
-        Color.LightGray.copy(alpha = 0.1f),
-        Color.LightGray.copy(alpha = 0.8f),
-    )
+    val shimmerColors = remember {
+        listOf(
+            Color.LightGray.copy(alpha = 0.8f),
+            Color.LightGray.copy(alpha = 0.1f),
+            Color.LightGray.copy(alpha = 0.8f),
+        )
+    }
 
     val transition = rememberInfiniteTransition()
     val translateAnim = transition.animateFloat(
@@ -73,7 +76,6 @@ fun ShimmerRectItem(modifier: Modifier = Modifier, brush: Brush) {
         )
     }
 }
-
 
 
 @Composable
@@ -145,12 +147,16 @@ fun ShimmerGridItem(brush: Brush) {
 
 @Composable
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-fun ShimmerPreview(){
-    ShimmerRectItem(brush = Brush.linearGradient(
-        listOf(
-            Color.LightGray.copy(alpha = 0.6f),
-            Color.LightGray.copy(alpha = 0.2f),
-            Color.LightGray.copy(alpha = 0.6f),
+fun ShimmerPreview() {
+    ShimmerRectItem(
+        modifier = Modifier
+            .fillMaxSize(),
+        brush = Brush.linearGradient(
+            listOf(
+                Color.LightGray.copy(alpha = 0.9f),
+                Color.LightGray.copy(alpha = 0.1f),
+                Color.LightGray.copy(alpha = 0.9f),
+            )
         )
-    ))
+    )
 }
