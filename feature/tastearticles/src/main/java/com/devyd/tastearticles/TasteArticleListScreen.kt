@@ -33,12 +33,13 @@ import com.devyd.ui.models.ArticleUiState
 @Composable
 fun TasteArticleListScreen(
     onArticleClick: (ArticleUiState) -> Unit,
-    onSetCategoryClick: () -> Unit
+    onSetCategoryClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<ComposeTasteArticleListViewModel>()
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -94,10 +95,10 @@ fun TasteArticleListScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PullToRefreshTasteArticleList(
-    modifier: Modifier = Modifier,
     composeTasteArticleResult: ComposeTasteArticleResult,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
+    modifier: Modifier = Modifier,
     articleContent: @Composable (ArticleUiState) -> Unit
 ) {
     val pullToRefreshState = rememberPullToRefreshState()
@@ -125,11 +126,12 @@ fun PullToRefreshTasteArticleList(
 
 @Composable
 fun CategorySettingGuide(
-    onSetCategoryClick: () -> Unit
+    onSetCategoryClick: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     Column(
-        modifier = Modifier.wrapContentSize(),
+        modifier = modifier.wrapContentSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {

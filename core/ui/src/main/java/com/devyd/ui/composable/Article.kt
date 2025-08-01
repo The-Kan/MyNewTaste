@@ -23,9 +23,9 @@ import com.devyd.ui.models.ArticleUiState
 
 @Composable
 fun Article(
-    modifier: Modifier = Modifier,
     articleUiState: ArticleUiState,
     onArticleClick: (ArticleUiState) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
 
     Card(

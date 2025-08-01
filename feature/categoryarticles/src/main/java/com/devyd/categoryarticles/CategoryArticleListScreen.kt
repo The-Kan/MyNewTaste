@@ -25,7 +25,9 @@ import com.devyd.ui.models.ComposeArticleResult
 
 @Composable
 fun CategoryArticleListScreen(
-    category: String, onArticleClick: (ArticleUiState) -> Unit
+    category: String,
+    onArticleClick: (ArticleUiState) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<ComposeCategoryArticleListViewModel>()
 
@@ -35,7 +37,7 @@ fun CategoryArticleListScreen(
 
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,

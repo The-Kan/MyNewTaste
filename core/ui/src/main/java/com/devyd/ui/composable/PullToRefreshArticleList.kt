@@ -14,10 +14,10 @@ import com.devyd.ui.models.ComposeArticleResult
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PullToRefreshArticleList(
-    modifier: Modifier = Modifier,
     composeArticleResult: ComposeArticleResult,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
+    modifier: Modifier = Modifier,
     articleContent: @Composable (ArticleUiState) -> Unit
 ) {
     val pullToRefreshState = rememberPullToRefreshState()

@@ -25,12 +25,13 @@ import com.devyd.ui.models.ComposeArticleResult
 
 @Composable
 fun AllArticleListScreen(
-    onArticleClick: (ArticleUiState) -> Unit
+    onArticleClick: (ArticleUiState) -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<ComposeAllArticleListViewModel>()
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(8.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
