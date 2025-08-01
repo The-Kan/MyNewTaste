@@ -85,7 +85,7 @@ dependencies {
     implementation(libs.androidx.compose.viewmodel)
     implementation(libs.hilt.android.compose)
 
-    debugImplementation(libs.androidx.ui.tooling)
+    implementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
     androidTestImplementation(platform(libs.androidx.compose.bom))
