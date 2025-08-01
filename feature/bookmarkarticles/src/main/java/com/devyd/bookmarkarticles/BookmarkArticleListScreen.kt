@@ -1,4 +1,4 @@
-package com.devyd.categoryarticles
+package com.devyd.bookmarkarticles
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,33 +8,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.devyd.categoryarticles.vm.ComposeCategoryArticleListViewModel
+import com.devyd.bookmarkarticles.vm.ComposeBookmarkArticleListViewModel
 import com.devyd.ui.composable.AirplaneProgressLottie
 import com.devyd.ui.composable.Article
 import com.devyd.ui.composable.PullToRefreshArticleList
 import com.devyd.ui.models.ArticleUiState
 import com.devyd.ui.models.ComposeArticleResult
 
-
 @Composable
-fun CategoryArticleListScreen(
-    category: String,
+fun BookmarkArticleListScreen(
     onArticleClick: (ArticleUiState) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val viewModel = hiltViewModel<ComposeCategoryArticleListViewModel>()
-
-    LaunchedEffect(Unit) {
-        viewModel.initParams(category)
-    }
-
+    val viewModel = hiltViewModel<ComposeBookmarkArticleListViewModel>()
 
     Column(
         modifier = modifier
@@ -51,7 +44,7 @@ fun CategoryArticleListScreen(
             is ComposeArticleResult.Failure -> {
                 Button(
                     onClick = {
-                        viewModel.refreshArticle(false, category)
+                        viewModel.refreshArticle(false)
                     }
                 ) {
                     Text("Fail!! retry")
@@ -71,7 +64,7 @@ fun CategoryArticleListScreen(
                     composeArticleResult = articleResult,
                     isRefreshing = articleResult == ComposeArticleResult.Refreshing,
                     onRefresh = {
-                        viewModel.refreshArticle(true, category)
+                        viewModel.refreshArticle(true)
                     },
                     articleContent = {
                         Article(
@@ -85,6 +78,4 @@ fun CategoryArticleListScreen(
             }
         }
     }
-
-
 }

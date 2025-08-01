@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.devyd.allcategoryarticles.ComposeAllArticleListFragment
 import com.devyd.bookmarkarticles.BookmarkArticleListFragment
+import com.devyd.bookmarkarticles.ComposeBookmarkArticleListFragment
 import com.devyd.categoryarticles.CategoryArticleListFragment
 import com.devyd.categoryarticles.ComposeCategoryArticleListFragment
 import com.devyd.common.CategoryStrings
@@ -28,7 +29,7 @@ class ComposeChildFragmentStateAdapter(
         )
         else if (position == 0) return ComposeTasteArticleListFragment()
         else if (position == 1) return ComposeAllArticleListFragment()
-        else if (position == titles.lastIndex) return BookmarkArticleListFragment()
+        else if (position == titles.lastIndex) return ComposeBookmarkArticleListFragment()
 
         return CategoryArticleListFragment.newInstance(CategoryStrings.BUSINESS)
     }
