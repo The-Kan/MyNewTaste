@@ -9,7 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.devyd.common.Constants
-import com.devyd.tastearticles.vm.TasteArticleListViewModel
+import com.devyd.tastearticles.vm.ComposeTasteArticleListViewModel
 import com.devyd.ui.models.ArticleUiState
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -42,7 +42,7 @@ class ComposeTasteArticleListFragment : Fragment() {
     }
 
     fun refreshArticle() {
-        val viewModel by viewModels<TasteArticleListViewModel>()
+        val viewModel by viewModels<ComposeTasteArticleListViewModel>()
         viewModel.refreshArticle(false)
     }
 }
